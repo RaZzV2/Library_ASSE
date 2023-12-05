@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Library.models;
+using System;
+using System.Configuration;
+using System.Data.Entity;
 
 namespace Library
 {
@@ -10,8 +9,7 @@ namespace Library
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("test");
-           // var context = new 
+            var context = new LibraryContext();
         }
     }
 }

@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DomainModel
+namespace Library.models
 {
-    public class Class1
+    public class Student
     {
+        public int Id { get; set; } 
+        public string Name { get; set; }   
     }
 }
