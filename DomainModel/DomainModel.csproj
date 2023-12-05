@@ -54,8 +54,10 @@
     <Compile Include="Author.cs" />
     <Compile Include="Book.cs" />
     <Compile Include="BookDomain.cs" />
+    <Compile Include="Borrow.cs" />
     <Compile Include="Edition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reader.cs" />
     <Compile Include="Student.cs" />
   </ItemGroup>
   <ItemGroup>
