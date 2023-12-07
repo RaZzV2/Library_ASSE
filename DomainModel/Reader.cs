@@ -18,5 +18,8 @@ namespace DomainModel
         public string Address { get; set; } 
 
         public string EmailAddress { get; set; }
+
+        public bool Role { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }

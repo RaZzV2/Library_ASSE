@@ -20,5 +20,7 @@ namespace DomainModel
         public DateTime BorrowEndDate { get; set; }
 
         public bool IsReturned { get; set; }
+
+        public virtual ICollection<ExtendedBorrow> ExtendedBorrows { get; set; } = new List<ExtendedBorrow>();
     }
 }
