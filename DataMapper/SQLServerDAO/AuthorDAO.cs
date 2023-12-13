@@ -3,56 +3,55 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataMapper
+namespace DataMapper.SQLServerDAO
 {
-    public class BookDAO : IDAO<Book>
+    internal class AuthorDAO : IDAO<Author>
     {
-        public void Add(Book t)
+        public void Add(Author t)
         {
             using (var context = new LibraryContext())
             {
-                context.Books.Add(t);
+                context.Author.Add(t);
                 context.SaveChanges();
             }
         }
 
-        public void Delete(Book t)
+        public void Delete(Author t)
         {
             using (var context = new LibraryContext())
             {
-                var newBook = new Book { BookId = t.BookId };
-                context.Books.Attach(newBook);
-                context.Books.Remove(newBook);
+                var newAuthor = new Author { Id = t.Id };
+                context.Author.Attach(newAuthor);
+                context.Author.Remove(newAuthor);
                 context.SaveChanges();
             }
         }
 
-        public Book GetById(int id)
+        public Author GetById(int id)
         {
             using (var context = new LibraryContext())
             {
-                return context.Books.Where(book => book.BookId == id).SingleOrDefault();
+                return context.Author.Where(author => author.Id == id).SingleOrDefault();
             }
         }
 
-        public void Update(Book t)
+        public void Update(Author t)
         {
             using (var context = new LibraryContext())
             {
-                var existingBook = context.Books.Find(t.BookId);
+                var existingAuthor = context.Author.Find(t.Id);
 
-                if (existingBook != null)
+                if (existingAuthor != null)
                 {
-                    context.Entry(existingBook).CurrentValues.SetValues(t);
+                    context.Entry(existingAuthor).CurrentValues.SetValues(t);
                     context.SaveChanges();
                 }
                 else
                 {
-                    throw new InvalidOperationException($"Book with ID {t.BookId} not found");
+                    throw new InvalidOperationException($"Book with ID {t.Id} not found");
                 }
             }
         }

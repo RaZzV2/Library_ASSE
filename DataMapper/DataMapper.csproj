@@ -51,7 +51,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LibraryContext.cs" />
+    <Compile Include="IDAO.cs" />
+    <Compile Include="SQLServerDAO\AuthorDAO.cs" />
+    <Compile Include="SQLServerDAO\BookDAO.cs" />
+    <Compile Include="SQLServerDAO\BookDomainDAO.cs" />
+    <Compile Include="SQLServerDAO\BorrowDAO.cs" />
+    <Compile Include="SQLServerDAO\EditionDAO.cs" />
+    <Compile Include="SQLServerDAO\ExtendedBorrowDAO.cs" />
+    <Compile Include="SQLServerDAO\LibraryContext.cs" />
     <Compile Include="Migrations\202312051542151_test.cs" />
     <Compile Include="Migrations\202312051542151_test.designer.cs">
       <DependentUpon>202312051542151_test.cs</DependentUpon>
@@ -90,6 +97,8 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SQLServerDAO\ReaderDAO.cs" />
+    <Compile Include="SQLServerDAO\StudentDAO.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

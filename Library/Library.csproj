@@ -59,6 +59,10 @@
       <Project>{b8d34bbe-3f87-459c-9f81-f5dab76e857d}</Project>
       <Name>DataMapper</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DomainModel\DomainModel.csproj">
+      <Project>{76a3dd96-69e7-4375-a4f5-e0905a4ec927}</Project>
+      <Name>DomainModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
