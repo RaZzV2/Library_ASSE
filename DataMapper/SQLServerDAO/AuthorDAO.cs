@@ -51,7 +51,7 @@ namespace DataMapper.SQLServerDAO
                 }
                 else
                 {
-                    throw new InvalidOperationException($"Book with ID {t.Id} not found");
+                    throw new InvalidOperationException($"Author with ID {t.Id} not found");
                 }
             }
         }

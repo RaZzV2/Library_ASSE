@@ -15,8 +15,8 @@ namespace Library.models
         public DbSet<Edition> Editions { get; set; }
         public DbSet<Reader> Readers { get; set; }
         public DbSet<Borrow> Borrows { get; set; }
-
         public DbSet<ExtendedBorrow> ExtendedBorrows { get; set; } 
+        public DbSet<Student> Students { get; set; }
 
 
     }

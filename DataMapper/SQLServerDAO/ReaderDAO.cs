@@ -52,7 +52,7 @@ namespace DataMapper.SQLServerDAO
                 }
                 else
                 {
-                    throw new InvalidOperationException($"Book with ID {t.ReaderId} not found");
+                    throw new InvalidOperationException($"Reader with ID {t.ReaderId} not found");
                 }
             }
         }
