@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataMapper
 {
-    public class BookDAO : IDAO<Book>
+    public class BookDAO : BookIDAO
     {
         public void Add(Book t)
         {

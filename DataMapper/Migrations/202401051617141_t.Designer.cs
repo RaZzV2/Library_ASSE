@@ -7,13 +7,13 @@ namespace DataMapper.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class t111 : IMigrationMetadata
+    public sealed partial class t : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(t111));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(t));
         
         string IMigrationMetadata.Id
         {
-            get { return "202312051629375_t111"; }
+            get { return "202401051617141_t"; }
         }
         
         string IMigrationMetadata.Source

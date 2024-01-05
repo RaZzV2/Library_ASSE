@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataMapper.SQLServerDAO
 {
-    internal class BookDomainDAO : IDAO<BookDomain>
+    internal class BookDomainDAO : BookDomainIDAO
     {
         public void Add(BookDomain t)
         {

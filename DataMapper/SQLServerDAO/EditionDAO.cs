@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataMapper.SQLServerDAO
 {
-    internal class EditionDAO : IDAO<Edition>
+    internal class EditionDAO : EditionIDAO
     {
         public void Add(Edition t)
         {

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataMapper.SQLServerDAO
 {
-    internal class ExtendedBorrowDAO : IDAO<ExtendedBorrow>
+    internal class ExtendedBorrowDAO : ExtendedBorrowIDAO
     {
         public void Add(ExtendedBorrow t)
         {

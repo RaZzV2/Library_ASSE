@@ -52,6 +52,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IDAO.cs" />
+    <Compile Include="Migrations\202401051617141_t.cs" />
+    <Compile Include="Migrations\202401051617141_t.designer.cs">
+      <DependentUpon>202401051617141_t.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="SQLServerDAO\AuthorDAO.cs" />
     <Compile Include="SQLServerDAO\BookDAO.cs" />
     <Compile Include="SQLServerDAO\BookDomainDAO.cs" />
@@ -59,43 +64,6 @@
     <Compile Include="SQLServerDAO\EditionDAO.cs" />
     <Compile Include="SQLServerDAO\ExtendedBorrowDAO.cs" />
     <Compile Include="SQLServerDAO\LibraryContext.cs" />
-    <Compile Include="Migrations\202312051542151_test.cs" />
-    <Compile Include="Migrations\202312051542151_test.designer.cs">
-      <DependentUpon>202312051542151_test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202312051602577_t10.cs" />
-    <Compile Include="Migrations\202312051602577_t10.designer.cs">
-      <DependentUpon>202312051602577_t10.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202312051627298_t11.cs" />
-    <Compile Include="Migrations\202312051627298_t11.designer.cs">
-      <DependentUpon>202312051627298_t11.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202312051629375_t111.cs" />
-    <Compile Include="Migrations\202312051629375_t111.designer.cs">
-      <DependentUpon>202312051629375_t111.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202312051657408_t112.cs" />
-    <Compile Include="Migrations\202312051657408_t112.designer.cs">
-      <DependentUpon>202312051657408_t112.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202312051715013_t113.cs" />
-    <Compile Include="Migrations\202312051715013_t113.designer.cs">
-      <DependentUpon>202312051715013_t113.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202312051718181_t114.cs" />
-    <Compile Include="Migrations\202312051718181_t114.designer.cs">
-      <DependentUpon>202312051718181_t114.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202312071827591_t115.cs" />
-    <Compile Include="Migrations\202312071827591_t115.designer.cs">
-      <DependentUpon>202312071827591_t115.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202312071841501_t116.cs" />
-    <Compile Include="Migrations\202312071841501_t116.designer.cs">
-      <DependentUpon>202312071841501_t116.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLServerDAO\ReaderDAO.cs" />
     <Compile Include="SQLServerDAO\StudentDAO.cs" />
@@ -111,32 +79,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202312051542151_test.resx">
-      <DependentUpon>202312051542151_test.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202312051602577_t10.resx">
-      <DependentUpon>202312051602577_t10.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202312051627298_t11.resx">
-      <DependentUpon>202312051627298_t11.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202312051629375_t111.resx">
-      <DependentUpon>202312051629375_t111.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202312051657408_t112.resx">
-      <DependentUpon>202312051657408_t112.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202312051715013_t113.resx">
-      <DependentUpon>202312051715013_t113.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202312051718181_t114.resx">
-      <DependentUpon>202312051718181_t114.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202312071827591_t115.resx">
-      <DependentUpon>202312071827591_t115.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202312071841501_t116.resx">
-      <DependentUpon>202312071841501_t116.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202401051617141_t.resx">
+      <DependentUpon>202401051617141_t.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

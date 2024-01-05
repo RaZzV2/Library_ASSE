@@ -7,11 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataMapper
 {
-    internal interface IDAO<T>
+    internal interface BookIDAO : IDAO<Book>
     {
-        T GetById(int id);
-        void Add(T t);
-        void Update(T t);
-        void Delete(T t);
     }
 }
