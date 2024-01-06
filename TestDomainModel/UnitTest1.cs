@@ -259,6 +259,38 @@ namespace TestDomainModel
                 Assert.IsNull(validationResult);
                 Assert.AreEqual(ValidationResult.Success, validationResult);
             }
+
+            [TestMethod]
+            public void ReaderPhoneNumberEmptyEmailIncorrect()
+            {
+                this.reader.EmailAddress = "email_gresit";
+
+                AssertValidationException(this.reader, "Invalid Email Address");
+
+                this.reader.PhoneNumber = string.Empty;
+
+                var validationContext = new ValidationContext(reader, null, null);
+                var validationResult = new PhoneOrEmailReq().GetValidationResult(reader, validationContext);
+
+                Assert.IsNull(validationResult);
+                Assert.AreEqual(ValidationResult.Success, validationResult);
+            }
+
+            [TestMethod]
+            public void ReaderEmailEmptyPhoneNumberIncorrect()
+            {
+                this.reader.PhoneNumber = "numar_gresit";
+
+                AssertValidationException(this.reader, "Invalid Phone Number!");
+
+                this.reader.EmailAddress = string.Empty;
+
+                var validationContext = new ValidationContext(reader, null, null);
+                var validationResult = new PhoneOrEmailReq().GetValidationResult(reader, validationContext);
+
+                Assert.IsNull(validationResult);
+                Assert.AreEqual(ValidationResult.Success, validationResult);
+            }
         }
     }
 }
