@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomValidationHelpers\ModelValidationHelper.cs" />
+    <Compile Include="ModelsTests\EditionTests.cs" />
     <Compile Include="ModelsTests\ReaderTests.cs" />
     <Compile Include="ModelsTests\StudentTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

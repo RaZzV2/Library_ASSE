@@ -52,6 +52,7 @@ namespace TestDomainModel
         [TestMethod]
         public void StudentAgeCorrect()
         {
+            this.student.Age = 32;
             try
             {
                 Validator.ValidateObject(this.student, CreateValidationContext(this.student), true);

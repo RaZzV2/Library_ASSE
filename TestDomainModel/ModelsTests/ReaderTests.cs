@@ -58,6 +58,20 @@ namespace TestDomainModel
         }
 
         [TestMethod]
+        public void ReaderFirstNameCorrect()
+        {
+            this.reader.ReaderFirstName = "Razvan";
+            try
+            {
+                Validator.ValidateObject(this.reader, CreateValidationContext(this.reader), true);
+            }
+            catch (ValidationException ex)
+            {
+                Assert.Fail($"An exception has been thrown!: {ex.Message}");
+            }
+        }
+
+        [TestMethod]
         public void ReaderLastNameIsEmpty()
         {
             this.reader.ReaderLastName = string.Empty;
@@ -79,6 +93,20 @@ namespace TestDomainModel
         }
 
         [TestMethod]
+        public void ReaderLastNameCorrect()
+        {
+            this.reader.ReaderLastName = "Dragomir";
+            try
+            {
+                Validator.ValidateObject(this.reader, CreateValidationContext(this.reader), true);
+            }
+            catch (ValidationException ex)
+            {
+                Assert.Fail($"An exception has been thrown!: {ex.Message}");
+            }
+        }
+
+        [TestMethod]
         public void AddressIsRequired()
         {
             this.reader.Address = null;
@@ -91,6 +119,20 @@ namespace TestDomainModel
         {
             this.reader.EmailAddress = "invalid_email";
             AssertValidationException(this.reader, "Invalid Email Address");
+        }
+
+        [TestMethod]
+        public void CorrectEmailAddress()
+        {
+            this.reader.EmailAddress = "d_raszvan01@yahoo.com";
+            try
+            {
+                Validator.ValidateObject(this.reader, CreateValidationContext(this.reader), true);
+            }
+            catch (ValidationException ex)
+            {
+                Assert.Fail($"An exception has been thrown!: {ex.Message}");
+            }
         }
 
         [TestMethod]
@@ -113,6 +155,20 @@ namespace TestDomainModel
         {
             this.reader.PhoneNumber = "invalid_phone";
             AssertValidationException(this.reader, "Invalid Phone Number!");
+        }
+
+        [TestMethod]
+        public void CorrectPhoneNumber()
+        {
+            this.reader.PhoneNumber = "0238432132";
+            try
+            {
+                Validator.ValidateObject(this.reader, CreateValidationContext(this.reader), true);
+            }
+            catch (ValidationException ex)
+            {
+                Assert.Fail($"An exception has been thrown!: {ex.Message}");
+            }
         }
 
         [TestMethod]
