@@ -60,7 +60,9 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="CustomValidationHelpers\ModelValidationHelper.cs" />
+    <Compile Include="ModelsTests\ReaderTests.cs" />
+    <Compile Include="ModelsTests\StudentTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
