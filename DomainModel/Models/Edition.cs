@@ -26,6 +26,9 @@ namespace Library.models
         [EnumDataType(typeof(Type), ErrorMessage = "Invalid book type.")]
         public Type BookType { get; set; }
 
+        [Required(ErrorMessage = "A edition must have at least one book!")]
+        public virtual Book Book {  get; set; } 
+
         public enum Type
         {
             Hardcover,

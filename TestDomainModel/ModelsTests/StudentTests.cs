@@ -6,7 +6,7 @@ using Rhino.Mocks.Constraints;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace TestDomainModel
+namespace TestDomainModel.ModelsTests
 {
     [TestClass]
     public class StudentTests
@@ -103,6 +103,13 @@ namespace TestDomainModel
         {
             this.student.LastName = "ads";
             AssertValidationException(this.student, "Last name must have at least 4 characters!");
+        }
+
+        [TestMethod]
+        public void StudentNegativeAge()
+        {
+            this.student.Age = -1;
+            AssertValidationException(this.student, "You must have at least 7 and at most 99 years to borrow a book!");
         }
     }
 }

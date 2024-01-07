@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Policy;
 using System.Text;
 
 namespace TestDomainModel.ModelsTests
@@ -34,7 +35,11 @@ namespace TestDomainModel.ModelsTests
                 PagesNumber = 99,
                 BorrowableBooks = 23,
                 UnBorrowableBooks = 32,
-                BookType = Edition.Type.Board
+                BookType = Edition.Type.Board,
+                Book = new Book()
+                {
+
+                }
             };
         }
 
@@ -142,6 +147,88 @@ namespace TestDomainModel.ModelsTests
             {
                 Assert.Fail($"An exception has been thrown!: {ex.Message}");
             }
+        }
+
+        [TestMethod]
+        public void NegativeUnBorrowableBooks()
+        {
+            this.edition.UnBorrowableBooks = -3;
+            AssertValidationException(this.edition, "Number of unborrowable books cannot be negative.");
+        }
+
+        [TestMethod]
+        public void CorrectUnBorrowableBooks()
+        {
+            this.edition.UnBorrowableBooks = 32;
+            try
+            {
+                Validator.ValidateObject(this.edition, CreateValidationContext(this.edition), true);
+            }
+            catch (ValidationException ex)
+            {
+                Assert.Fail($"An exception has been thrown!: {ex.Message}");
+            }
+        }
+
+        [TestMethod]
+        public void CorrectBookType()
+        {
+            edition.BookType = Edition.Type.Hardcover;
+            try
+            {
+                Validator.ValidateObject(this.edition, CreateValidationContext(this.edition), true);
+            }
+            catch (ValidationException ex)
+            {
+                Assert.Fail($"An exception has been thrown!: {ex.Message}");
+            }
+        }
+
+        [TestMethod]
+        public void InvalidBookType()
+        {
+            edition.BookType = (Edition.Type)99;
+            AssertValidationException(this.edition, "Invalid book type.");
+        }
+
+        [TestMethod]
+        public void AtLeastOneBook()
+        {
+            edition.Book = new Book()
+            {
+                Title = "Amintiri din copilarie",
+                Author = new List<Author>
+                {
+                    new Author
+                    {
+                        FirstName = "Ion",
+                        LastName = "Creanga"
+                    }
+                },
+                Domains = new List<BookDomain>
+                {
+                    new BookDomain
+                    {
+
+                    }
+                }
+            };
+            try
+            {
+                Validator.ValidateObject(this.edition.Book, CreateValidationContext(this.edition.Book), true);
+                Validator.ValidateObject(this.edition, CreateValidationContext(this.edition), true);
+            }
+            catch (ValidationException ex)
+            {
+                Assert.Fail($"An exception has been thrown!: {ex.Message}");
+            }
+        }
+
+        [TestMethod]
+        public void NoBook()
+        {
+            edition.Book = null;
+            AssertValidationException(this.edition, "A edition must have at least one book!");
         }
     }
 }
