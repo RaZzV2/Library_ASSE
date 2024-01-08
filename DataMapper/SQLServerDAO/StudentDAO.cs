@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataMapper.SQLServerDAO
 {
-    internal class StudentDAO : StudentIDAO
+    internal class StudentDAO : IStudentIDAO
     {
         public void Add(Student t)
         {

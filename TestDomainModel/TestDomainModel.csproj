@@ -64,6 +64,7 @@
     <Compile Include="ModelsTests\AuthorTests.cs" />
     <Compile Include="ModelsTests\BookDomainTests.cs" />
     <Compile Include="ModelsTests\BookTests.cs" />
+    <Compile Include="ModelsTests\BorrowTests.cs" />
     <Compile Include="ModelsTests\EditionTests.cs" />
     <Compile Include="ModelsTests\ReaderTests.cs" />
     <Compile Include="ModelsTests\StudentTests.cs" />
@@ -89,7 +90,9 @@
     <Error Condition="!Exists('..\Library\packages\MSTest.TestAdapter.2.2.10\build\net46\MSTest.TestAdapter.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\Library\packages\MSTest.TestAdapter.2.2.10\build\net46\MSTest.TestAdapter.targets'))" />
     <Error Condition="!Exists('..\Library\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\Library\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
     <Error Condition="!Exists('..\Library\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\Library\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+    <Error Condition="!Exists('..\Library\packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\Library\packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets'))" />
   </Target>
   <Import Project="..\Library\packages\MSTest.TestAdapter.2.2.10\build\net46\MSTest.TestAdapter.targets" Condition="Exists('..\Library\packages\MSTest.TestAdapter.2.2.10\build\net46\MSTest.TestAdapter.targets')" />
   <Import Project="..\Library\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\Library\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <Import Project="..\Library\packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets" Condition="Exists('..\Library\packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets')" />
 </Project>

@@ -1,10 +1,4 @@
-﻿using Library.models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DomainModel
 {
@@ -28,7 +22,6 @@ namespace DomainModel
 
         [Required(ErrorMessage = "Address is required!")]
         public string Address { get; set; }
-
 
         [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string EmailAddress { get; set; }

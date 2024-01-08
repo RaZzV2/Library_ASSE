@@ -43,6 +43,13 @@ namespace TestDomainModel.ModelsTests
         }
 
         [TestMethod]
+        public void StudentAgeNegative()
+        {
+            this.student.Age = -33;
+            AssertValidationException(this.student, "You must have at least 7 and at most 99 years to borrow a book!");
+        }
+
+        [TestMethod]
         public void StudentAgeTooHigh()
         {
             this.student.Age = 101;

@@ -87,6 +87,13 @@ namespace TestDomainModel.ModelsTests
         }
 
         [TestMethod]
+        public void EditionYearNegative()
+        {
+            this.edition.EditionYear = -100;
+            AssertValidationException(this.edition, "Invalid edition year. Must be between 1900 and 2024.");
+        }
+
+        [TestMethod]
         public void EditionYearTooHigh()
         {
             this.edition.EditionYear = 2899;

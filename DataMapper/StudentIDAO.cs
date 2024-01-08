@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataMapper
 {
-    internal interface StudentIDAO : IDAO<Student>
+    internal interface IStudentIDAO : IDAO<Student>
     {
     }
 }

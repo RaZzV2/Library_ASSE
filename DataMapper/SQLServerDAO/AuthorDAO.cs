@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataMapper.SQLServerDAO
 {
-    internal class AuthorDAO : AuthorIDAO
+    internal class AuthorDAO : IAuthorIDAO
     {
         public void Add(Author t)
         {

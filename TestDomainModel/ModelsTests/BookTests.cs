@@ -147,5 +147,38 @@ namespace TestDomainModel.ModelsTests
                 Assert.Fail($"An exception has been thrown!: {ex.Message}");
             }
         }
+
+        [TestMethod]
+        public void SetDomains()
+        {
+            var list = new List<BookDomain>
+            {
+                new BookDomain
+                {
+                    DomainName = "Test"
+                },
+                new BookDomain
+                {
+                    DomainName = "Test3"
+                }
+            };
+            this.book.Domains = list;
+            Assert.AreEqual(this.book.Domains, list);
+        }
+
+        [TestMethod]
+        public void SetAuthors()
+        {
+            var list = new List<Author>
+            {
+                new Author
+                {
+                    FirstName = "Test",
+                    LastName = "Creanga"
+                }
+            };
+            this.book.Author = list;
+            Assert.AreEqual(this.book.Author, list);
+        }
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataMapper.SQLServerDAO
 {
-    internal class ReaderDAO : ReaderIDAO
+    internal class ReaderDAO : IReaderIDAO
     {
         public void Add(Reader t)
         {

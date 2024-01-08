@@ -14,6 +14,7 @@ namespace Library.models
         [NoDomainInSubdomains(ErrorMessage = "Domain name must be unique within subdomains and parent domains!")]
         public string DomainName { get; set; }
         public virtual ICollection<Book> Books { get; set; } = new List<Book>();
+
         public virtual ICollection<BookDomain> BookSubdomains { get; set; }  = new List<BookDomain>();
 
         [NoDomainInSubdomains(ErrorMessage = "Domain name must be unique within parent domains!")]
