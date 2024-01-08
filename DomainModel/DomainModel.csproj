@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomValidators\DateRange.cs" />
     <Compile Include="CustomValidators\EnsureAtLeastOneElement.cs" />
     <Compile Include="CustomValidators\NoDomainInSubdomains.cs" />
     <Compile Include="CustomValidators\StartEndDateValid.cs" />

@@ -144,5 +144,46 @@ namespace TestDomainModel.ModelsTests
             AssertValidationException(this.borrow, "Edition is required!");
         }
 
+        [TestMethod]
+        public void SetReturnStatusToTrue()
+        {
+            this.borrow.IsReturned = true;
+            Assert.IsTrue(this.borrow.IsReturned);
+        }
+
+        [TestMethod]
+        public void SetReturnStatusToFalse()
+        {
+            this.borrow.IsReturned = false;
+            Assert.IsFalse(this.borrow.IsReturned);
+        }
+
+        [TestMethod]
+        public void StartDateBeforeMinRange()
+        {
+            this.borrow.BorrowStartDate = new DateTime(1800, 1, 1, 12, 0, 0);
+            AssertValidationException(this.borrow, "Date must be between 1900 and 2100.");
+        }
+
+        [TestMethod]
+        public void EndDateAfterMaxRange()
+        {
+            this.borrow.BorrowEndDate = new DateTime(2122, 1, 1, 12, 0, 0);
+            AssertValidationException(this.borrow, "Date must be between 1900 and 2100.");
+        }
+
+        [TestMethod]
+        public void StartDateAfterMaxRange()
+        {
+            this.borrow.BorrowStartDate = new DateTime(2101, 1, 1, 12, 0, 0);
+            AssertValidationException(this.borrow, "Date must be between 1900 and 2100.");
+        }
+
+        [TestMethod]
+        public void EndDateBeforeMinRange()
+        {
+            this.borrow.BorrowStartDate = new DateTime(1500, 1, 1, 12, 0, 0);
+            AssertValidationException(this.borrow, "Date must be between 1900 and 2100.");
+        }
     }
 }

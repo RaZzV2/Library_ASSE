@@ -18,11 +18,14 @@ namespace DomainModel
         public virtual Edition Edition { get; set; }
 
         [DataType(DataType.Date, ErrorMessage = "Enter a valid date!")]
+        [DateRange(1900, 2100, ErrorMessage = "Borrow dates must be between 1900 and 2100.")]
         public DateTime BorrowStartDate { get; set; }
 
         [DataType(DataType.Date, ErrorMessage = "Enter a valid date!")]
+        [DateRange(1900, 2100, ErrorMessage = "Borrow dates must be between 1900 and 2100.")]
         public DateTime BorrowEndDate { get; set; }
 
+        [Required(ErrorMessage = "IsReturned is required!")]
         public bool IsReturned { get; set; }
 
         public virtual ICollection<ExtendedBorrow> ExtendedBorrows { get; set; } = new List<ExtendedBorrow>();

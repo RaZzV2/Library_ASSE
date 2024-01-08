@@ -17,10 +17,10 @@ namespace Library.models
         [Range(1, int.MaxValue, ErrorMessage = "Number of pages must be at least 1.")]
         public int PagesNumber { get; set; }
 
-        [Range(0, int.MaxValue, ErrorMessage = "Number of borrowable books cannot be negative.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Number of borrowable books cannot be negative.")]
         public int BorrowableBooks { get; set; }
 
-        [Range(0, int.MaxValue, ErrorMessage = "Number of unborrowable books cannot be negative.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Number of unborrowable books cannot be negative.")]
         public int UnBorrowableBooks { get; set; }
 
         [EnumDataType(typeof(Type), ErrorMessage = "Invalid book type.")]
