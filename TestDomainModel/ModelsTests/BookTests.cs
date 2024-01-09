@@ -72,14 +72,14 @@ namespace TestDomainModel.ModelsTests
         public void NullAuthors()
         {
             this.book.Author = null;
-            AssertValidationException(this.book, "The book must have at least one author!");
+            AssertValidationException(this.book, "The collection must contain at least one element.");
         }
 
         [TestMethod]
         public void NoAuthors()
         {
             this.book.Author = new List<Author>();
-            AssertValidationException(this.book, "The book must have at least one author!");
+            AssertValidationException(this.book, "The collection must contain at least one element.");
         }
 
         [TestMethod]
@@ -128,7 +128,7 @@ namespace TestDomainModel.ModelsTests
         public void NoDomains()
         {
             this.book.Domains = null;
-            AssertValidationException(this.book, "The book must have at least one domain!");
+            AssertValidationException(this.book, "The collection must contain at least one element.");
         }
 
         [TestMethod]

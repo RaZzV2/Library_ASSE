@@ -27,9 +27,12 @@ namespace DomainModel.CustomValidators
                 {
                     return new ValidationResult($"Date must be between {_minYear} and {_maxYear}.");
                 }
+                return ValidationResult.Success;
             }
-
-            return ValidationResult.Success;
+            else
+            {
+                return new ValidationResult("The value must be a valid DateTime.");
+            }
         }
     }
 }

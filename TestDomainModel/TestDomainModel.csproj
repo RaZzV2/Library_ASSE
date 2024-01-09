@@ -61,6 +61,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomValidationHelpers\ModelValidationHelper.cs" />
+    <Compile Include="CustomValidatorsTests\DateRangeTests.cs" />
+    <Compile Include="CustomValidatorsTests\EnsureAtLeastOneElementTests.cs" />
+    <Compile Include="CustomValidatorsTests\NoDomainInSubdomainTests.cs" />
+    <Compile Include="CustomValidatorsTests\PhoneOrEmailReqTests.cs" />
     <Compile Include="ModelsTests\AuthorTests.cs" />
     <Compile Include="ModelsTests\BookDomainTests.cs" />
     <Compile Include="ModelsTests\BookTests.cs" />
@@ -79,6 +83,9 @@
       <Project>{76a3dd96-69e7-4375-a4f5-e0905a4ec927}</Project>
       <Name>DomainModel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Utils\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
