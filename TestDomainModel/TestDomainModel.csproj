@@ -65,11 +65,13 @@
     <Compile Include="CustomValidatorsTests\EnsureAtLeastOneElementTests.cs" />
     <Compile Include="CustomValidatorsTests\NoDomainInSubdomainTests.cs" />
     <Compile Include="CustomValidatorsTests\PhoneOrEmailReqTests.cs" />
+    <Compile Include="CustomValidatorsTests\StartAndEndDateTests.cs" />
     <Compile Include="ModelsTests\AuthorTests.cs" />
     <Compile Include="ModelsTests\BookDomainTests.cs" />
     <Compile Include="ModelsTests\BookTests.cs" />
     <Compile Include="ModelsTests\BorrowTests.cs" />
     <Compile Include="ModelsTests\EditionTests.cs" />
+    <Compile Include="ModelsTests\ExtendedBorrowTests.cs" />
     <Compile Include="ModelsTests\ReaderTests.cs" />
     <Compile Include="ModelsTests\StudentTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
