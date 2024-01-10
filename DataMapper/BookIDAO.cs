@@ -2,7 +2,7 @@
 
 namespace DataMapper
 {
-    internal interface IBookIDAO : IDAO<Book>
+    public interface IBookIDAO : IDAO<Book>
     {
     }
 }

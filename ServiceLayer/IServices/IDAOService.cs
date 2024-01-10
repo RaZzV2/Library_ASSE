@@ -1,13 +1,12 @@
-﻿using Library.models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataMapper
+namespace ServiceLayer.IServices
 {
-    public interface IDAO<T>
+    public interface IDAOService<T>
     {
         T GetById(int id);
         void Add(T t);

@@ -5,13 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataMapper
+namespace ServiceLayer.IServices
 {
-    public interface IDAO<T>
+    public interface IBookService : IDAOService<Book>
     {
-        T GetById(int id);
-        void Add(T t);
-        void Update(T t);
-        void Delete(T t);
+       
     }
 }
