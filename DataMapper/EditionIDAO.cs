@@ -2,7 +2,7 @@
 
 namespace DataMapper
 {
-    internal interface IEditionIDAO : IDAO<Edition>
+    public interface IEditionIDAO : IDAO<Edition>
     {
     }
 }

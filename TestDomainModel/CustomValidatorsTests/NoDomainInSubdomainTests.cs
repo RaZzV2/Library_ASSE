@@ -26,7 +26,7 @@ namespace TestDomainModel.CustomValidatorsTests
             };
             var validator = new NoDomainInSubdomains();
 
-            var validationResult = validator.GetValidationResult("Domain2", new ValidationContext(bookDomain));
+            var validationResult = validator.GetValidationResult(bookDomain, new ValidationContext(bookDomain));
 
             Assert.AreEqual(ValidationResult.Success, validationResult);
         }
@@ -36,7 +36,7 @@ namespace TestDomainModel.CustomValidatorsTests
         {
             var bookDomain = new BookDomain
             {
-                DomainName = "Domain1",
+                DomainName = "Subdomain1",
                 BookSubdomains = new List<BookDomain>
             {
                 new BookDomain { DomainName = "Subdomain1" },
@@ -45,7 +45,7 @@ namespace TestDomainModel.CustomValidatorsTests
             };
             var validator = new NoDomainInSubdomains();
 
-            var validationResult = validator.GetValidationResult("Subdomain2", new ValidationContext(bookDomain));
+            var validationResult = validator.GetValidationResult(bookDomain, new ValidationContext(bookDomain));
 
             Assert.AreEqual("Domain name must be unique within subdomains!", validationResult.ToString());
         }
@@ -64,7 +64,7 @@ namespace TestDomainModel.CustomValidatorsTests
             };
             var validator = new NoDomainInSubdomains();
 
-            var validationResult = validator.GetValidationResult("Domain2", new ValidationContext(bookDomain));
+            var validationResult = validator.GetValidationResult(bookDomain, new ValidationContext(bookDomain));
 
             Assert.AreNotEqual(ValidationResult.Success, validationResult);
             Assert.AreEqual("Circular dependency detected! Domain name must be unique within parent domains!", validationResult.ErrorMessage);
@@ -84,7 +84,7 @@ namespace TestDomainModel.CustomValidatorsTests
             };
             var validator = new NoDomainInSubdomains();
 
-            var validationResult = validator.GetValidationResult("Domain2", new ValidationContext(bookDomain));
+            var validationResult = validator.GetValidationResult(bookDomain, new ValidationContext(bookDomain));
 
             Assert.AreEqual(ValidationResult.Success, validationResult);
         }

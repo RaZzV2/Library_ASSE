@@ -1,10 +1,12 @@
 ﻿using DataMapper;
+using DomainModel.CustomValidationHelpers;
 using Library.models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhino.Mocks;
 using ServiceLayer.Services;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace TestServiceLayer.ServicesTests
@@ -12,13 +14,21 @@ namespace TestServiceLayer.ServicesTests
     [TestClass]
     public class BookServiceTests
     {
-        [TestMethod]
-        public void Add_ValidBook_CallsIBookIDAOMethod()
-        {
-            var mockBookIDAO = MockRepository.GenerateMock<IBookIDAO>();
-            var bookService = new BookService(mockBookIDAO);
+        private IBookIDAO mockBookIDAO;
+        private BookService bookService;
+        private Book book;
 
-            var validBook = new Book
+        private void AssertValidationException<T>(T instance, string expectedErrorMessage)
+        {
+            ModelValidationHelper.AssertValidationException(instance, expectedErrorMessage);
+        }
+
+        [TestInitialize]
+        public void SetUp()
+        {
+            mockBookIDAO = MockRepository.GenerateMock<IBookIDAO>();
+            bookService = new BookService(mockBookIDAO);
+            book = new Book()
             {
                 Title = "Amintiri din copilarie",
                 Author = new List<Author>
@@ -38,16 +48,36 @@ namespace TestServiceLayer.ServicesTests
                 },
                 Editions = new List<Edition>()
             };
+        }
 
-            try
-            {
-                bookService.Add(validBook);
-                mockBookIDAO.AssertWasCalled(mock => mock.Add(Arg<Book>.Is.Equal(validBook)), options => options.Repeat.Once());
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail($"Unexpected exception: {ex.Message}");
-            }
+        [TestMethod]
+        public void AddValidBookCallsIBookIDAO()
+        {
+            bookService.Add(this.book);
+            mockBookIDAO.AssertWasCalled(mock => mock.Add(Arg<Book>.Is.Equal(this.book)), options => options.Repeat.Once());
+        }
+
+        [TestMethod]
+        public void AddInvalidBookCallsIBookIDAO()
+        {
+            this.book.Title = "+++33";
+            var exception = Assert.ThrowsException<ValidationException>(() => bookService.Add(this.book));
+            Assert.AreEqual("Title must not have special characters!", exception.Message);
+        }
+
+        [TestMethod]
+        public void RemoveBookCallsIBookIDAO()
+        {
+            bookService.Delete(this.book);
+            mockBookIDAO.AssertWasCalled(mock => mock.Delete(Arg<Book>.Is.Equal(this.book)), options => options.Repeat.Once());
+        }
+
+        [TestMethod]
+        public void UpdateBookCallsIBookIDAO()
+        {
+            bookService.Update(this.book);
+            mockBookIDAO.AssertWasCalled(mock => mock.Update(Arg<Book>.Is.Equal(this.book)), options => options.Repeat.Once());
+
         }
     }
 }

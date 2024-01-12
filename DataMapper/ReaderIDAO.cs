@@ -2,7 +2,7 @@
 
 namespace DataMapper
 {
-    internal interface IReaderIDAO : IDAO<Reader>
+    public interface IReaderIDAO : IDAO<Reader>
     {
     }
 }

@@ -2,7 +2,7 @@
 
 namespace DataMapper
 {
-    internal interface IAuthorIDAO : IDAO<Author>
+    public interface IAuthorIDAO : IDAO<Author>
     {
 
     }

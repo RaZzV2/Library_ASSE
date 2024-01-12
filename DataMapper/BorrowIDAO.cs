@@ -2,7 +2,7 @@
 
 namespace DataMapper
 {
-    internal interface IBorrowIDAO : IDAO<Borrow>
+    public interface IBorrowIDAO : IDAO<Borrow>
     {
 
     }

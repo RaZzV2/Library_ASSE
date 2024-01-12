@@ -1,13 +1,13 @@
-﻿using Library.models;
+﻿using DomainModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataMapper
+namespace ServiceLayer.IServices
 {
-    public interface IStudentIDAO : IDAO<Student>
+    public interface IExtendedBorrowService : IDAOService<ExtendedBorrow>
     {
     }
 }

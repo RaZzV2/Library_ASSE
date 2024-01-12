@@ -1,5 +1,4 @@
 ﻿using DataMapper;
-using DomainModel.CustomValidationHelpers;
 using Library.models;
 using log4net;
 using ServiceLayer.IServices;
@@ -7,50 +6,49 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ServiceLayer.Services
 {
-    public class BookService : IBookService
+    public class BookDomainService : IBookDomainService
     {
-        readonly IBookIDAO iBookIDAO;
-        private static readonly ILog Log = LogManager.GetLogger(typeof(BookService));
+        readonly IBookDomainIDAO iBookDomainIDAO;
+        private static readonly ILog Log = LogManager.GetLogger(typeof(BookDomainService));
 
         private ValidationContext CreateValidationContext(object instance)
         {
             return new ValidationContext(instance, null, null);
         }
 
-        public BookService(IBookIDAO iBookIDAO)
+        public BookDomainService(IBookDomainIDAO iBookDomainIDAO)
         {
-            this.iBookIDAO = iBookIDAO;
+            this.iBookDomainIDAO = iBookDomainIDAO;
         }
 
-        public void Add(Book t)
+        public void Add(BookDomain t)
         {
-                Validator.ValidateObject(t, CreateValidationContext(t),true);
-                iBookIDAO.Add(t);
-                Log.Info("Book has been added successfully!");
+            Validator.ValidateObject(t, CreateValidationContext(t), true);
+            iBookDomainIDAO.Add(t);
+            Log.Info("Book domain has been added successfully!");
         }
 
-        public void Delete(Book t)
+        public void Delete(BookDomain t)
         {
-            iBookIDAO.Delete(t);
+            iBookDomainIDAO.Delete(t);
         }
 
-        public Book GetById(int id)
+        public BookDomain GetById(int id)
         {
-            return iBookIDAO.GetById(id);
+            return iBookDomainIDAO.GetById(id);
         }
 
-        public void Update(Book t)
+        public void Update(BookDomain t)
         {
             try
             {
                 Validator.ValidateObject(t, CreateValidationContext(t), true);
-                iBookIDAO.Update(t);
+                iBookDomainIDAO.Update(t);
             }
             catch (Exception exception)
             {

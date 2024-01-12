@@ -12,7 +12,7 @@ namespace DomainModel.CustomValidators
         {
             var bookDomain = (BookDomain)validationContext.ObjectInstance;
 
-            if (bookDomain.BookSubdomains.Any(subdomain => subdomain.DomainName == (string)value))
+            if (bookDomain.BookSubdomains.Any(subdomain => subdomain.DomainName == bookDomain.DomainName))
             {
                 return new ValidationResult("Domain name must be unique within subdomains!");
             }

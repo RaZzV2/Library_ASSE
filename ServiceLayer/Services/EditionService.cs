@@ -1,5 +1,4 @@
 ﻿using DataMapper;
-using DomainModel.CustomValidationHelpers;
 using Library.models;
 using log4net;
 using ServiceLayer.IServices;
@@ -7,50 +6,48 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ServiceLayer.Services
 {
-    public class BookService : IBookService
+    public class EditionService : IEditionService
     {
-        readonly IBookIDAO iBookIDAO;
-        private static readonly ILog Log = LogManager.GetLogger(typeof(BookService));
+        readonly IEditionIDAO iEditionIDAO;
+        private static readonly ILog Log = LogManager.GetLogger(typeof(EditionService));
 
         private ValidationContext CreateValidationContext(object instance)
         {
             return new ValidationContext(instance, null, null);
         }
 
-        public BookService(IBookIDAO iBookIDAO)
+        public EditionService(IEditionIDAO iEditionIDAO)
         {
-            this.iBookIDAO = iBookIDAO;
+            this.iEditionIDAO = iEditionIDAO;
+        }
+        public void Add(Edition t)
+        {
+            Validator.ValidateObject(t, CreateValidationContext(t), true);
+            iEditionIDAO.Add(t);
+            Log.Info("Edition has been added successfully!");
         }
 
-        public void Add(Book t)
+        public void Delete(Edition t)
         {
-                Validator.ValidateObject(t, CreateValidationContext(t),true);
-                iBookIDAO.Add(t);
-                Log.Info("Book has been added successfully!");
+            iEditionIDAO.Delete(t);
         }
 
-        public void Delete(Book t)
+        public Edition GetById(int id)
         {
-            iBookIDAO.Delete(t);
+            return iEditionIDAO.GetById(id);
         }
 
-        public Book GetById(int id)
-        {
-            return iBookIDAO.GetById(id);
-        }
-
-        public void Update(Book t)
+        public void Update(Edition t)
         {
             try
             {
                 Validator.ValidateObject(t, CreateValidationContext(t), true);
-                iBookIDAO.Update(t);
+                iEditionIDAO.Update(t);
             }
             catch (Exception exception)
             {
