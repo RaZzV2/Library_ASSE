@@ -16,6 +16,7 @@ namespace ServiceLayer.Services
         readonly IReaderIDAO iReaderIDAO;
         private static readonly ILog Log = LogManager.GetLogger(typeof(ReaderService));
 
+
         private ValidationContext CreateValidationContext(object instance)
         {
             return new ValidationContext(instance, null, null);

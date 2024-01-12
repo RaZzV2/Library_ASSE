@@ -70,6 +70,10 @@
     <Compile Include="Migrations\202401051617141_t.designer.cs">
       <DependentUpon>202401051617141_t.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202401121842410_test.cs" />
+    <Compile Include="Migrations\202401121842410_test.designer.cs">
+      <DependentUpon>202401121842410_test.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ReaderIDAO.cs" />
     <Compile Include="SQLServerDAO\AuthorDAO.cs" />
@@ -97,6 +101,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202401051617141_t.resx">
       <DependentUpon>202401051617141_t.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401121842410_test.resx">
+      <DependentUpon>202401121842410_test.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

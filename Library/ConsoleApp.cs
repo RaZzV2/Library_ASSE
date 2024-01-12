@@ -4,6 +4,10 @@ using System;
 using System.Configuration;
 using System.Data.Entity;
 using log4net;
+using ServiceLayer.Services;
+using DataMapper.SQLServerDAO;
+using DomainModel;
+using System.Runtime.InteropServices;
 
 namespace Library
 {
@@ -11,9 +15,25 @@ namespace Library
     {
         static void Main(string[] args)
         {
-            var context = new LibraryContext();
-            // Environment.SetEnvironmentVariable("LOG_FILE_PATH", "D:\\log.txt");
-            log4net.Util.LogLog.InternalDebugging = true;
+            var configurator = log4net.Config.XmlConfigurator.Configure();
+            if (configurator != null)
+            {
+                // Log4net a fost inițializat cu succes
+                Console.WriteLine("log4net was initialized successfully.");
+            }
+            IReaderIDAO iReaderIDAO = new ReaderDAO();
+            ReaderService readerService = new ReaderService(iReaderIDAO);
+
+            readerService.Add(new Reader
+            {
+                ReaderFirstName = "Gigel",
+                ReaderLastName = "Dorel",
+                Address = "Strada x Da",
+                EmailAddress = "razzkk@gmail.com",
+                Role = false,
+                PhoneNumber = "0732139910"
+            });
+
         }
     }
 }
