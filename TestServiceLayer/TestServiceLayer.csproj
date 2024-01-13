@@ -71,6 +71,7 @@
     <Compile Include="ServicesTests\BookServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServicesTests\BorrowServiceTests.cs" />
+    <Compile Include="ServicesTests\ConfigValueServiceTests.cs" />
     <Compile Include="ServicesTests\EditionServiceTests.cs" />
     <Compile Include="ServicesTests\ExtendedBorrowServiceTests.cs" />
     <Compile Include="ServicesTests\ReaderServiceTests.cs" />

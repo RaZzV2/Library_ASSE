@@ -63,6 +63,7 @@
     <Compile Include="IServices\IBookDomainService.cs" />
     <Compile Include="IServices\IBookService.cs" />
     <Compile Include="IServices\IBorrowService.cs" />
+    <Compile Include="IServices\IConfigValue.cs" />
     <Compile Include="IServices\IDAOService.cs" />
     <Compile Include="IServices\IEditionService.cs" />
     <Compile Include="IServices\IExtendedBorrowService.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Services\BookDomainService.cs" />
     <Compile Include="Services\BookService.cs" />
     <Compile Include="Services\BorrowService.cs" />
+    <Compile Include="Services\ConfigValueService.cs" />
     <Compile Include="Services\EditionService.cs" />
     <Compile Include="Services\ExtendedBorrowService.cs" />
     <Compile Include="Services\ReaderService.cs" />
