@@ -35,6 +35,11 @@ namespace ServiceLayer.Services
                 Log.Info("Book has been added successfully!");
         }
 
+        public List<Book> GetAll()
+        {
+            return iBookIDAO.GetAll();
+        }
+
         public void Delete(Book t)
         {
             iBookIDAO.Delete(t);
@@ -47,15 +52,7 @@ namespace ServiceLayer.Services
 
         public void Update(Book t)
         {
-            try
-            {
-                Validator.ValidateObject(t, CreateValidationContext(t), true);
-                iBookIDAO.Update(t);
-            }
-            catch (Exception exception)
-            {
-                throw exception;
-            }
+            iBookIDAO.Update(t);
         }
     }
 }

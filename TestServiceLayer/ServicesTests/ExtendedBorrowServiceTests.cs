@@ -9,6 +9,7 @@ using ServiceLayer.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Text;
 using static log4net.Appender.RollingFileAppender;
 
@@ -29,6 +30,7 @@ namespace TestServiceLayer.ServicesTests
             extendedBorrowService = new ExtendedBorrowService(mockExtendedBorrowIDAO);
             this.extendedBorrow = new ExtendedBorrow()
             {
+                Id = 1,
 
                 Borrow = new Borrow
                 {
@@ -50,6 +52,35 @@ namespace TestServiceLayer.ServicesTests
         }
 
         [TestMethod]
+        public void GetAllExtendedBorrowsCallsIExtendedBorrowIDAO()
+        {
+            var expectedExtendedBorrows = new List<ExtendedBorrow>
+            {
+                new ExtendedBorrow
+                {
+                    Borrow = new Borrow
+                    {
+                        Reader = new Reader { },
+                        Edition = new Edition { },
+                        BorrowStartDate = new DateTime(2022, 1, 1, 12, 0, 0),
+                        BorrowEndDate = new DateTime(2022, 1, 8, 12, 0, 0),
+                        IsReturned = false
+                    },
+                    Date = new DateTime(2023, 1, 1, 12, 0, 0)
+                },
+        
+            };
+
+            mockExtendedBorrowIDAO.Stub(x => x.GetAll()).Return(expectedExtendedBorrows);
+
+            var result = extendedBorrowService.GetAll();
+
+            mockExtendedBorrowIDAO.AssertWasCalled(mock => mock.GetAll(), options => options.Repeat.Once());
+            CollectionAssert.AreEqual(expectedExtendedBorrows, result.ToList());
+        }
+
+
+        [TestMethod]
         public void AddInvalidExtendedBorrowCallsIExtendedBorrowIDAO()
         {
             this.extendedBorrow = new ExtendedBorrow
@@ -59,6 +90,19 @@ namespace TestServiceLayer.ServicesTests
             };
             var exception = Assert.ThrowsException<ValidationException>(() => extendedBorrowService.Add(this.extendedBorrow));
             Assert.AreEqual("A borrow is required!", exception.Message);
+        }
+
+        [TestMethod]
+        public void GetById_ReturnsCorrectExtendedBorrow()
+        {
+            int extendedBorrowId = 1;
+
+            mockExtendedBorrowIDAO.Stub(x => x.GetById(Arg<int>.Is.Anything)).Return(this.extendedBorrow);
+
+            var result = extendedBorrowService.GetById(extendedBorrowId);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(this.extendedBorrow, result);
         }
 
         [TestMethod]

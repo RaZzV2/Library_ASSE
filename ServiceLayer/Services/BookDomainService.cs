@@ -43,17 +43,17 @@ namespace ServiceLayer.Services
             return iBookDomainIDAO.GetById(id);
         }
 
+        public List<BookDomain> GetAll()
+        {
+            return iBookDomainIDAO.GetAll();
+        }
+
+
+
         public void Update(BookDomain t)
         {
-            try
-            {
-                Validator.ValidateObject(t, CreateValidationContext(t), true);
-                iBookDomainIDAO.Update(t);
-            }
-            catch (Exception exception)
-            {
-                throw exception;
-            }
+            Validator.ValidateObject(t, CreateValidationContext(t), true);
+            iBookDomainIDAO.Update(t);
         }
     }
 }

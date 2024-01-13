@@ -8,6 +8,7 @@ namespace ServiceLayer.IServices
 {
     public interface IConfigValue
     {
-        int Value(string key, string filePath);
+         void LoadConfiguration(string filePath);
+         T GetValue<T>(string key);
     }
 }

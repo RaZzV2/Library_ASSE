@@ -31,6 +31,14 @@ namespace DataMapper.SQLServerDAO
             }
         }
 
+        public List<Reader> GetAll()
+        {
+            using (var context = new LibraryContext())
+            {
+                return context.Readers.ToList();
+            }
+        }
+
         public Reader GetById(int id)
         {
             using (var context = new LibraryContext())

@@ -9,6 +9,7 @@ using ServiceLayer.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Text;
 
 namespace TestServiceLayer.ServicesTests
@@ -20,11 +21,6 @@ namespace TestServiceLayer.ServicesTests
         private StudentService studentService;
         private Student student;
 
-        private void AssertValidationException<T>(T instance, string expectedErrorMessage)
-        {
-            ModelValidationHelper.AssertValidationException(instance, expectedErrorMessage);
-        }
-
         [TestInitialize]
         public void SetUp()
         {
@@ -32,10 +28,24 @@ namespace TestServiceLayer.ServicesTests
             studentService = new StudentService(mockStudentIDAO);
             student = new Student()
             {
+                Id = 1,
                 FirstName = "Test",
                 LastName = "Test",
                 Age = 23
             };
+        }
+
+        [TestMethod]
+        public void GetById_ReturnsCorrectStudent()
+        {
+            int studentId = 1;
+            
+            mockStudentIDAO.Stub(x => x.GetById(Arg<int>.Is.Anything)).Return(this.student);
+
+            var result = studentService.GetById(studentId);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(this.student, result);
         }
 
         [TestMethod]
@@ -58,6 +68,27 @@ namespace TestServiceLayer.ServicesTests
         {
             studentService.Delete(this.student);
             mockStudentIDAO.AssertWasCalled(mock => mock.Delete(Arg<Student>.Is.Equal(this.student)), options => options.Repeat.Once());
+        }
+
+        [TestMethod]
+        public void GetAllStudentsCallsIStudentIDAO()
+        {
+            var expectedStudents = new List<Student>
+            {
+                new Student
+                {
+                    FirstName = "Test",
+                    LastName = "Test",
+                    Age = 23
+                },
+            };
+
+            mockStudentIDAO.Stub(x => x.GetAll()).Return(expectedStudents);
+
+            var result = studentService.GetAll();
+
+            mockStudentIDAO.AssertWasCalled(mock => mock.GetAll(), options => options.Repeat.Once());
+            CollectionAssert.AreEqual(expectedStudents, result.ToList());
         }
 
         [TestMethod]

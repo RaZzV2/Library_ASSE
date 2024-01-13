@@ -8,6 +8,7 @@ using ServiceLayer.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Text;
 
 namespace TestServiceLayer.ServicesTests
@@ -19,11 +20,6 @@ namespace TestServiceLayer.ServicesTests
         private ReaderService readerService;
         private Reader reader;
 
-        private void AssertValidationException<T>(T instance, string expectedErrorMessage)
-        {
-            ModelValidationHelper.AssertValidationException(instance, expectedErrorMessage);
-        }
-
         [TestInitialize]
         public void SetUp()
         {
@@ -31,6 +27,7 @@ namespace TestServiceLayer.ServicesTests
             readerService = new ReaderService(mockReaderIDAO);
             reader = new Reader()
             {
+                ReaderId = 1,
                 ReaderFirstName = "Andrei",
                 ReaderLastName ="Icsulescu",
                 Address = "Strada x, Numarul 33",
@@ -55,10 +52,46 @@ namespace TestServiceLayer.ServicesTests
         }
 
         [TestMethod]
+        public void GetAllReadersCallsIReaderIDAO()
+        {
+            var expectedReaders = new List<Reader>
+            {
+                new Reader
+                {
+                    ReaderFirstName = "Andrei",
+                    ReaderLastName ="Icsulescu",
+                    Address = "Strada x, Numarul 33",
+                    Role = true,
+                    PhoneNumber ="0732138913"
+                },
+            };
+            mockReaderIDAO.Stub(x => x.GetAll()).Return(expectedReaders);
+
+            var result = readerService.GetAll();
+
+            mockReaderIDAO.AssertWasCalled(mock => mock.GetAll(), options => options.Repeat.Once());
+            CollectionAssert.AreEqual(expectedReaders, result.ToList());
+        }
+
+        [TestMethod]
         public void RemoveReaderCallsIReaderIDAO()
         {
             readerService.Delete(this.reader);
             mockReaderIDAO.AssertWasCalled(mock => mock.Delete(Arg<Reader>.Is.Equal(this.reader)), options => options.Repeat.Once());
+        }
+
+        [TestMethod]
+        public void GetById_ReturnsCorrectReader()
+        {
+            int readerId = 1;
+
+            
+            mockReaderIDAO.Stub(x => x.GetById(Arg<int>.Is.Anything)).Return(this.reader);
+
+            var result = readerService.GetById(readerId);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(this.reader, result);
         }
 
         [TestMethod]

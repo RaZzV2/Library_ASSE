@@ -29,6 +29,14 @@ namespace DataMapper.SQLServerDAO
             }
         }
 
+        public List<Edition> GetAll()
+        {
+            using (var context = new LibraryContext())
+            {
+                return context.Editions.ToList();
+            }
+        }
+
         public Edition GetById(int id)
         {
             using (var context = new LibraryContext())

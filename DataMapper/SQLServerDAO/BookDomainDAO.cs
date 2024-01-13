@@ -29,6 +29,14 @@ namespace DataMapper.SQLServerDAO
             }
         }
 
+        public List<BookDomain> GetAll()
+        {
+            using (var context = new LibraryContext())
+            {
+                return context.BookDomains.ToList();
+            }
+        }
+
         public BookDomain GetById(int id)
         {
             using (var context = new LibraryContext())

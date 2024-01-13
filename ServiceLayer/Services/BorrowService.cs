@@ -33,6 +33,10 @@ namespace ServiceLayer.Services
             Log.Info("Borrow has been added successfully!");
         }
 
+        public List<Borrow> GetAll()
+        {
+            return iBorrowIDAO.GetAll();
+        }
         public void Delete(Borrow t)
         {
             iBorrowIDAO.Delete(t);
@@ -45,15 +49,7 @@ namespace ServiceLayer.Services
 
         public void Update(Borrow t)
         {
-            try
-            {
-                Validator.ValidateObject(t, CreateValidationContext(t), true);
-                iBorrowIDAO.Update(t);
-            }
-            catch (Exception exception)
-            {
-                throw exception;
-            }
+            iBorrowIDAO.Update(t);
         }
     }
 }

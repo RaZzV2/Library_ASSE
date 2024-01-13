@@ -10,6 +10,7 @@ using System.Text;
 using Library.models;
 using ServiceLayer.IServices;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace TestServiceLayer.ServicesTests
 {
@@ -20,11 +21,6 @@ namespace TestServiceLayer.ServicesTests
         private EditionService editionService;
         private Edition edition;
 
-        private void AssertValidationException<T>(T instance, string expectedErrorMessage)
-        {
-            ModelValidationHelper.AssertValidationException(instance, expectedErrorMessage);
-        }
-
         [TestInitialize]
         public void SetUp()
         {
@@ -32,6 +28,7 @@ namespace TestServiceLayer.ServicesTests
             editionService = new EditionService(mockEditionIDAO);
             this.edition = new Edition
             {
+                EditionId = 1,
                 EditionName = "Editia Calugarului",
                 EditionYear = 2003,
                 PagesNumber = 99,
@@ -65,6 +62,45 @@ namespace TestServiceLayer.ServicesTests
         {
             editionService.Delete(this.edition);
             mockEditionIDAO.AssertWasCalled(mock => mock.Delete(Arg<Edition>.Is.Equal(this.edition)), options => options.Repeat.Once());
+        }
+
+        [TestMethod]
+        public void GetAllEditionsCallsIEditionIDAO()
+        {
+            var expectedEditions = new List<Edition>
+            {
+                new Edition
+                {
+                    EditionName = "Editia Calugarului",
+                    EditionYear = 2003,
+                    PagesNumber = 99,
+                    BorrowableBooks = 23,
+                    UnBorrowableBooks = 32,
+                    BookType = Edition.Type.Board,
+                    Book = new Book()
+                    {
+                    }
+                },
+            };
+
+            mockEditionIDAO.Stub(x => x.GetAll()).Return(expectedEditions);
+
+            var result = editionService.GetAll();
+
+            mockEditionIDAO.AssertWasCalled(mock => mock.GetAll(), options => options.Repeat.Once());
+            CollectionAssert.AreEqual(expectedEditions, result.ToList());
+        }
+
+        [TestMethod]
+        public void GetById_ReturnsCorrectEdition()
+        {
+            
+            mockEditionIDAO.Stub(x => x.GetById(Arg<int>.Is.Anything)).Return(this.edition);
+
+            var result = editionService.GetById(1); 
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(this.edition, result);
         }
 
         [TestMethod]

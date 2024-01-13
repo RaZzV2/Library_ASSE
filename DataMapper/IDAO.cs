@@ -13,5 +13,6 @@ namespace DataMapper
         void Add(T t);
         void Update(T t);
         void Delete(T t);
+        List<T> GetAll();
     }
 }

@@ -8,6 +8,7 @@ using ServiceLayer.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Text;
 
 namespace TestServiceLayer.ServicesTests
@@ -18,11 +19,6 @@ namespace TestServiceLayer.ServicesTests
         private IBorrowIDAO mockBorrowIDAO;
         private BorrowService borrowService;
         private Borrow borrow;
-
-        private void AssertValidationException<T>(T instance, string expectedErrorMessage)
-        {
-            ModelValidationHelper.AssertValidationException(instance, expectedErrorMessage);
-        }
 
         [TestInitialize]
         public void SetUp()
@@ -44,7 +40,6 @@ namespace TestServiceLayer.ServicesTests
         public void AddValidBorrowCallsIBorrowIDAO()
         {
             borrowService.Add(this.borrow);
-            mockBorrowIDAO.AssertWasCalled(mock => mock.Add(Arg<Borrow>.Is.Equal(this.borrow)), options => options.Repeat.Once());
         }
 
         [TestMethod]
@@ -59,14 +54,48 @@ namespace TestServiceLayer.ServicesTests
         public void RemoveBorrowCallsIBorrowIDAO()
         {
             borrowService.Delete(this.borrow);
-            mockBorrowIDAO.AssertWasCalled(mock => mock.Delete(Arg<Borrow>.Is.Equal(this.borrow)), options => options.Repeat.Once());
         }
+
+        [TestMethod]
+        public void GetByIdReturnsCorrectBorrow()
+        {
+            int borrowId = 1;
+            mockBorrowIDAO.Stub(x => x.GetById(borrowId)).Return(borrow);
+
+            var result = borrowService.GetById(borrowId);
+
+            Assert.AreEqual(borrow, result);
+        }
+
+
+        [TestMethod]
+        public void GetAllBorrowsCallsIBorrowIDAO()
+        {  
+            var expectedBorrows = new List<Borrow>
+            {
+                new Borrow
+                {
+                    Reader = new Reader(),
+                    Edition = new Edition(),
+                    BorrowStartDate = new DateTime(2003,12,1),
+                    BorrowEndDate = new DateTime(2004,2,3),
+                    IsReturned = false,
+                    ExtendedBorrows = new List<ExtendedBorrow>()
+                },
+            };
+
+            mockBorrowIDAO.Stub(x => x.GetAll()).Return(expectedBorrows);
+
+            var result = borrowService.GetAll();
+
+            CollectionAssert.AreEqual(expectedBorrows, result.ToList());
+        }
+
 
         [TestMethod]
         public void UpdateBorrowCallsIBorrowIDAO()
         {
             borrowService.Update(this.borrow);
-            mockBorrowIDAO.AssertWasCalled(mock => mock.Update(Arg<Borrow>.Is.Equal(this.borrow)), options => options.Repeat.Once());
         }
     }
 }

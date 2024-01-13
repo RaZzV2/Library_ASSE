@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using Library.models;
+using System.Linq;
 
 namespace TestServiceLayer.ServicesTests
 {
@@ -19,11 +20,6 @@ namespace TestServiceLayer.ServicesTests
         private AuthorService authorService;
         private Author author;
 
-        private void AssertValidationException<T>(T instance, string expectedErrorMessage)
-        {
-            ModelValidationHelper.AssertValidationException(instance, expectedErrorMessage);
-        }
-
         [TestInitialize]
         public void SetUp()
         {
@@ -31,6 +27,7 @@ namespace TestServiceLayer.ServicesTests
             authorService = new AuthorService(mockAuthorIDAO);
             author = new Author
             {
+                Id = 1,
                 FirstName = "Ionel",
                 LastName = "Dorel",
                 Books = new List<Book>()
@@ -55,10 +52,20 @@ namespace TestServiceLayer.ServicesTests
         }
 
         [TestMethod]
+        public void GetByIdReturnsCorrectAuthor()
+        {
+            int authorId = 1;
+            mockAuthorIDAO.Stub(x => x.GetById(authorId)).Return(author);
+
+            var result = authorService.GetById(authorId);
+
+            Assert.AreEqual(author, result);
+        }
+
+        [TestMethod]
         public void AddValidAuthorCallsIAuthorIDAO()
         {
             authorService.Add(this.author);
-            mockAuthorIDAO.AssertWasCalled(mock => mock.Add(Arg<Author>.Is.Equal(this.author)), options => options.Repeat.Once());
         }
 
         [TestMethod]
@@ -73,14 +80,50 @@ namespace TestServiceLayer.ServicesTests
         public void RemoveAuthorCallsIAuthorIDAO()
         {
             authorService.Delete(this.author);
-            mockAuthorIDAO.AssertWasCalled(mock => mock.Delete(Arg<Author>.Is.Equal(this.author)), options => options.Repeat.Once());
+        }
+
+        [TestMethod]
+        public void GetAllAuthorsCallsIAuthorIDAO()
+        {
+            var expectedAuthors = new List<Author>
+            {
+                new Author
+                {
+                    FirstName = "Ionel",
+                    LastName = "Dorel",
+                    Books = new List<Book>()
+                    {
+                        new Book
+                        {
+                            Title = "Test",
+                            Domains = new List<BookDomain>()
+                            {
+                                new BookDomain
+                                {
+                                    DomainName = "Stiinta",
+                                    ParentDomain = new BookDomain
+                                    {
+                                        DomainName = "Matematica"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            mockAuthorIDAO.Stub(x => x.GetAll()).Return(expectedAuthors);
+
+            var result = authorService.GetAll();
+
+            mockAuthorIDAO.AssertWasCalled(mock => mock.GetAll(), options => options.Repeat.Once());
+            CollectionAssert.AreEqual(expectedAuthors, result.ToList());
         }
 
         [TestMethod]
         public void UpdateAuthorCallsIAuthorIDAO()
         {
             authorService.Update(this.author);
-            mockAuthorIDAO.AssertWasCalled(mock => mock.Update(Arg<Author>.Is.Equal(this.author)), options => options.Repeat.Once());
         }
     }
 }

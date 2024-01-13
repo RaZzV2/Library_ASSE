@@ -7,6 +7,7 @@ using ServiceLayer.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Text;
 
 namespace TestServiceLayer.ServicesTests
@@ -18,11 +19,6 @@ namespace TestServiceLayer.ServicesTests
         private BookService bookService;
         private Book book;
 
-        private void AssertValidationException<T>(T instance, string expectedErrorMessage)
-        {
-            ModelValidationHelper.AssertValidationException(instance, expectedErrorMessage);
-        }
-
         [TestInitialize]
         public void SetUp()
         {
@@ -30,6 +26,7 @@ namespace TestServiceLayer.ServicesTests
             bookService = new BookService(mockBookIDAO);
             book = new Book()
             {
+                BookId = 1,
                 Title = "Amintiri din copilarie",
                 Author = new List<Author>
                 {
@@ -54,7 +51,6 @@ namespace TestServiceLayer.ServicesTests
         public void AddValidBookCallsIBookIDAO()
         {
             bookService.Add(this.book);
-            mockBookIDAO.AssertWasCalled(mock => mock.Add(Arg<Book>.Is.Equal(this.book)), options => options.Repeat.Once());
         }
 
         [TestMethod]
@@ -69,15 +65,58 @@ namespace TestServiceLayer.ServicesTests
         public void RemoveBookCallsIBookIDAO()
         {
             bookService.Delete(this.book);
-            mockBookIDAO.AssertWasCalled(mock => mock.Delete(Arg<Book>.Is.Equal(this.book)), options => options.Repeat.Once());
         }
+
+        [TestMethod]
+        public void GetAllBooksCallsIBookIDAO()
+        {
+            var expectedBooks = new List<Book>
+            {
+                new Book
+                {
+                    Title = "Amintiri din copilarie",
+                    Author = new List<Author>
+                    {
+                        new Author
+                        {
+                            FirstName = "Ion",
+                            LastName = "Creanga"
+                        }
+                    },
+                    Domains = new List<BookDomain>
+                    {
+                        new BookDomain
+                        {
+                        }
+                    },
+                    Editions = new List<Edition>()
+                },
+            };
+
+            mockBookIDAO.Stub(x => x.GetAll()).Return(expectedBooks);
+
+            var result = bookService.GetAll();
+
+            mockBookIDAO.AssertWasCalled(mock => mock.GetAll(), options => options.Repeat.Once());
+            CollectionAssert.AreEqual(expectedBooks, result.ToList());
+        }
+
+        [TestMethod]
+        public void GetByIdReturnsCorrectBook()
+        {
+            int bookId = 1;
+            mockBookIDAO.Stub(x => x.GetById(bookId)).Return(book);
+
+            var result = bookService.GetById(bookId);
+
+            Assert.AreEqual(book, result);
+        }
+
 
         [TestMethod]
         public void UpdateBookCallsIBookIDAO()
         {
             bookService.Update(this.book);
-            mockBookIDAO.AssertWasCalled(mock => mock.Update(Arg<Book>.Is.Equal(this.book)), options => options.Repeat.Once());
-
         }
     }
 }

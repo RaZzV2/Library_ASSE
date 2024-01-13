@@ -32,6 +32,10 @@ namespace ServiceLayer.Services
             Log.Info("Edition has been added successfully!");
         }
 
+        public List<Edition> GetAll()
+        {
+            return iEditionIDAO.GetAll();
+        }
         public void Delete(Edition t)
         {
             iEditionIDAO.Delete(t);

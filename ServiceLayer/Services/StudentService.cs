@@ -27,6 +27,11 @@ namespace ServiceLayer.Services
             this.iStudentIDAO = iStudentIDAO;
         }
 
+        public List<Student> GetAll()
+        {
+            return iStudentIDAO.GetAll();
+        }
+
         public void Add(Student t)
         {
             try

@@ -1,64 +1,58 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhino.Mocks;
+using ServiceLayer;
 using ServiceLayer.IServices;
 using ServiceLayer.Services;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
+using System.IO.Abstractions;
+using System.Xml;
 
 namespace TestServiceLayer.ServicesTests
 {
     [TestClass]
     public class ConfigValueServiceTests
     {
-        private IConfigValue mockConfigValue;
-        string filePath;
+        private ConfigValueService configValueService;
 
         [TestInitialize]
-        public void SetUp()
+        public void Initialize()
         {
-            mockConfigValue = MockRepository.GenerateMock<IConfigValue>();
-            filePath = "configuration.xml";
+            configValueService = new ConfigValueService();
         }
 
         [TestMethod]
-        public void Value_ReturnsCorrectValueForKey()
+        public void LoadConfiguration_ShouldLoadXmlData_WhenFilePathIsValid()
         {
-            string keyToTest = "C";
-            int expectedValue = 4;
-
-            mockConfigValue.Stub(c => c.Value(keyToTest,filePath)).Return(expectedValue);
-
-            int actualValue = mockConfigValue.Value(keyToTest, filePath);
-
-            Assert.AreEqual(expectedValue, actualValue);
+            // Act
+            configValueService.LoadConfiguration("config.xml");
         }
 
         [TestMethod]
-        public void Value_ReturnsDefaultForInvalidFilePath()
+        public void GetValue()
         {
-            string keyToTest = "C";
-            string invalidFilePath = "invalid.xml";
+            // Arrange
+            var expectedValue = "value";
 
-            mockConfigValue.Stub(c => c.Value(keyToTest, invalidFilePath)).Return(0);
+            // Act
+            configValueService.LoadConfiguration("config.xml");
 
-            int actualValue = mockConfigValue.Value(keyToTest, invalidFilePath);
+            var result = configValueService.GetValue<string>("key");
 
-            Assert.AreEqual(0, actualValue);
+            // Assert
+            Assert.AreEqual(expectedValue, result);
         }
 
         [TestMethod]
-        public void Value_ReturnsValueNoExistForValidPath()
+        public void GetValueDefault()
         {
-            string keyToTest = "X";
-            int expectedValue = 0;
 
-            mockConfigValue.Stub(c => c.Value(keyToTest, filePath)).Return(expectedValue);
+            // Act
+            configValueService.LoadConfiguration("config.xml");
 
-            int actualValue = mockConfigValue.Value(keyToTest, filePath);
+            var result = configValueService.GetValue<string>("invalidkey");
 
-            Assert.AreEqual(expectedValue, actualValue);
+            // Assert
+            Assert.AreEqual(default, result);
         }
+
     }
 }

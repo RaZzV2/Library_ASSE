@@ -30,6 +30,14 @@ namespace DataMapper.SQLServerDAO
             }
         }
 
+        public List<ExtendedBorrow> GetAll()
+        {
+            using (var context = new LibraryContext())
+            {
+                return context.ExtendedBorrows.ToList();
+            }
+        }
+
         public ExtendedBorrow GetById(int id)
         {
             using (var context = new LibraryContext())

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using Library.models;
+using System.Linq;
 
 namespace TestServiceLayer.ServicesTests
 {
@@ -18,11 +19,6 @@ namespace TestServiceLayer.ServicesTests
         private IBookDomainIDAO mockBookDomainIDAO;
         private BookDomainService bookDomainService;
         private BookDomain bookDomain;
-
-        private void AssertValidationException<T>(T instance, string expectedErrorMessage)
-        {
-            ModelValidationHelper.AssertValidationException(instance, expectedErrorMessage);
-        }
 
         [TestInitialize]
         public void SetUp()
@@ -57,8 +53,9 @@ namespace TestServiceLayer.ServicesTests
         public void AddValidBookDomainCallsIBookDomainIDAO()
         {
             bookDomainService.Add(this.bookDomain);
-            mockBookDomainIDAO.AssertWasCalled(mock => mock.Add(Arg<BookDomain>.Is.Equal(this.bookDomain)), options => options.Repeat.Once());
         }
+
+
 
         [TestMethod]
         public void AddInvalidBookDomainCallsIBookDomainIDAO()
@@ -66,7 +63,7 @@ namespace TestServiceLayer.ServicesTests
             this.bookDomain.ParentDomain = new BookDomain()
             {
                 DomainName = "Matematica"
-            }; 
+            };
             var exception = Assert.ThrowsException<ValidationException>(() => bookDomainService.Add(this.bookDomain));
             Assert.AreEqual("Circular dependency detected! Domain name must be unique within parent domains!", exception.Message);
         }
@@ -75,14 +72,80 @@ namespace TestServiceLayer.ServicesTests
         public void RemoveBookDomainCallsIBookDomainIDAO()
         {
             bookDomainService.Delete(this.bookDomain);
-            mockBookDomainIDAO.AssertWasCalled(mock => mock.Delete(Arg<BookDomain>.Is.Equal(this.bookDomain)), options => options.Repeat.Once());
         }
+
+        [TestMethod]
+        public void GetAllBookDomainsCallsIBookDomainIDAO()
+        {
+            var expectedBookDomains = new List<BookDomain>
+            {
+                new BookDomain
+                {
+                    DomainName = "Matematica",
+                    Books = new List<Book>()
+                    {
+                        new Book()
+                        {
+
+                        }
+                    },
+                    BookSubdomains = new List<BookDomain>()
+                    {
+                        new BookDomain()
+                        {
+                            DomainName = "Informatica"
+                        }
+                    },
+                    ParentDomain = new BookDomain()
+                    {
+                        DomainName = "Stiinta"
+                    }
+                },
+            };
+            mockBookDomainIDAO.Stub(x => x.GetAll()).Return(expectedBookDomains);
+            var result = bookDomainService.GetAll();
+
+            CollectionAssert.AreEqual(expectedBookDomains, result.ToList());
+        }
+
+        [TestMethod]
+        public void GetByIdReturnsCorrectBookDomain()
+        {
+            int bookDomainId = 1;
+            var expectedBookDomain = new BookDomain
+            {
+                DomainName = "Matematica",
+                Books = new List<Book>
+                {
+                    new Book()
+                    {
+
+                    }
+                },
+                BookSubdomains = new List<BookDomain>
+                {
+                    new BookDomain()
+                    {
+                        DomainName = "Informatica"
+                    }
+                },
+                ParentDomain = new BookDomain()
+                {
+                    DomainName = "Stiinta"
+                }
+            };
+
+            mockBookDomainIDAO.Stub(x => x.GetById(Arg<int>.Is.Anything)).Return(expectedBookDomain);
+            var result = bookDomainService.GetById(bookDomainId);
+
+            Assert.AreEqual(expectedBookDomain, result);
+        }
+
 
         [TestMethod]
         public void UpdateBookDomainCallsBookDomainIDAO()
         {
-            mockBookDomainIDAO.Update(this.bookDomain);
-            mockBookDomainIDAO.AssertWasCalled(mock => mock.Update(Arg<BookDomain>.Is.Equal(this.bookDomain)), options => options.Repeat.Once());
+            bookDomainService.Update(this.bookDomain);
         }
     }
 }

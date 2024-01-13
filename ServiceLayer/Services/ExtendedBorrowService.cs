@@ -32,6 +32,11 @@ namespace ServiceLayer.Services
             Log.Info("Extended borrow has been added successfully!");
         }
 
+        public List<ExtendedBorrow> GetAll()
+        {
+            return iExtendedBorrowIDAO.GetAll();
+        }
+
         public void Delete(ExtendedBorrow t)
         {
             iExtendedBorrowIDAO.Delete(t);
@@ -44,15 +49,7 @@ namespace ServiceLayer.Services
 
         public void Update(ExtendedBorrow t)
         {
-            try
-            {
-                Validator.ValidateObject(t, CreateValidationContext(t), true);
-                iExtendedBorrowIDAO.Update(t);
-            }
-            catch (Exception exception)
-            {
-                throw exception;
-            }
+            iExtendedBorrowIDAO.Update(t);
         }
     }
 }

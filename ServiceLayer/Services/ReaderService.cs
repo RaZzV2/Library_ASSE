@@ -41,6 +41,11 @@ namespace ServiceLayer.Services
             }
         }
 
+        public List<Reader> GetAll()
+        {
+            return iReaderIDAO.GetAll();
+        }
+
         public void Delete(Reader t)
         {
             iReaderIDAO.Delete(t);

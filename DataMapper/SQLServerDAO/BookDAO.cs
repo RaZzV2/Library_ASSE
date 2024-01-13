@@ -31,6 +31,14 @@ namespace DataMapper
             }
         }
 
+        public List<Book> GetAll()
+        {
+            using (var context = new LibraryContext())
+            {
+                return context.Books.ToList();
+            }
+        }
+
         public Book GetById(int id)
         {
             using (var context = new LibraryContext())

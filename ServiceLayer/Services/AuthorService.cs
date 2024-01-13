@@ -2,12 +2,8 @@
 using Library.models;
 using log4net;
 using ServiceLayer.IServices;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ServiceLayer.Services
 {
@@ -33,6 +29,11 @@ namespace ServiceLayer.Services
             Log.Info("Author has been added successfully!");
         }
 
+        public List<Author> GetAll()
+        {
+            return iAuthorIDAO.GetAll();
+        }
+
         public void Delete(Author t)
         {
             iAuthorIDAO.Delete(t);
@@ -45,15 +46,8 @@ namespace ServiceLayer.Services
 
         public void Update(Author t)
         {
-            try
-            {
-                Validator.ValidateObject(t, CreateValidationContext(t), true);
-                iAuthorIDAO.Update(t);
-            }
-            catch (Exception exception)
-            {
-                throw exception;
-            }
+            Validator.ValidateObject(t, CreateValidationContext(t), true);
+            iAuthorIDAO.Update(t);
         }
     }
 }

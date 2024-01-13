@@ -29,6 +29,14 @@ namespace DataMapper.SQLServerDAO
             }
         }
 
+        public List<Student> GetAll()
+        {
+            using (var context = new LibraryContext())
+            {
+                return context.Students.ToList();
+            }
+        }
+
         public Student GetById(int id)
         {
             using (var context = new LibraryContext())

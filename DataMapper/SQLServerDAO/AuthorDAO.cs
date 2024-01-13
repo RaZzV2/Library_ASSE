@@ -38,6 +38,14 @@ namespace DataMapper.SQLServerDAO
             }
         }
 
+        public List<Author> GetAll()
+        {
+            using (var context = new LibraryContext())
+            {
+                return context.Author.ToList();
+            }
+        }
+
         public void Update(Author t)
         {
             using (var context = new LibraryContext())
