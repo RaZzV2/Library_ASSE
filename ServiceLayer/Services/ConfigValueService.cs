@@ -6,20 +6,33 @@
     using log4net;
     using ServiceLayer.IServices;
 
+    /// <summary>
+    /// Service class for managing configuration values from an XML file.
+    /// </summary>
     public class ConfigValueService : IConfigValue
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(ConfigValueService));
         private XElement xmlData;
 
+        /// <summary>
+        /// Loads the configuration data from the specified XML file.
+        /// </summary>
+        /// <param name="filePath">The path to the XML file containing configuration data.</param>
         public void LoadConfiguration(string filePath)
         {
             string xmlText = File.ReadAllText(filePath);
             this.xmlData = XElement.Parse(xmlText);
         }
 
+        /// <summary>
+        /// Retrieves a configuration value of type T associated with the specified key.
+        /// </summary>
+        /// <typeparam name="T">The type of the configuration value to retrieve.</typeparam>
+        /// <param name="key">The key associated with the desired configuration value.</param>
+        /// <returns>The configuration value of type T.</returns>
         public T GetValue<T>(string key)
         {
-            if (xmlData != null)
+            if (this.xmlData != null)
             {
                 XElement element = this.xmlData.Element(key);
                 if (element != null)

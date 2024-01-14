@@ -72,7 +72,6 @@
         [TestMethod]
         public void MissingBorrow_ReturnsError()
         {
-            var dateTime = new DateTime(2022, 1, 1, 12, 0, 0);
             this.extendedBorrow = new ExtendedBorrow
             {
                 Borrow = null,

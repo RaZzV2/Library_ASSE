@@ -9,6 +9,9 @@
     using Rhino.Mocks;
     using ServiceLayer.Services;
 
+    /// <summary>
+    /// Unit tests for the ReaderService class.
+    /// </summary>
     [TestClass]
     public class ReaderServiceTests
     {
@@ -16,6 +19,9 @@
         private ReaderService readerService;
         private Reader reader;
 
+        /// <summary>
+        /// Initializes necessary objects before each test.
+        /// </summary>
         [TestInitialize]
         public void SetUp()
         {
@@ -25,13 +31,16 @@
             {
                 ReaderId = 1,
                 ReaderFirstName = "Andrei",
-                ReaderLastName ="Icsulescu",
+                ReaderLastName = "Icsulescu",
                 Address = "Strada x, Numarul 33",
                 Role = true,
-                PhoneNumber = "0732138913"
+                PhoneNumber = "0732138913",
             };
         }
 
+        /// <summary>
+        /// Unit test for the ReaderService's Add method, ensuring it calls IReaderIDAO with a valid reader.
+        /// </summary>
         [TestMethod]
         public void AddValidReaderCallsIReaderIDAO()
         {
@@ -39,6 +48,9 @@
             this.mockReaderIDAO.AssertWasCalled(mock => mock.Add(Arg<Reader>.Is.Equal(this.reader)), options => options.Repeat.Once());
         }
 
+        /// <summary>
+        /// Unit test for the ReaderService's Add method, verifying that it throws a ValidationException for an invalid reader.
+        /// </summary>
         [TestMethod]
         public void AddInvalidReaderCallsIReaderIDAO()
         {
@@ -47,6 +59,9 @@
             Assert.AreEqual("First name must not have special characters!", exception.Message);
         }
 
+        /// <summary>
+        /// Unit test for the ReaderService's GetAll method, validating that it calls IReaderIDAO and returns the expected readers.
+        /// </summary>
         [TestMethod]
         public void GetAllReadersCallsIReaderIDAO()
         {
@@ -69,6 +84,9 @@
             CollectionAssert.AreEqual(expectedReaders, result.ToList());
         }
 
+        /// <summary>
+        /// Unit test for the ReaderService's Delete method, confirming it calls IReaderIDAO to remove a reader.
+        /// </summary>
         [TestMethod]
         public void RemoveReaderCallsIReaderIDAO()
         {
@@ -76,6 +94,9 @@
             this.mockReaderIDAO.AssertWasCalled(mock => mock.Delete(Arg<Reader>.Is.Equal(this.reader)), options => options.Repeat.Once());
         }
 
+        /// <summary>
+        /// Unit test for the ReaderService's GetById method, ensuring it returns the correct reader based on the provided ID.
+        /// </summary>
         [TestMethod]
         public void GetById_ReturnsCorrectReader()
         {
@@ -89,6 +110,9 @@
             Assert.AreEqual(this.reader, result);
         }
 
+        /// <summary>
+        /// Unit test for the ReaderService's Update method, verifying that it calls IReaderIDAO to update a reader.
+        /// </summary>
         [TestMethod]
         public void UpdateReaderCallsIReaderIDAO()
         {

@@ -1,18 +1,17 @@
-﻿using DataMapper;
-using DomainModel.CustomValidationHelpers;
-using DomainModel;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Rhino.Mocks;
-using ServiceLayer.Services;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-using Library.Models;
-using System.Linq;
-
-namespace TestServiceLayer.ServicesTests
+﻿namespace TestServiceLayer.ServicesTests
 {
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+    using DataMapper;
+    using Library.Models;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Rhino.Mocks;
+    using ServiceLayer.Services;
+
+    /// <summary>
+    /// Unit tests for the <see cref="BookDomainService"/> class.
+    /// </summary>
     [TestClass]
     public class BookDomainServiceTests
     {
@@ -20,60 +19,72 @@ namespace TestServiceLayer.ServicesTests
         private BookDomainService bookDomainService;
         private BookDomain bookDomain;
 
+        /// <summary>
+        /// Set up the test environment by creating mock objects and initializing test data.
+        /// </summary>
         [TestInitialize]
         public void SetUp()
         {
-            mockBookDomainIDAO = MockRepository.GenerateMock<IBookDomainIDAO>();
-            bookDomainService = new BookDomainService(mockBookDomainIDAO);
-            bookDomain = new BookDomain()
+            this.mockBookDomainIDAO = MockRepository.GenerateMock<IBookDomainIDAO>();
+            this.bookDomainService = new BookDomainService(this.mockBookDomainIDAO);
+            this.bookDomain = new BookDomain()
             {
                 DomainName = "Matematica",
                 Books = new List<Book>()
                 {
                     new Book()
                     {
-
-                    }
+                    },
                 },
                 BookSubdomains = new List<BookDomain>()
                 {
                     new BookDomain()
                     {
-                        DomainName = "Informatica"
-                    }
+                        DomainName = "Informatica",
+                    },
                 },
                 ParentDomain = new BookDomain()
                 {
-                    DomainName = "Stiinta"
-                }
+                    DomainName = "Stiinta",
+                },
             };
         }
 
+        /// <summary>
+        /// Test the <see cref="BookDomainService.Add"/> method with a valid BookDomain, verifying that it calls the <see cref="IBookDomainIDAO"/> interface.
+        /// </summary>
         [TestMethod]
         public void AddValidBookDomainCallsIBookDomainIDAO()
         {
-            bookDomainService.Add(this.bookDomain);
+            this.bookDomainService.Add(this.bookDomain);
         }
 
-
-
+        /// <summary>
+        /// Test the <see cref="BookDomainService.Add"/> method with an invalid BookDomain, ensuring that it throws a <see cref="ValidationException"/>.
+        /// </summary>
         [TestMethod]
         public void AddInvalidBookDomainCallsIBookDomainIDAO()
         {
             this.bookDomain.ParentDomain = new BookDomain()
             {
-                DomainName = "Matematica"
+                DomainName = "Matematica",
             };
-            var exception = Assert.ThrowsException<ValidationException>(() => bookDomainService.Add(this.bookDomain));
+            var exception = Assert.ThrowsException<ValidationException>(() => this.bookDomainService.Add(this.bookDomain));
             Assert.AreEqual("Circular dependency detected! Domain name must be unique within parent domains!", exception.Message);
         }
 
+        /// <summary>
+        /// Test the <see cref="BookDomainService.Delete"/> method to ensure it calls the <see cref="IBookDomainIDAO"/> interface when deleting a BookDomain.
+        /// </summary>
         [TestMethod]
         public void RemoveBookDomainCallsIBookDomainIDAO()
         {
-            bookDomainService.Delete(this.bookDomain);
+            this.bookDomainService.Delete(this.bookDomain);
         }
 
+        /// <summary>
+        /// Test the <see cref="BookDomainService.GetAll"/> method to ensure it calls the <see cref="IBookDomainIDAO"/> interface and returns the expected list of BookDomains.
+        /// </summary>
         [TestMethod]
         public void GetAllBookDomainsCallsIBookDomainIDAO()
         {
@@ -86,28 +97,30 @@ namespace TestServiceLayer.ServicesTests
                     {
                         new Book()
                         {
-
-                        }
+                        },
                     },
                     BookSubdomains = new List<BookDomain>()
                     {
                         new BookDomain()
                         {
-                            DomainName = "Informatica"
-                        }
+                            DomainName = "Informatica",
+                        },
                     },
                     ParentDomain = new BookDomain()
                     {
-                        DomainName = "Stiinta"
-                    }
+                        DomainName = "Stiinta",
+                    },
                 },
             };
-            mockBookDomainIDAO.Stub(x => x.GetAll()).Return(expectedBookDomains);
-            var result = bookDomainService.GetAll();
+            this.mockBookDomainIDAO.Stub(x => x.GetAll()).Return(expectedBookDomains);
+            var result = this.bookDomainService.GetAll();
 
             CollectionAssert.AreEqual(expectedBookDomains, result.ToList());
         }
 
+        /// <summary>
+        /// Test the <see cref="BookDomainService.GetById"/> method to ensure it returns the correct BookDomain based on the provided ID.
+        /// </summary>
         [TestMethod]
         public void GetByIdReturnsCorrectBookDomain()
         {
@@ -119,33 +132,34 @@ namespace TestServiceLayer.ServicesTests
                 {
                     new Book()
                     {
-
-                    }
+                    },
                 },
                 BookSubdomains = new List<BookDomain>
                 {
                     new BookDomain()
                     {
-                        DomainName = "Informatica"
-                    }
+                        DomainName = "Informatica",
+                    },
                 },
                 ParentDomain = new BookDomain()
                 {
-                    DomainName = "Stiinta"
-                }
+                    DomainName = "Stiinta",
+                },
             };
 
-            mockBookDomainIDAO.Stub(x => x.GetById(Arg<int>.Is.Anything)).Return(expectedBookDomain);
-            var result = bookDomainService.GetById(bookDomainId);
+            this.mockBookDomainIDAO.Stub(x => x.GetById(Arg<int>.Is.Anything)).Return(expectedBookDomain);
+            var result = this.bookDomainService.GetById(bookDomainId);
 
             Assert.AreEqual(expectedBookDomain, result);
         }
 
-
+        /// <summary>
+        /// Test the <see cref="BookDomainService.Update"/> method to ensure it calls the <see cref="IBookDomainIDAO"/> interface when updating a BookDomain.
+        /// </summary>
         [TestMethod]
         public void UpdateBookDomainCallsBookDomainIDAO()
         {
-            bookDomainService.Update(this.bookDomain);
+            this.bookDomainService.Update(this.bookDomain);
         }
     }
 }

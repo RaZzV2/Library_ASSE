@@ -1,58 +1,60 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Rhino.Mocks;
-using ServiceLayer;
-using ServiceLayer.IServices;
-using ServiceLayer.Services;
-using System.IO.Abstractions;
-using System.Xml;
-
-namespace TestServiceLayer.ServicesTests
+﻿namespace TestServiceLayer.ServicesTests
 {
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using ServiceLayer.Services;
+
+    /// <summary>
+    /// Unit tests for the ConfigValueService class.
+    /// </summary>
     [TestClass]
     public class ConfigValueServiceTests
     {
         private ConfigValueService configValueService;
 
+        /// <summary>
+        /// Initializes a new instance of the ConfigValueService before each test.
+        /// </summary>
         [TestInitialize]
         public void Initialize()
         {
-            configValueService = new ConfigValueService();
+            this.configValueService = new ConfigValueService();
         }
 
+        /// <summary>
+        /// Unit test for the ConfigValueService's LoadConfiguration method, which should load XML data when the file path is valid.
+        /// </summary>
         [TestMethod]
         public void LoadConfiguration_ShouldLoadXmlData_WhenFilePathIsValid()
         {
-            // Act
-            configValueService.LoadConfiguration("config.xml");
+            this.configValueService.LoadConfiguration("config.xml");
         }
 
+        /// <summary>
+        /// Unit test for the ConfigValueService's GetValue method, which should retrieve the expected value based on a given key after loading configuration data.
+        /// </summary>
         [TestMethod]
         public void GetValue()
         {
-            // Arrange
             var expectedValue = "value";
 
-            // Act
-            configValueService.LoadConfiguration("config.xml");
+            this.configValueService.LoadConfiguration("config.xml");
 
-            var result = configValueService.GetValue<string>("key");
+            var result = this.configValueService.GetValue<string>("key");
 
-            // Assert
             Assert.AreEqual(expectedValue, result);
         }
 
+        /// <summary>
+        /// Unit test for the ConfigValueService's GetValue method with a default value, which should return the default value when the key is not found after loading configuration data.
+        /// </summary>
         [TestMethod]
         public void GetValueDefault()
         {
+            this.configValueService.LoadConfiguration("config.xml");
 
-            // Act
-            configValueService.LoadConfiguration("config.xml");
+            var result = this.configValueService.GetValue<string>("invalidkey");
 
-            var result = configValueService.GetValue<string>("invalidkey");
-
-            // Assert
             Assert.AreEqual(default, result);
         }
-
     }
 }

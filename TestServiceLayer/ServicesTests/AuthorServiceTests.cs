@@ -1,18 +1,17 @@
-﻿using DataMapper;
-using DomainModel.CustomValidationHelpers;
-using DomainModel;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Rhino.Mocks;
-using ServiceLayer.Services;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-using Library.Models;
-using System.Linq;
-
-namespace TestServiceLayer.ServicesTests
+﻿namespace TestServiceLayer.ServicesTests
 {
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+    using DataMapper;
+    using Library.Models;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Rhino.Mocks;
+    using ServiceLayer.Services;
+
+    /// <summary>
+    /// Unit tests for the <see cref="AuthorService"/> class.
+    /// </summary>
     [TestClass]
     public class AuthorServiceTests
     {
@@ -20,12 +19,15 @@ namespace TestServiceLayer.ServicesTests
         private AuthorService authorService;
         private Author author;
 
+        /// <summary>
+        /// Set up the test environment by creating mock objects and initializing test data.
+        /// </summary>
         [TestInitialize]
         public void SetUp()
         {
-            mockAuthorIDAO = MockRepository.GenerateMock<IAuthorIDAO>();
-            authorService = new AuthorService(mockAuthorIDAO);
-            author = new Author
+            this.mockAuthorIDAO = MockRepository.GenerateMock<IAuthorIDAO>();
+            this.authorService = new AuthorService(this.mockAuthorIDAO);
+            this.author = new Author
             {
                 Id = 1,
                 FirstName = "Ionel",
@@ -42,46 +44,61 @@ namespace TestServiceLayer.ServicesTests
                                 DomainName = "Stiinta",
                                 ParentDomain = new BookDomain
                                 {
-                                    DomainName = "Matematica"
-                                }
-                            }
-                        }
-                    }
-                }
+                                    DomainName = "Matematica",
+                                },
+                            },
+                        },
+                    },
+                },
             };
         }
 
+        /// <summary>
+        /// Test the <see cref="AuthorService.GetById"/> method to ensure it returns the correct Author based on the provided ID.
+        /// </summary>
         [TestMethod]
         public void GetByIdReturnsCorrectAuthor()
         {
             int authorId = 1;
-            mockAuthorIDAO.Stub(x => x.GetById(authorId)).Return(author);
+            this.mockAuthorIDAO.Stub(x => x.GetById(authorId)).Return(this.author);
 
-            var result = authorService.GetById(authorId);
+            var result = this.authorService.GetById(authorId);
 
-            Assert.AreEqual(author, result);
+            Assert.AreEqual(this.author, result);
         }
 
+        /// <summary>
+        /// Test the <see cref="AuthorService.Add"/> method with a valid Author, verifying that it calls the <see cref="IAuthorIDAO"/> interface.
+        /// </summary>
         [TestMethod]
         public void AddValidAuthorCallsIAuthorIDAO()
         {
-            authorService.Add(this.author);
+            this.authorService.Add(this.author);
         }
 
+        /// <summary>
+        /// Test the <see cref="AuthorService.Add"/> method with an invalid Author, ensuring that it throws a <see cref="ValidationException"/>.
+        /// </summary>
         [TestMethod]
         public void AddInvalidAuthorCallsIAuthorIDAO()
         {
             this.author.FirstName = "invalid_name++";
-            var exception = Assert.ThrowsException<ValidationException>(() => authorService.Add(this.author));
+            var exception = Assert.ThrowsException<ValidationException>(() => this.authorService.Add(this.author));
             Assert.AreEqual("First name must not have special characters!", exception.Message);
         }
 
+        /// <summary>
+        /// Test the <see cref="AuthorService.Delete"/> method to ensure it calls the <see cref="IAuthorIDAO"/> interface when deleting an Author.
+        /// </summary>
         [TestMethod]
         public void RemoveAuthorCallsIAuthorIDAO()
         {
-            authorService.Delete(this.author);
+            this.authorService.Delete(this.author);
         }
 
+        /// <summary>
+        /// Test the <see cref="AuthorService.GetAll"/> method to ensure it calls the <see cref="IAuthorIDAO"/> interface and returns the expected list of Authors.
+        /// </summary>
         [TestMethod]
         public void GetAllAuthorsCallsIAuthorIDAO()
         {
@@ -103,27 +120,30 @@ namespace TestServiceLayer.ServicesTests
                                     DomainName = "Stiinta",
                                     ParentDomain = new BookDomain
                                     {
-                                        DomainName = "Matematica"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                                        DomainName = "Matematica",
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
             };
 
-            mockAuthorIDAO.Stub(x => x.GetAll()).Return(expectedAuthors);
+            this.mockAuthorIDAO.Stub(x => x.GetAll()).Return(expectedAuthors);
 
-            var result = authorService.GetAll();
+            var result = this.authorService.GetAll();
 
-            mockAuthorIDAO.AssertWasCalled(mock => mock.GetAll(), options => options.Repeat.Once());
+            this.mockAuthorIDAO.AssertWasCalled(mock => mock.GetAll(), options => options.Repeat.Once());
             CollectionAssert.AreEqual(expectedAuthors, result.ToList());
         }
 
+        /// <summary>
+        /// Test the <see cref="AuthorService.Update"/> method to ensure it calls the <see cref="IAuthorIDAO"/> interface when updating an Author.
+        /// </summary>
         [TestMethod]
         public void UpdateAuthorCallsIAuthorIDAO()
         {
-            authorService.Update(this.author);
+            this.authorService.Update(this.author);
         }
     }
 }
