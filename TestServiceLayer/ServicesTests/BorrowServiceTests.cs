@@ -28,7 +28,7 @@ namespace TestServiceLayer.ServicesTests
         public void SetUp()
         {
             mockBorrowIDAO = MockRepository.GenerateMock<IBorrowIDAO>();
-            borrowService = new BorrowService(mockBorrowIDAO, new TimeSpan(30, 0, 0, 0), 4, 4, 5, new TimeSpan(90, 0, 0, 0), 2, new TimeSpan(5, 1, 30, 0));
+            borrowService = new BorrowService(mockBorrowIDAO, new TimeSpan(30, 0, 0, 0), 4, 4, 5, new TimeSpan(90, 0, 0, 0), 2, new TimeSpan(5, 0, 0, 0));
             borrow = new Borrow()
             {
                 Reader = new Reader
@@ -185,6 +185,7 @@ namespace TestServiceLayer.ServicesTests
             borrowService.MaximumBorrowsPerDay(this.borrow);
         }
 
+
         [TestMethod]
         public void MaximumBorrowsPerDayCallsIBorrowIDAORoleTrueIncorrect()
         {
@@ -239,6 +240,41 @@ namespace TestServiceLayer.ServicesTests
                 BorrowStartDate = new DateTime(2020, 12, 2)
             });
             borrowService.CannotBorrowSameBookInAPeriod(this.borrow);
+        }
+
+        [TestMethod]
+        public void CannotBorrowSameBookInAPeriodCallsIBorrowIDAOCorrectRolePersonal()
+        {
+            this.borrow.Reader.Role = true;
+            this.borrow.BorrowStartDate = new DateTime(2020, 11, 3);
+            this.borrow.Edition.EditionId = 1;
+            this.borrow.Reader.Borrows.Add(new Borrow
+            {
+                Edition = new Edition
+                {
+                    EditionId = 1,
+                },
+                BorrowStartDate = new DateTime(2020, 12, 2)
+            });
+            borrowService.CannotBorrowSameBookInAPeriod(this.borrow);
+        }
+
+        [TestMethod]
+        public void CannotBorrowSameBookInAPeriodCallsIBorrowIDAOIncorrectRolePersonal()
+        {
+            this.borrow.Reader.Role = true;
+            this.borrow.BorrowStartDate = new DateTime(2020, 12, 3);
+            this.borrow.Edition.EditionId = 1;
+            this.borrow.Reader.Borrows.Add(new Borrow
+            {
+                Edition = new Edition
+                {
+                    EditionId = 1,
+                },
+                BorrowStartDate = new DateTime(2020, 12, 2)
+            });
+            var exception = Assert.ThrowsException<ValidationException>(() => borrowService.CannotBorrowSameBookInAPeriod(this.borrow)).Message;
+            Assert.AreEqual(exception, "You cannot borrow same edition in this period!");
         }
 
         [TestMethod]

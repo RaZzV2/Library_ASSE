@@ -64,6 +64,16 @@ namespace TestServiceLayer.ServicesTests
         }
 
         [TestMethod]
+        public void NecessaryDomains()
+        {
+            this.book.Domains = new List<BookDomain>()
+            {
+                new BookDomain {}
+            };
+            bookService.VerifyMoreDomainsThanNecessary(this.book);
+        }
+
+        [TestMethod]
         public void AddValidBookCallsIBookIDAO()
         {
             bookService.Add(this.book);

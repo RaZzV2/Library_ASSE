@@ -44,11 +44,24 @@ namespace ServiceLayer.Services
 
         public void CannotBorrowSameBookInAPeriod(Borrow entity)
         {
-            var startDate = entity.BorrowStartDate - delta;
-            var borrowCount = entity.Reader.Borrows.Where(x => startDate < x.BorrowStartDate && x.BorrowStartDate < entity.BorrowStartDate).Where(x => x.Edition.EditionId == entity.Edition.EditionId).Count();
-            if(borrowCount > 0)
+            if (entity.Reader.Role == false)
             {
-                throw new ValidationException("You cannot borrow same edition in this period!");
+                var startDate = entity.BorrowStartDate - delta;
+                var borrowCount = entity.Reader.Borrows.Where(x => startDate < x.BorrowStartDate && x.BorrowStartDate < entity.BorrowStartDate).Where(x => x.Edition.EditionId == entity.Edition.EditionId).Count();
+                if (borrowCount > 0)
+                {
+                    throw new ValidationException("You cannot borrow same edition in this period!");
+                }
+            }
+            else
+            {
+                var deltaPersonal = new TimeSpan(delta.Ticks / 2);
+                var startDate = entity.BorrowStartDate - deltaPersonal;
+                var borrowCount = entity.Reader.Borrows.Where(x => startDate < x.BorrowStartDate && x.BorrowStartDate < entity.BorrowStartDate).Where(x => x.Edition.EditionId == entity.Edition.EditionId).Count();
+                if (borrowCount > 0)
+                {
+                    throw new ValidationException("You cannot borrow same edition in this period!");
+                }
             }
         }
 

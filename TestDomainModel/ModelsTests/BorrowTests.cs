@@ -29,6 +29,7 @@ namespace TestDomainModel.ModelsTests
             var dateTime = new DateTime(2022, 1, 1, 12, 0, 0);
             this.borrow = new Borrow
             {
+                Id = 1,
                 Reader = new Reader {  },
                 Edition = new Edition {  },
                 BorrowStartDate = dateTime,
@@ -184,6 +185,16 @@ namespace TestDomainModel.ModelsTests
         {
             this.borrow.BorrowStartDate = new DateTime(1500, 1, 1, 12, 0, 0);
             AssertValidationException(this.borrow, "Date must be between 1900 and 2100.");
+        }
+
+        [TestMethod]
+        public void IdIsSetCorrectly()
+        {
+            int expectedId = 42;
+
+            this.borrow.Id = expectedId;
+
+            Assert.AreEqual(expectedId, this.borrow.Id);
         }
     }
 }
