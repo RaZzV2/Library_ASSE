@@ -87,7 +87,6 @@
     <Compile Include="ModelsTests\EditionTests.cs" />
     <Compile Include="ModelsTests\ExtendedBorrowTests.cs" />
     <Compile Include="ModelsTests\ReaderTests.cs" />
-    <Compile Include="ModelsTests\StudentTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

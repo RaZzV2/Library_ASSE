@@ -27,7 +27,7 @@ namespace TestServiceLayer.ServicesTests
         {
             var dateTime = new DateTime(2022, 1, 1, 12, 0, 0);
             mockExtendedBorrowIDAO = MockRepository.GenerateMock<IExtendedBorrowIDAO>();
-            extendedBorrowService = new ExtendedBorrowService(mockExtendedBorrowIDAO);
+            extendedBorrowService = new ExtendedBorrowService(mockExtendedBorrowIDAO,2);
             this.extendedBorrow = new ExtendedBorrow()
             {
                 Id = 1,
@@ -79,6 +79,78 @@ namespace TestServiceLayer.ServicesTests
             CollectionAssert.AreEqual(expectedExtendedBorrows, result.ToList());
         }
 
+        [TestMethod]
+        public void MaximumExtension_ThrowsExceptionWhenConditionsNotMet()
+        {
+            var extendedBorrow = new ExtendedBorrow
+            {
+                Borrow = new Borrow
+                {
+                    Reader = new Reader
+                    {
+                        Borrows = new List<Borrow>
+                        {
+                            new Borrow
+                            {
+                                ExtendedBorrows = new List<ExtendedBorrow>
+                                {
+                                    new ExtendedBorrow
+                                    {
+                                        Date = new DateTime(2022,10,8)
+                                    },
+                                    new ExtendedBorrow
+                                    {
+                                        Date = new DateTime(2022,10,7)
+                                    },
+                                    new ExtendedBorrow
+                                    {
+                                        Date = new DateTime(2022,10,5)
+                                    },
+                                    new ExtendedBorrow
+                                    {
+                                        Date = new DateTime(2022,10,3)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                Date = new DateTime(2022,10,20)
+            };
+
+            
+            var exception = Assert.ThrowsException<ValidationException>(() => extendedBorrowService.MaximumExtension(extendedBorrow));
+            Assert.AreEqual("You can extend your borrow with maximum 2 in this period!", exception.Message);
+        }
+
+        [TestMethod]
+        public void MaximumExtension_NoThrowsExceptionWhenSuccess()
+        {
+            var extendedBorrow = new ExtendedBorrow
+            {
+                Borrow = new Borrow
+                {
+                    Reader = new Reader
+                    {
+                        Borrows = new List<Borrow>
+                        {
+                            new Borrow
+                            {
+                                ExtendedBorrows = new List<ExtendedBorrow>
+                                {
+                                    new ExtendedBorrow
+                                    {
+                                        Date = new DateTime(2022,10,8)
+                                    },
+                                }
+                            }
+                        }
+                    }
+                },
+                Date = new DateTime(2022, 10, 20)
+            };
+            extendedBorrowService.MaximumExtension(extendedBorrow);
+        }
 
         [TestMethod]
         public void AddInvalidExtendedBorrowCallsIExtendedBorrowIDAO()

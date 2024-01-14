@@ -94,8 +94,6 @@
     <Compile Include="SQLServerDAO\LibraryContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLServerDAO\ReaderDAO.cs" />
-    <Compile Include="SQLServerDAO\StudentDAO.cs" />
-    <Compile Include="StudentIDAO.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -84,7 +84,6 @@
     <Compile Include="ServicesTests\EditionServiceTests.cs" />
     <Compile Include="ServicesTests\ExtendedBorrowServiceTests.cs" />
     <Compile Include="ServicesTests\ReaderServiceTests.cs" />
-    <Compile Include="ServicesTests\StudentServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
