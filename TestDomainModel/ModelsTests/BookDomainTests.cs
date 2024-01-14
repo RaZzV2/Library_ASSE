@@ -1,68 +1,74 @@
-﻿using DomainModel.CustomValidationHelpers;
-using Library.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Rhino.Mocks.Constraints;
-using Rhino.Mocks;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-
-namespace TestDomainModel.ModelsTests
+﻿namespace TestDomainModel.ModelsTests
 {
-   
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using DomainModel.CustomValidationHelpers;
+    using Library.Models;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+    /// <summary>
+    /// Test class for validating the BookDomain model.
+    /// </summary>
     [TestClass]
     public class BookDomainTests
     {
-       
         private BookDomain bookDomain;
 
-        private ValidationContext CreateValidationContext(object instance)
-        {
-            return new ValidationContext(instance, null, null);
-        }
-        private void AssertValidationException<T>(T instance, string expectedErrorMessage)
-        {
-            ModelValidationHelper.AssertValidationException(instance, expectedErrorMessage);
-        }
-
+        /// <summary>
+        /// Set up method to initialize common objects for tests.
+        /// </summary>
         [TestInitialize]
-        public void setUp()
+        public void SetUp()
         {
-            bookDomain = new BookDomain
+            this.bookDomain = new BookDomain
             {
-                DomainName = "Matematica"
+                DomainName = "Matematica",
             };
         }
 
+        /// <summary>
+        /// Validates that the domain name is empty and returns an error.
+        /// </summary>
         [TestMethod]
         public void DomainNameEmpty()
         {
             this.bookDomain.DomainName = string.Empty;
-            AssertValidationException(this.bookDomain, "Domain name is required!");
+            this.AssertValidationException(this.bookDomain, "Domain name is required!");
         }
 
+        /// <summary>
+        /// Validates that the domain name is null and returns an error.
+        /// </summary>
         [TestMethod]
         public void DomainNameNull()
         {
             this.bookDomain.DomainName = null;
-            AssertValidationException(this.bookDomain, "Domain name is required!");
+            this.AssertValidationException(this.bookDomain, "Domain name is required!");
         }
 
+        /// <summary>
+        /// Validates that the domain name contains special characters and returns an error.
+        /// </summary>
         [TestMethod]
         public void DomainNameWithSpecialCharacters()
         {
             this.bookDomain.DomainName = "M@T3M++";
-            AssertValidationException(this.bookDomain, "Domain name must not have special characters!");
+            this.AssertValidationException(this.bookDomain, "Domain name must not have special characters!");
         }
 
+        /// <summary>
+        /// Validates that the domain name is too short and returns an error.
+        /// </summary>
         [TestMethod]
         public void DomainNameTooShort()
         {
             this.bookDomain.DomainName = "sa";
-            AssertValidationException(this.bookDomain, "Domain name must have at least 3 characters!");
+            this.AssertValidationException(this.bookDomain, "Domain name must have at least 3 characters!");
         }
 
+        /// <summary>
+        /// Validates that parents are not equal to domains and returns success.
+        /// </summary>
         [TestMethod]
         public void ParentsNotEqualsDomains()
         {
@@ -73,7 +79,7 @@ namespace TestDomainModel.ModelsTests
             };
             try
             {
-                Validator.ValidateObject(domain, CreateValidationContext(domain), true);
+                Validator.ValidateObject(domain, this.CreateValidationContext(domain), true);
             }
             catch (ValidationException ex)
             {
@@ -81,6 +87,9 @@ namespace TestDomainModel.ModelsTests
             }
         }
 
+        /// <summary>
+        /// Validates that child domains are not equal and returns success.
+        /// </summary>
         [TestMethod]
         public void ChildsNotEqualsDomains()
         {
@@ -91,13 +100,13 @@ namespace TestDomainModel.ModelsTests
                 {
                     new BookDomain
                     {
-                        DomainName = "Exampl2e"
-                    }
-                }
+                        DomainName = "Exampl2e",
+                    },
+                },
             };
             try
             {
-                Validator.ValidateObject(this.bookDomain, CreateValidationContext(this.bookDomain), true);
+                Validator.ValidateObject(this.bookDomain, this.CreateValidationContext(this.bookDomain), true);
             }
             catch (ValidationException ex)
             {
@@ -105,23 +114,29 @@ namespace TestDomainModel.ModelsTests
             }
         }
 
+        /// <summary>
+        /// Validates that child domains are equal and returns an error.
+        /// </summary>
         [TestMethod]
         public void ChildsEqualsDomains()
         {
-            bookDomain = new BookDomain
+            this.bookDomain = new BookDomain
             {
                 DomainName = "Example",
                 BookSubdomains = new List<BookDomain>
                 {
                     new BookDomain
                     {
-                        DomainName = "Example"
-                    }
-                }
+                        DomainName = "Example",
+                    },
+                },
             };
-            AssertValidationException(this.bookDomain, "Domain name must be unique within subdomains!");
+            this.AssertValidationException(this.bookDomain, "Domain name must be unique within subdomains!");
         }
 
+        /// <summary>
+        /// Validates that parent domains are equal and returns an error.
+        /// </summary>
         [TestMethod]
         public void ParentsEqualsDomains()
         {
@@ -130,8 +145,17 @@ namespace TestDomainModel.ModelsTests
                 DomainName = "ExampleDomain",
                 ParentDomain = new BookDomain { DomainName = "Genul 1", ParentDomain = new BookDomain { DomainName = "ExampleDomain" } },
             };
-            AssertValidationException(this.bookDomain, "Circular dependency detected! Domain name must be unique within parent domains!");
+            this.AssertValidationException(this.bookDomain, "Circular dependency detected! Domain name must be unique within parent domains!");
         }
 
+        private ValidationContext CreateValidationContext(object instance)
+        {
+            return new ValidationContext(instance, null, null);
+        }
+
+        private void AssertValidationException<T>(T instance, string expectedErrorMessage)
+        {
+            ModelValidationHelper.AssertValidationException(instance, expectedErrorMessage);
+        }
     }
 }

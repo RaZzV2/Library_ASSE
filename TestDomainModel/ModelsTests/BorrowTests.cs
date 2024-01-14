@@ -7,20 +7,17 @@
     using Library.Models;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+    /// <summary>
+    /// Test class for validating the Borrow model.
+    /// </summary>
     [TestClass]
     public class BorrowTests
     {
         private Borrow borrow;
 
-        private ValidationContext CreateValidationContext(object instance)
-        {
-            return new ValidationContext(instance, null, null);
-        }
-        private void AssertValidationException<T>(T instance, string expectedErrorMessage)
-        {
-            ModelValidationHelper.AssertValidationException(instance, expectedErrorMessage);
-        }
-
+        /// <summary>
+        /// Set up method to initialize common objects for tests.
+        /// </summary>
         [TestInitialize]
         public void SetUp()
         {
@@ -28,21 +25,24 @@
             this.borrow = new Borrow
             {
                 Id = 1,
-                Reader = new Reader {  },
-                Edition = new Edition {  },
+                Reader = new Reader { },
+                Edition = new Edition { },
                 BorrowStartDate = dateTime,
                 BorrowEndDate = dateTime.AddDays(7),
-                IsReturned = false
+                IsReturned = false,
             };
         }
 
+        /// <summary>
+        /// Validates that the start date is valid and returns success.
+        /// </summary>
         [TestMethod]
         public void ValidStartDate()
         {
             this.borrow.BorrowStartDate = new DateTime(2022, 1, 1, 12, 0, 0);
             try
             {
-                Validator.ValidateObject(this.borrow, CreateValidationContext(this.borrow), true);
+                Validator.ValidateObject(this.borrow, this.CreateValidationContext(this.borrow), true);
             }
             catch (ValidationException ex)
             {
@@ -50,6 +50,9 @@
             }
         }
 
+        /// <summary>
+        /// Validates that the end date is valid and returns success.
+        /// </summary>
         [TestMethod]
         public void ValidEndDate()
         {
@@ -57,7 +60,7 @@
             this.borrow.BorrowEndDate = this.borrow.BorrowStartDate.AddDays(7);
             try
             {
-                Validator.ValidateObject(this.borrow, CreateValidationContext(this.borrow), true);
+                Validator.ValidateObject(this.borrow, this.CreateValidationContext(this.borrow), true);
             }
             catch (ValidationException ex)
             {
@@ -65,6 +68,9 @@
             }
         }
 
+        /// <summary>
+        /// Validates that an incorrect date format results in an error.
+        /// </summary>
         [TestMethod]
         public void IncorrectDate()
         {
@@ -72,14 +78,20 @@
             Assert.IsFalse(invalid_date);
         }
 
+        /// <summary>
+        /// Validates that the start date is greater than the end date and returns an error.
+        /// </summary>
         [TestMethod]
         public void StartDateGreaterThanEndDate()
         {
             this.borrow.BorrowEndDate = new DateTime(2022, 1, 1, 12, 0, 0);
             this.borrow.BorrowStartDate = this.borrow.BorrowStartDate.AddDays(7);
-            AssertValidationException(this.borrow, "End date must be later than start date.");
+            this.AssertValidationException(this.borrow, "End date must be later than start date.");
         }
 
+        /// <summary>
+        /// Validates that the start date is lower than the end date and returns success.
+        /// </summary>
         [TestMethod]
         public void StartDateLowerThanEndDate()
         {
@@ -87,7 +99,7 @@
             this.borrow.BorrowEndDate = this.borrow.BorrowStartDate.AddDays(7);
             try
             {
-                Validator.ValidateObject(this.borrow, CreateValidationContext(this.borrow), true);
+                Validator.ValidateObject(this.borrow, this.CreateValidationContext(this.borrow), true);
             }
             catch (ValidationException ex)
             {
@@ -95,16 +107,19 @@
             }
         }
 
+        /// <summary>
+        /// Validates that a reader is required and returns success.
+        /// </summary>
         [TestMethod]
         public void ReaderRequired()
         {
             this.borrow.Reader = new Reader
             {
-                ReaderFirstName = "Andrei"
+                ReaderFirstName = "Andrei",
             };
             try
             {
-                Validator.ValidateObject(this.borrow, CreateValidationContext(this.borrow), true);
+                Validator.ValidateObject(this.borrow, this.CreateValidationContext(this.borrow), true);
             }
             catch (ValidationException ex)
             {
@@ -112,23 +127,29 @@
             }
         }
 
+        /// <summary>
+        /// Validates that no reader is required and returns an error.
+        /// </summary>
         [TestMethod]
         public void NoReaderRequired()
         {
             this.borrow.Reader = null;
-            AssertValidationException(this.borrow, "Reader is required!");
+            this.AssertValidationException(this.borrow, "Reader is required!");
         }
 
+        /// <summary>
+        /// Validates that an edition is required and returns success.
+        /// </summary>
         [TestMethod]
         public void EditionRequired()
         {
             this.borrow.Edition = new Edition
             {
-                EditionName = "Editia 1"
+                EditionName = "Editia 1",
             };
             try
             {
-                Validator.ValidateObject(this.borrow, CreateValidationContext(this.borrow), true);
+                Validator.ValidateObject(this.borrow, this.CreateValidationContext(this.borrow), true);
             }
             catch (ValidationException ex)
             {
@@ -136,13 +157,19 @@
             }
         }
 
+        /// <summary>
+        /// Validates that no edition is required and returns an error.
+        /// </summary>
         [TestMethod]
         public void NoEditionRequired()
         {
             this.borrow.Edition = null;
-            AssertValidationException(this.borrow, "Edition is required!");
+            this.AssertValidationException(this.borrow, "Edition is required!");
         }
 
+        /// <summary>
+        /// Sets the return status to true and asserts equality.
+        /// </summary>
         [TestMethod]
         public void SetReturnStatusToTrue()
         {
@@ -150,6 +177,9 @@
             Assert.IsTrue(this.borrow.IsReturned);
         }
 
+        /// <summary>
+        /// Sets the return status to false and asserts equality.
+        /// </summary>
         [TestMethod]
         public void SetReturnStatusToFalse()
         {
@@ -157,34 +187,49 @@
             Assert.IsFalse(this.borrow.IsReturned);
         }
 
+        /// <summary>
+        /// Validates that the start date is before the minimum range and returns an error.
+        /// </summary>
         [TestMethod]
         public void StartDateBeforeMinRange()
         {
             this.borrow.BorrowStartDate = new DateTime(1800, 1, 1, 12, 0, 0);
-            AssertValidationException(this.borrow, "Date must be between 1900 and 2100.");
+            this.AssertValidationException(this.borrow, "Date must be between 1900 and 2100.");
         }
 
+        /// <summary>
+        /// Validates that the end date is after the maximum range and returns an error.
+        /// </summary>
         [TestMethod]
         public void EndDateAfterMaxRange()
         {
             this.borrow.BorrowEndDate = new DateTime(2122, 1, 1, 12, 0, 0);
-            AssertValidationException(this.borrow, "Date must be between 1900 and 2100.");
+            this.AssertValidationException(this.borrow, "Date must be between 1900 and 2100.");
         }
 
+        /// <summary>
+        /// Validates that the start date is after the maximum range and returns an error.
+        /// </summary>
         [TestMethod]
         public void StartDateAfterMaxRange()
         {
             this.borrow.BorrowStartDate = new DateTime(2101, 1, 1, 12, 0, 0);
-            AssertValidationException(this.borrow, "Date must be between 1900 and 2100.");
+            this.AssertValidationException(this.borrow, "Date must be between 1900 and 2100.");
         }
 
+        /// <summary>
+        /// Validates that the end date is before the minimum range and returns an error.
+        /// </summary>
         [TestMethod]
         public void EndDateBeforeMinRange()
         {
             this.borrow.BorrowStartDate = new DateTime(1500, 1, 1, 12, 0, 0);
-            AssertValidationException(this.borrow, "Date must be between 1900 and 2100.");
+            this.AssertValidationException(this.borrow, "Date must be between 1900 and 2100.");
         }
 
+        /// <summary>
+        /// Sets the ID of the borrow object and asserts equality.
+        /// </summary>
         [TestMethod]
         public void IdIsSetCorrectly()
         {
@@ -193,6 +238,16 @@
             this.borrow.Id = expectedId;
 
             Assert.AreEqual(expectedId, this.borrow.Id);
+        }
+
+        private ValidationContext CreateValidationContext(object instance)
+        {
+            return new ValidationContext(instance, null, null);
+        }
+
+        private void AssertValidationException<T>(T instance, string expectedErrorMessage)
+        {
+            ModelValidationHelper.AssertValidationException(instance, expectedErrorMessage);
         }
     }
 }

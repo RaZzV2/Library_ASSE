@@ -1,30 +1,23 @@
-﻿using DomainModel;
-using DomainModel.CustomValidationHelpers;
-using Library.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Security.Policy;
-using System.Text;
-
-namespace TestDomainModel.ModelsTests
+﻿namespace TestDomainModel.ModelsTests
 {
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using DomainModel.CustomValidationHelpers;
+    using Library.Models;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+    /// <summary>
+    /// Test class for validating the Edition model.
+    /// </summary>
     [TestClass]
     public class EditionTests
     {
 
         private Edition edition;
 
-        private ValidationContext CreateValidationContext(object instance)
-        {
-            return new ValidationContext(instance, null, null);
-        }
-        private void AssertValidationException<T>(T instance, string expectedErrorMessage)
-        {
-            ModelValidationHelper.AssertValidationException(instance, expectedErrorMessage);
-        }
-
+        /// <summary>
+        /// Set up method to initialize common objects for tests.
+        /// </summary>
         [TestInitialize]
         public void SetUp()
         {
@@ -38,32 +31,43 @@ namespace TestDomainModel.ModelsTests
                 BookType = Edition.Type.Board,
                 Book = new Book()
                 {
-
-                }
+                },
             };
         }
 
+        /// <summary>
+        /// Validates that the edition name is not empty and returns an error.
+        /// </summary>
         [TestMethod]
         public void EditionNameEmpty()
         {
             this.edition.EditionName = string.Empty;
-            AssertValidationException(this.edition, "Edition name is required!");
+            this.AssertValidationException(this.edition, "Edition name is required!");
         }
 
+        /// <summary>
+        /// Validates that the edition name does not contain special characters and returns an error.
+        /// </summary>
         [TestMethod]
         public void EditionNameWithSpecialCharacters()
         {
             this.edition.EditionName = "Editia@@23++;";
-            AssertValidationException(this.edition, "Edition name must not have special characters!");
+            this.AssertValidationException(this.edition, "Edition name must not have special characters!");
         }
 
+        /// <summary>
+        /// Validates that the edition name has at least 4 characters and returns an error.
+        /// </summary>
         [TestMethod]
         public void EditionNameTooShort()
         {
             this.edition.EditionName = "Ed";
-            AssertValidationException(this.edition, "Edition name must have at least 4 characters!");
+            this.AssertValidationException(this.edition, "Edition name must have at least 4 characters!");
         }
 
+        /// <summary>
+        /// Validates that the edition name is correct and returns success.
+        /// </summary>
         [TestMethod]
 
         public void EditionNameCorrect()
@@ -71,7 +75,7 @@ namespace TestDomainModel.ModelsTests
             this.edition.EditionName = "Editia de Craciun";
             try
             {
-                Validator.ValidateObject(this.edition, CreateValidationContext(this.edition), true);
+                Validator.ValidateObject(this.edition, this.CreateValidationContext(this.edition), true);
             }
             catch (ValidationException ex)
             {
@@ -79,34 +83,46 @@ namespace TestDomainModel.ModelsTests
             }
         }
 
+        /// <summary>
+        /// Validates that the edition year is too low and returns an error.
+        /// </summary>
         [TestMethod]
         public void EditionYearTooLow()
         {
             this.edition.EditionYear = 1300;
-            AssertValidationException(this.edition, "Invalid edition year. Must be between 1900 and 2024.");
+            this.AssertValidationException(this.edition, "Invalid edition year. Must be between 1900 and 2024.");
         }
 
+        /// <summary>
+        /// Validates that the edition year is negative and returns an error.
+        /// </summary>
         [TestMethod]
         public void EditionYearNegative()
         {
             this.edition.EditionYear = -100;
-            AssertValidationException(this.edition, "Invalid edition year. Must be between 1900 and 2024.");
+            this.AssertValidationException(this.edition, "Invalid edition year. Must be between 1900 and 2024.");
         }
 
+        /// <summary>
+        /// Validates that the edition year is too high and returns an error.
+        /// </summary>
         [TestMethod]
         public void EditionYearTooHigh()
         {
             this.edition.EditionYear = 2899;
-            AssertValidationException(this.edition, "Invalid edition year. Must be between 1900 and 2024.");
+            this.AssertValidationException(this.edition, "Invalid edition year. Must be between 1900 and 2024.");
         }
 
+        /// <summary>
+        /// Validates that the edition year is correct and returns success.
+        /// </summary>
         [TestMethod]
         public void EditionYearCorrect()
         {
             this.edition.EditionYear = 2020;
             try
             {
-                Validator.ValidateObject(this.edition, CreateValidationContext(this.edition), true);
+                Validator.ValidateObject(this.edition, this.CreateValidationContext(this.edition), true);
             }
             catch (ValidationException ex)
             {
@@ -114,20 +130,26 @@ namespace TestDomainModel.ModelsTests
             }
         }
 
+        /// <summary>
+        /// Validates that the number of pages is negative and returns an error.
+        /// </summary>
         [TestMethod]
         public void NegativeNumberOfPages()
         {
             this.edition.PagesNumber = -3;
-            AssertValidationException(this.edition, "Number of pages must be at least 1.");
+            this.AssertValidationException(this.edition, "Number of pages must be at least 1.");
         }
 
+        /// <summary>
+        /// Validates that the number of pages is correct and returns success.
+        /// </summary>
         [TestMethod]
         public void CorrectNumberOfPages()
         {
             this.edition.PagesNumber = 100;
             try
             {
-                Validator.ValidateObject(this.edition, CreateValidationContext(this.edition), true);
+                Validator.ValidateObject(this.edition, this.CreateValidationContext(this.edition), true);
             }
             catch (ValidationException ex)
             {
@@ -135,20 +157,26 @@ namespace TestDomainModel.ModelsTests
             }
         }
 
+        /// <summary>
+        /// Validates that the number of borrowable books is negative and returns an error.
+        /// </summary>
         [TestMethod]
         public void NegativeBorrowableBooks()
         {
             this.edition.BorrowableBooks = -3;
-            AssertValidationException(this.edition, "Number of borrowable books cannot be negative.");
+            this.AssertValidationException(this.edition, "Number of borrowable books cannot be negative.");
         }
 
+        /// <summary>
+        /// Validates that the number of borrowable books is correct and returns success.
+        /// </summary>
         [TestMethod]
         public void CorrectBorrowableBooks()
         {
             this.edition.BorrowableBooks = 32;
             try
             {
-                Validator.ValidateObject(this.edition, CreateValidationContext(this.edition), true);
+                Validator.ValidateObject(this.edition, this.CreateValidationContext(this.edition), true);
             }
             catch (ValidationException ex)
             {
@@ -156,20 +184,26 @@ namespace TestDomainModel.ModelsTests
             }
         }
 
+        /// <summary>
+        /// Validates that the number of unborrowable books is negative and returns an error.
+        /// </summary>
         [TestMethod]
         public void NegativeUnBorrowableBooks()
         {
             this.edition.UnBorrowableBooks = -3;
-            AssertValidationException(this.edition, "Number of unborrowable books cannot be negative.");
+            this.AssertValidationException(this.edition, "Number of unborrowable books cannot be negative.");
         }
 
+        /// <summary>
+        /// Validates that the number of unborrowable books is correct and returns success.
+        /// </summary>
         [TestMethod]
         public void CorrectUnBorrowableBooks()
         {
             this.edition.UnBorrowableBooks = 32;
             try
             {
-                Validator.ValidateObject(this.edition, CreateValidationContext(this.edition), true);
+                Validator.ValidateObject(this.edition, this.CreateValidationContext(this.edition), true);
             }
             catch (ValidationException ex)
             {
@@ -177,13 +211,16 @@ namespace TestDomainModel.ModelsTests
             }
         }
 
+        /// <summary>
+        /// Validates that the book type is correct and returns success.
+        /// </summary>
         [TestMethod]
         public void CorrectBookType()
         {
-            edition.BookType = Edition.Type.Hardcover;
+            this.edition.BookType = Edition.Type.Hardcover;
             try
             {
-                Validator.ValidateObject(this.edition, CreateValidationContext(this.edition), true);
+                Validator.ValidateObject(this.edition, this.CreateValidationContext(this.edition), true);
             }
             catch (ValidationException ex)
             {
@@ -191,17 +228,23 @@ namespace TestDomainModel.ModelsTests
             }
         }
 
+        /// <summary>
+        /// Validates that an invalid book type returns an error.
+        /// </summary>
         [TestMethod]
         public void InvalidBookType()
         {
-            edition.BookType = (Edition.Type)99;
-            AssertValidationException(this.edition, "Invalid book type.");
+            this.edition.BookType = (Edition.Type)99;
+            this.AssertValidationException(this.edition, "Invalid book type.");
         }
 
+        /// <summary>
+        /// Validates that having at least one book is correct and returns success.
+        /// </summary>
         [TestMethod]
         public void AtLeastOneBook()
         {
-            edition.Book = new Book()
+            this.edition.Book = new Book()
             {
                 Title = "Amintiri din copilarie",
                 Author = new List<Author>
@@ -209,21 +252,20 @@ namespace TestDomainModel.ModelsTests
                     new Author
                     {
                         FirstName = "Ion",
-                        LastName = "Creanga"
-                    }
+                        LastName = "Creanga",
+                    },
                 },
                 Domains = new List<BookDomain>
                 {
                     new BookDomain
                     {
-
-                    }
-                }
+                    },
+                },
             };
             try
             {
-                Validator.ValidateObject(this.edition.Book, CreateValidationContext(this.edition.Book), true);
-                Validator.ValidateObject(this.edition, CreateValidationContext(this.edition), true);
+                Validator.ValidateObject(this.edition.Book, this.CreateValidationContext(this.edition.Book), true);
+                Validator.ValidateObject(this.edition, this.CreateValidationContext(this.edition), true);
             }
             catch (ValidationException ex)
             {
@@ -231,11 +273,24 @@ namespace TestDomainModel.ModelsTests
             }
         }
 
+        /// <summary>
+        /// Validates that having no book returns an error.
+        /// </summary>
         [TestMethod]
         public void NoBook()
         {
-            edition.Book = null;
-            AssertValidationException(this.edition, "A edition must have at least one book!");
+            this.edition.Book = null;
+            this.AssertValidationException(this.edition, "A edition must have at least one book!");
+        }
+
+        private ValidationContext CreateValidationContext(object instance)
+        {
+            return new ValidationContext(instance, null, null);
+        }
+
+        private void AssertValidationException<T>(T instance, string expectedErrorMessage)
+        {
+            ModelValidationHelper.AssertValidationException(instance, expectedErrorMessage);
         }
     }
 }

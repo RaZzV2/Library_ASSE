@@ -1,27 +1,21 @@
-﻿using DomainModel;
-using DomainModel.CustomValidationHelpers;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-
-namespace TestDomainModel.ModelsTests
+﻿namespace TestDomainModel.ModelsTests
 {
-   
+    using System.ComponentModel.DataAnnotations;
+    using DomainModel;
+    using DomainModel.CustomValidationHelpers;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+    /// <summary>
+    /// Test class for validating the Reader model.
+    /// </summary>
     [TestClass]
     public class ReaderTests
     {
         private Reader reader;
-        private ValidationContext CreateValidationContext(object instance)
-        {
-            return new ValidationContext(instance, null, null);
-        }
-        private void AssertValidationException<T>(T instance, string expectedErrorMessage)
-        {
-            ModelValidationHelper.AssertValidationException(instance, expectedErrorMessage);
-        }
 
+        /// <summary>
+        /// Set up method to initialize common objects for tests.
+        /// </summary>
         [TestInitialize]
         public void SetUp()
         {
@@ -32,38 +26,50 @@ namespace TestDomainModel.ModelsTests
                 Address = "Strada x Da",
                 EmailAddress = "razzkk@gmail.com",
                 Role = true,
-                PhoneNumber = "0732139910"
+                PhoneNumber = "0732139910",
             };
         }
 
+        /// <summary>
+        /// Validates that an empty first name returns an error.
+        /// </summary>
         [TestMethod]
         public void ReaderFirstNameIsEmpty()
         {
             this.reader.ReaderFirstName = string.Empty;
-            AssertValidationException(this.reader, "First name is required!");
+            this.AssertValidationException(this.reader, "First name is required!");
         }
 
+        /// <summary>
+        /// Validates that a first name containing special characters returns an error.
+        /// </summary>
         [TestMethod]
         public void ReaderFirstNameContainsSpecialCharacters()
         {
             this.reader.ReaderFirstName = "12312@@@";
-            AssertValidationException(this.reader, "First name must not have special characters!");
+            this.AssertValidationException(this.reader, "First name must not have special characters!");
         }
 
+        /// <summary>
+        /// Validates that a short first name returns an error.
+        /// </summary>
         [TestMethod]
         public void ReaderFirstNameTooShort()
         {
             this.reader.ReaderFirstName = "rzz";
-            AssertValidationException(this.reader, "First name must have at least 4 characters!");
+            this.AssertValidationException(this.reader, "First name must have at least 4 characters!");
         }
 
+        /// <summary>
+        /// Validates that a correct first name passes validation.
+        /// </summary>
         [TestMethod]
         public void ReaderFirstNameCorrect()
         {
             this.reader.ReaderFirstName = "Razvan";
             try
             {
-                Validator.ValidateObject(this.reader, CreateValidationContext(this.reader), true);
+                Validator.ValidateObject(this.reader, this.CreateValidationContext(this.reader), true);
             }
             catch (ValidationException ex)
             {
@@ -71,34 +77,46 @@ namespace TestDomainModel.ModelsTests
             }
         }
 
+        /// <summary>
+        /// Validates that a incorrect last name returns an error.
+        /// </summary>
         [TestMethod]
         public void ReaderLastNameIsEmpty()
         {
             this.reader.ReaderLastName = string.Empty;
-            AssertValidationException(this.reader, "Last name is required!");
+            this.AssertValidationException(this.reader, "Last name is required!");
         }
 
+        /// <summary>
+        /// Validates that a short last name returns an error.
+        /// </summary>
         [TestMethod]
         public void ReaderLastNameTooShort()
         {
             this.reader.ReaderLastName = "abc";
-            AssertValidationException(this.reader, "Last name must have at least 4 characters!");
+            this.AssertValidationException(this.reader, "Last name must have at least 4 characters!");
         }
 
+        /// <summary>
+        /// Validates that a last name containing special characters returns an error.
+        /// </summary>
         [TestMethod]
         public void ReaderLastNameContainsSpecialCharacters()
         {
             this.reader.ReaderLastName = "Special@Name";
-            AssertValidationException(this.reader, "Last name must not have special characters!");
+            this.AssertValidationException(this.reader, "Last name must not have special characters!");
         }
 
+        /// <summary>
+        /// Validates that a correct last name passes validation.
+        /// </summary>
         [TestMethod]
         public void ReaderLastNameCorrect()
         {
             this.reader.ReaderLastName = "Dragomir";
             try
             {
-                Validator.ValidateObject(this.reader, CreateValidationContext(this.reader), true);
+                Validator.ValidateObject(this.reader, this.CreateValidationContext(this.reader), true);
             }
             catch (ValidationException ex)
             {
@@ -106,28 +124,36 @@ namespace TestDomainModel.ModelsTests
             }
         }
 
+        /// <summary>
+        /// Validates that an empty address returns an error.
+        /// </summary>
         [TestMethod]
         public void AddressIsRequired()
         {
             this.reader.Address = null;
-            AssertValidationException(this.reader, "Address is required!");
+            this.AssertValidationException(this.reader, "Address is required!");
         }
 
-
+        /// <summary>
+        /// Validates that an invalid email address returns an error.
+        /// </summary>
         [TestMethod]
         public void InvalidEmailAddress()
         {
             this.reader.EmailAddress = "invalid_email";
-            AssertValidationException(this.reader, "Invalid Email Address");
+            this.AssertValidationException(this.reader, "Invalid Email Address");
         }
 
+        /// <summary>
+        /// Validates that a correct email address passes validation.
+        /// </summary>
         [TestMethod]
         public void CorrectEmailAddress()
         {
             this.reader.EmailAddress = "d_raszvan01@yahoo.com";
             try
             {
-                Validator.ValidateObject(this.reader, CreateValidationContext(this.reader), true);
+                Validator.ValidateObject(this.reader, this.CreateValidationContext(this.reader), true);
             }
             catch (ValidationException ex)
             {
@@ -135,6 +161,9 @@ namespace TestDomainModel.ModelsTests
             }
         }
 
+        /// <summary>
+        /// Validates setting the role to true.
+        /// </summary>
         [TestMethod]
         public void SetRoleToTrue()
         {
@@ -142,6 +171,9 @@ namespace TestDomainModel.ModelsTests
             Assert.IsTrue(this.reader.Role);
         }
 
+        /// <summary>
+        /// Validates setting the role to false.
+        /// </summary>
         [TestMethod]
         public void SetRoleToFalse()
         {
@@ -149,21 +181,26 @@ namespace TestDomainModel.ModelsTests
             Assert.IsFalse(this.reader.Role);
         }
 
-
+        /// <summary>
+        /// Validates that an invalid phone number returns an error.
+        /// </summary>
         [TestMethod]
         public void InvalidPhoneNumber()
         {
             this.reader.PhoneNumber = "invalid_phone";
-            AssertValidationException(this.reader, "Invalid Phone Number!");
+            this.AssertValidationException(this.reader, "Invalid Phone Number!");
         }
 
+        /// <summary>
+        /// Validates that a correct phone number passes validation.
+        /// </summary>
         [TestMethod]
         public void CorrectPhoneNumber()
         {
             this.reader.PhoneNumber = "0238432132";
             try
             {
-                Validator.ValidateObject(this.reader, CreateValidationContext(this.reader), true);
+                Validator.ValidateObject(this.reader, this.CreateValidationContext(this.reader), true);
             }
             catch (ValidationException ex)
             {
@@ -171,17 +208,23 @@ namespace TestDomainModel.ModelsTests
             }
         }
 
+        /// <summary>
+        /// Validates that either phone number or email address is required.
+        /// </summary>
         [TestMethod]
         public void ReaderPhoneNumberOrEmailEmpty()
         {
             this.reader.PhoneNumber = string.Empty;
             this.reader.EmailAddress = string.Empty;
-            var validationContext = new ValidationContext(reader, null, null);
-            var validationResult = new PhoneOrEmailReq().GetValidationResult(reader, validationContext);
+            var validationContext = new ValidationContext(this.reader, null, null);
+            var validationResult = new PhoneOrEmailReq().GetValidationResult(this.reader, validationContext);
             Assert.IsNotNull(validationResult);
             Assert.AreEqual("Either phone number or email address is required.", validationResult.ErrorMessage);
         }
 
+        /// <summary>
+        /// Validates the scenario when email is empty and phone number is correct.
+        /// </summary>
         [TestMethod]
         public void ReaderEmailEmptyPhoneNumberCorrect()
         {
@@ -189,7 +232,7 @@ namespace TestDomainModel.ModelsTests
 
             try
             {
-                Validator.ValidateObject(this.reader, CreateValidationContext(this.reader), true);
+                Validator.ValidateObject(this.reader, this.CreateValidationContext(this.reader), true);
             }
             catch (ValidationException ex)
             {
@@ -198,13 +241,16 @@ namespace TestDomainModel.ModelsTests
 
             this.reader.EmailAddress = string.Empty;
 
-            var validationContext = new ValidationContext(reader, null, null);
-            var validationResult = new PhoneOrEmailReq().GetValidationResult(reader, validationContext);
+            var validationContext = new ValidationContext(this.reader, null, null);
+            var validationResult = new PhoneOrEmailReq().GetValidationResult(this.reader, validationContext);
 
             Assert.IsNull(validationResult);
             Assert.AreEqual(ValidationResult.Success, validationResult);
         }
 
+        /// <summary>
+        /// Validates the scenario when phone number is empty and email is correct.
+        /// </summary>
         [TestMethod]
 
         public void ReaderPhoneNumberEmptyEmailCorrect()
@@ -213,7 +259,7 @@ namespace TestDomainModel.ModelsTests
 
             try
             {
-                Validator.ValidateObject(this.reader, CreateValidationContext(this.reader), true);
+                Validator.ValidateObject(this.reader, this.CreateValidationContext(this.reader), true);
             }
             catch (ValidationException ex)
             {
@@ -222,43 +268,65 @@ namespace TestDomainModel.ModelsTests
 
             this.reader.PhoneNumber = string.Empty;
 
-            var validationContext = new ValidationContext(reader, null, null);
-            var validationResult = new PhoneOrEmailReq().GetValidationResult(reader, validationContext);
+            var validationContext = new ValidationContext(this.reader, null, null);
+            var validationResult = new PhoneOrEmailReq().GetValidationResult(this.reader, validationContext);
 
             Assert.IsNull(validationResult);
             Assert.AreEqual(ValidationResult.Success, validationResult);
         }
 
+        /// <summary>
+        /// Validates the scenario when phone number is empty and email is incorrect.
+        /// </summary>
         [TestMethod]
         public void ReaderPhoneNumberEmptyEmailIncorrect()
         {
             this.reader.EmailAddress = "email_gresit";
 
-            AssertValidationException(this.reader, "Invalid Email Address");
+            this.AssertValidationException(this.reader, "Invalid Email Address");
 
             this.reader.PhoneNumber = string.Empty;
 
-            var validationContext = new ValidationContext(reader, null, null);
-            var validationResult = new PhoneOrEmailReq().GetValidationResult(reader, validationContext);
+            var validationContext = new ValidationContext(this.reader, null, null);
+            var validationResult = new PhoneOrEmailReq().GetValidationResult(this.reader, validationContext);
 
             Assert.IsNull(validationResult);
             Assert.AreEqual(ValidationResult.Success, validationResult);
         }
 
+        /// <summary>
+        /// Validates the scenario when email is empty and phone number is incorrect.
+        /// </summary>
         [TestMethod]
         public void ReaderEmailEmptyPhoneNumberIncorrect()
         {
             this.reader.PhoneNumber = "numar_gresit";
 
-            AssertValidationException(this.reader, "Invalid Phone Number!");
+            this.AssertValidationException(this.reader, "Invalid Phone Number!");
 
             this.reader.EmailAddress = string.Empty;
 
-            var validationContext = new ValidationContext(reader, null, null);
-            var validationResult = new PhoneOrEmailReq().GetValidationResult(reader, validationContext);
+            var validationContext = new ValidationContext(this.reader, null, null);
+            var validationResult = new PhoneOrEmailReq().GetValidationResult(this.reader, validationContext);
 
             Assert.IsNull(validationResult);
             Assert.AreEqual(ValidationResult.Success, validationResult);
+        }
+
+        /// <summary>
+        /// Creates a validation context for the specified instance.
+        /// </summary>
+        private ValidationContext CreateValidationContext(object instance)
+        {
+            return new ValidationContext(instance, null, null);
+        }
+
+        /// <summary>
+        /// Asserts that a validation exception is thrown for the specified instance and expected error message.
+        /// </summary>
+        private void AssertValidationException<T>(T instance, string expectedErrorMessage)
+        {
+            ModelValidationHelper.AssertValidationException(instance, expectedErrorMessage);
         }
     }
 }
