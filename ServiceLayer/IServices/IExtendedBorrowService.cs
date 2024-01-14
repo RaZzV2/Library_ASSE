@@ -1,12 +1,11 @@
-﻿using DomainModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ServiceLayer.IServices
+﻿namespace ServiceLayer.IServices
 {
+    using DomainModel;
+
+    /// <summary>
+    /// Service interface for managing operations related to the ExtendedBorrow model.
+    /// Inherits from the generic IDAOService for common CRUD operations.
+    /// </summary>
     public interface IExtendedBorrowService : IDAOService<ExtendedBorrow>
     {
     }
