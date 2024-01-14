@@ -1,15 +1,22 @@
-﻿using DomainModel;
-using Library.models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DataMapper.SQLServerDAO
+﻿namespace DataMapper.SQLServerDAO
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using DomainModel;
+    using Library.models;
+    using Library.Models;
+
+    /// <summary>
+    /// The <see cref="BorrowDAO"/> class provides Data Access Object (DAO) functionality
+    /// for interacting with the "Borrow" entity in the SQL Server database.
+    /// </summary>
     internal class BorrowDAO : IBorrowIDAO
     {
+        /// <summary>
+        /// Adds a new borrow record to the database.
+        /// </summary>
+        /// <param name="t">The <see cref="Borrow"/> object to be added.</param>
         public void Add(Borrow t)
         {
             using (var context = new LibraryContext())
@@ -19,6 +26,10 @@ namespace DataMapper.SQLServerDAO
             }
         }
 
+        /// <summary>
+        /// Deletes an existing borrow record from the database.
+        /// </summary>
+        /// <param name="t">The <see cref="Borrow"/> object to be deleted.</param>
         public void Delete(Borrow t)
         {
             using (var context = new LibraryContext())
@@ -30,6 +41,10 @@ namespace DataMapper.SQLServerDAO
             }
         }
 
+        /// <summary>
+        /// Retrieves all borrow records from the database.
+        /// </summary>
+        /// <returns>A <see cref="List{T}"/> of <see cref="Borrow"/> objects.</returns>
         public List<Borrow> GetAll()
         {
             using (var context = new LibraryContext())
@@ -38,6 +53,11 @@ namespace DataMapper.SQLServerDAO
             }
         }
 
+        /// <summary>
+        /// Retrieves a borrow record from the database based on the provided ID.
+        /// </summary>
+        /// <param name="id">The unique identifier of the borrow record to retrieve.</param>
+        /// <returns>The <see cref="Borrow"/> object if found, otherwise null.</returns>
         public Borrow GetById(int id)
         {
             using (var context = new LibraryContext())
@@ -46,6 +66,10 @@ namespace DataMapper.SQLServerDAO
             }
         }
 
+        /// <summary>
+        /// Updates an existing borrow record in the database.
+        /// </summary>
+        /// <param name="t">The <see cref="Borrow"/> object with updated information.</param>
         public void Update(Borrow t)
         {
             using (var context = new LibraryContext())

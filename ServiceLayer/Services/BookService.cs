@@ -1,33 +1,31 @@
 ﻿using DataMapper;
-using DomainModel.CustomValidationHelpers;
 using Library.models;
 using log4net;
 using ServiceLayer.IServices;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ServiceLayer.Services
 {
     public class BookService : IBookService
     {
-        readonly IBookIDAO iBookIDAO;
         private static readonly ILog Log = LogManager.GetLogger(typeof(BookService));
-        private int maxDomains;
+        private readonly IBookIDAO iBookIDAO;
+        private readonly int maxDomains;
 
-        private ValidationContext CreateValidationContext(object instance)
-        {
-            return new ValidationContext(instance, null, null);
-        }
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BookService"/> class.
+        /// </summary>
+        /// <param name="iBookIDAO"></param>
+        /// <param name="maxDomains"></param>
         public BookService(IBookIDAO iBookIDAO, int maxDomains)
         {
             this.iBookIDAO = iBookIDAO;
             this.maxDomains = maxDomains;
+        }
+        private ValidationContext CreateValidationContext(object instance)
+        {
+            return new ValidationContext(instance, null, null);
         }
 
         public void VerifyMoreDomainsThanNecessary(Book book)

@@ -1,15 +1,21 @@
-﻿using Library.models;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DataMapper.SQLServerDAO
+﻿namespace DataMapper.SQLServerDAO
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Library.models;
+    using Library.Models;
+
+    /// <summary>
+    /// The <see cref="AuthorDAO"/> class provides Data Access Object (DAO) functionality
+    /// for interacting with the "Author" entity in the SQL Server database.
+    /// </summary>
     internal class AuthorDAO : IAuthorIDAO
     {
+        /// <summary>
+        /// Adds a new author to the database.
+        /// </summary>
+        /// <param name="t">The <see cref="Author"/> object to be added.</param>
         public void Add(Author t)
         {
             using (var context = new LibraryContext())
@@ -18,6 +24,11 @@ namespace DataMapper.SQLServerDAO
                 context.SaveChanges();
             }
         }
+
+        /// <summary>
+        /// Deletes an existing author from the database.
+        /// </summary>
+        /// <param name="t">The <see cref="Author"/> object to be deleted.</param>
 
         public void Delete(Author t)
         {
@@ -30,6 +41,11 @@ namespace DataMapper.SQLServerDAO
             }
         }
 
+        /// <summary>
+        /// Retrieves an author from the database based on the provided ID.
+        /// </summary>
+        /// <param name="id">The unique identifier of the author to retrieve.</param>
+        /// <returns>The <see cref="Author"/> object if found, otherwise null.</returns>
         public Author GetById(int id)
         {
             using (var context = new LibraryContext())
@@ -38,6 +54,10 @@ namespace DataMapper.SQLServerDAO
             }
         }
 
+        /// <summary>
+        /// Retrieves all authors from the database.
+        /// </summary>
+        /// <returns>A <see cref="List{T}"/> of <see cref="Author"/> objects.</returns>
         public List<Author> GetAll()
         {
             using (var context = new LibraryContext())
@@ -46,6 +66,10 @@ namespace DataMapper.SQLServerDAO
             }
         }
 
+        /// <summary>
+        /// Updates an existing author in the database.
+        /// </summary>
+        /// <param name="t">The <see cref="Author"/> object with updated information.</param>
         public void Update(Author t)
         {
             using (var context = new LibraryContext())

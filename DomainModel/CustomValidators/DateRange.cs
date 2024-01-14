@@ -1,31 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DomainModel.CustomValidators
+﻿namespace DomainModel.CustomValidators
 {
+    using System;
+    using System.ComponentModel.DataAnnotations;
+
     [AttributeUsage(AttributeTargets.Property)]
     public class DateRange : ValidationAttribute
     {
-        private readonly int _minYear;
-        private readonly int _maxYear;
+        private readonly int minYear;
+        private readonly int maxYear;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DateRange"/> class.
+        /// </summary>
+        /// <param name="minYear"></param>
+        /// <param name="maxYear"></param>
         public DateRange(int minYear, int maxYear)
         {
-            _minYear = minYear;
-            _maxYear = maxYear;
+            this.minYear = minYear;
+            this.maxYear = maxYear;
         }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             if (value is DateTime dateValue)
             {
-                if (dateValue.Year < _minYear || dateValue.Year > _maxYear)
+                if (dateValue.Year < this.minYear || dateValue.Year > this.maxYear)
                 {
-                    return new ValidationResult($"Date must be between {_minYear} and {_maxYear}.");
+                    return new ValidationResult($"Date must be between {this.minYear} and {this.maxYear}.");
                 }
                 return ValidationResult.Success;
             }

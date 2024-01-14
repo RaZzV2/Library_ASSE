@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
-
-namespace DomainModel.CustomValidators
+﻿namespace DomainModel.CustomValidators
 {
+    using System;
+    using System.Collections;
+    using System.Collections.ObjectModel;
+    using System.ComponentModel.DataAnnotations;
+
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
     public class EnsureAtLeastOneElement : ValidationAttribute
     {

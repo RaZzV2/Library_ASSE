@@ -1,18 +1,14 @@
-﻿using DataMapper;
-using DomainModel;
-using DomainModel.CustomValidationHelpers;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Rhino.Mocks;
-using ServiceLayer.IServices;
-using ServiceLayer.Services;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-
-namespace TestServiceLayer.ServicesTests
+﻿namespace TestServiceLayer.ServicesTests
 {
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+    using DataMapper;
+    using DomainModel;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Rhino.Mocks;
+    using ServiceLayer.Services;
+
     [TestClass]
     public class ReaderServiceTests
     {
@@ -23,31 +19,31 @@ namespace TestServiceLayer.ServicesTests
         [TestInitialize]
         public void SetUp()
         {
-            mockReaderIDAO = MockRepository.GenerateMock<IReaderIDAO>();
-            readerService = new ReaderService(mockReaderIDAO);
-            reader = new Reader()
+            this.mockReaderIDAO = MockRepository.GenerateMock<IReaderIDAO>();
+            this.readerService = new ReaderService(this.mockReaderIDAO);
+            this.reader = new Reader()
             {
                 ReaderId = 1,
                 ReaderFirstName = "Andrei",
                 ReaderLastName ="Icsulescu",
                 Address = "Strada x, Numarul 33",
                 Role = true,
-                PhoneNumber ="0732138913"
+                PhoneNumber = "0732138913"
             };
         }
 
         [TestMethod]
         public void AddValidReaderCallsIReaderIDAO()
         {
-            readerService.Add(this.reader);
-            mockReaderIDAO.AssertWasCalled(mock => mock.Add(Arg<Reader>.Is.Equal(this.reader)), options => options.Repeat.Once());
+            this.readerService.Add(this.reader);
+            this.mockReaderIDAO.AssertWasCalled(mock => mock.Add(Arg<Reader>.Is.Equal(this.reader)), options => options.Repeat.Once());
         }
 
         [TestMethod]
         public void AddInvalidReaderCallsIReaderIDAO()
         {
             this.reader.ReaderFirstName = "invalid_name++";
-            var exception = Assert.ThrowsException<ValidationException>(() => readerService.Add(this.reader));
+            var exception = Assert.ThrowsException<ValidationException>(() => this.readerService.Add(this.reader));
             Assert.AreEqual("First name must not have special characters!", exception.Message);
         }
 
@@ -59,25 +55,25 @@ namespace TestServiceLayer.ServicesTests
                 new Reader
                 {
                     ReaderFirstName = "Andrei",
-                    ReaderLastName ="Icsulescu",
+                    ReaderLastName = "Icsulescu",
                     Address = "Strada x, Numarul 33",
                     Role = true,
-                    PhoneNumber ="0732138913"
+                    PhoneNumber = "0732138913",
                 },
             };
-            mockReaderIDAO.Stub(x => x.GetAll()).Return(expectedReaders);
+            this.mockReaderIDAO.Stub(x => x.GetAll()).Return(expectedReaders);
 
-            var result = readerService.GetAll();
+            var result = this.readerService.GetAll();
 
-            mockReaderIDAO.AssertWasCalled(mock => mock.GetAll(), options => options.Repeat.Once());
+            this.mockReaderIDAO.AssertWasCalled(mock => mock.GetAll(), options => options.Repeat.Once());
             CollectionAssert.AreEqual(expectedReaders, result.ToList());
         }
 
         [TestMethod]
         public void RemoveReaderCallsIReaderIDAO()
         {
-            readerService.Delete(this.reader);
-            mockReaderIDAO.AssertWasCalled(mock => mock.Delete(Arg<Reader>.Is.Equal(this.reader)), options => options.Repeat.Once());
+            this.readerService.Delete(this.reader);
+            this.mockReaderIDAO.AssertWasCalled(mock => mock.Delete(Arg<Reader>.Is.Equal(this.reader)), options => options.Repeat.Once());
         }
 
         [TestMethod]
@@ -85,10 +81,9 @@ namespace TestServiceLayer.ServicesTests
         {
             int readerId = 1;
 
-            
-            mockReaderIDAO.Stub(x => x.GetById(Arg<int>.Is.Anything)).Return(this.reader);
+            this.mockReaderIDAO.Stub(x => x.GetById(Arg<int>.Is.Anything)).Return(this.reader);
 
-            var result = readerService.GetById(readerId);
+            var result = this.readerService.GetById(readerId);
 
             Assert.IsNotNull(result);
             Assert.AreEqual(this.reader, result);
@@ -97,8 +92,8 @@ namespace TestServiceLayer.ServicesTests
         [TestMethod]
         public void UpdateReaderCallsIReaderIDAO()
         {
-            readerService.Update(this.reader);
-            mockReaderIDAO.AssertWasCalled(mock => mock.Update(Arg<Reader>.Is.Equal(this.reader)), options => options.Repeat.Once());
+            this.readerService.Update(this.reader);
+            this.mockReaderIDAO.AssertWasCalled(mock => mock.Update(Arg<Reader>.Is.Equal(this.reader)), options => options.Repeat.Once());
         }
     }
 }
