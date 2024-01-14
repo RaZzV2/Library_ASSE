@@ -1,16 +1,19 @@
-﻿using DomainModel.CustomValidators;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Rhino.Mocks.Constraints;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-
-namespace TestDomainModel.CustomValidatorsTests
+﻿namespace TestDomainModel.CustomValidatorsTests
 {
+    using System;
+    using System.ComponentModel.DataAnnotations;
+    using DomainModel.CustomValidators;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+    /// <summary>
+    /// Test class for validating the DateRange custom validator.
+    /// </summary>
     [TestClass]
     public class DateRangeTests
     {
+        /// <summary>
+        /// Validates that a date within the specified range returns success.
+        /// </summary>
         [TestMethod]
         public void ValidDateWithinRange_ReturnsSuccess()
         {
@@ -22,6 +25,9 @@ namespace TestDomainModel.CustomValidatorsTests
             Assert.AreEqual(validationResult, ValidationResult.Success);
         }
 
+        /// <summary>
+        /// Validates that a date before the specified minimum year returns an error.
+        /// </summary>
         [TestMethod]
         public void DateBeforeMinYear_ReturnsError()
         {
@@ -34,6 +40,9 @@ namespace TestDomainModel.CustomValidatorsTests
             Assert.AreEqual("Date must be between 2000 and 2030.", validationResult.ErrorMessage);
         }
 
+        /// <summary>
+        /// Validates that a date after the specified maximum year returns an error.
+        /// </summary>
         [TestMethod]
         public void DateAfterMaxYear_ReturnsError()
         {
@@ -46,6 +55,9 @@ namespace TestDomainModel.CustomValidatorsTests
             Assert.AreEqual("Date must be between 2000 and 2030.", validationResult.ErrorMessage);
         }
 
+        /// <summary>
+        /// Validates that a valid date on the minimum year boundary returns success.
+        /// </summary>
         [TestMethod]
         public void ValidDateOnMinYearBoundary_ReturnsSuccess()
         {
@@ -57,6 +69,9 @@ namespace TestDomainModel.CustomValidatorsTests
             Assert.AreEqual(ValidationResult.Success, validationResult);
         }
 
+        /// <summary>
+        /// Validates that a valid date on the maximum year boundary returns success.
+        /// </summary>
         [TestMethod]
         public void ValidDateOnMaxYearBoundary_ReturnsSuccess()
         {
@@ -68,6 +83,9 @@ namespace TestDomainModel.CustomValidatorsTests
             Assert.AreEqual(ValidationResult.Success, validationResult);
         }
 
+        /// <summary>
+        /// Validates that validating a string DateTime value returns an error.
+        /// </summary>
         [TestMethod]
         public void ValidatingStringDateTimeValue_ReturnsError()
         {
@@ -80,6 +98,9 @@ namespace TestDomainModel.CustomValidatorsTests
             Assert.AreEqual("The value must be a valid DateTime.", validationResult.ErrorMessage);
         }
 
+        /// <summary>
+        /// Validates that validating an int DateTime value returns an error.
+        /// </summary>
         [TestMethod]
         public void ValidatingIntDateTimeValue_ReturnsError()
         {
@@ -91,8 +112,5 @@ namespace TestDomainModel.CustomValidatorsTests
             Assert.AreNotEqual(ValidationResult.Success, validationResult);
             Assert.AreEqual("The value must be a valid DateTime.", validationResult.ErrorMessage);
         }
-
-        
-
     }
 }

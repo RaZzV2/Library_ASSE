@@ -7,7 +7,7 @@ using ServiceLayer.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Library.models;
+using Library.Models;
 using ServiceLayer.IServices;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -45,7 +45,7 @@ namespace TestServiceLayer.ServicesTests
         [TestMethod]
         public void AddValidEditionCallsIEditionIDAO()
         {
-            editionService.Add(this.edition);
+            this.editionService.Add(this.edition);
             mockEditionIDAO.AssertWasCalled(mock => mock.Add(Arg<Edition>.Is.Equal(this.edition)), options => options.Repeat.Once());
         }
 
@@ -85,7 +85,7 @@ namespace TestServiceLayer.ServicesTests
 
             mockEditionIDAO.Stub(x => x.GetAll()).Return(expectedEditions);
 
-            var result = editionService.GetAll();
+            var result = this.editionService.GetAll();
 
             mockEditionIDAO.AssertWasCalled(mock => mock.GetAll(), options => options.Repeat.Once());
             CollectionAssert.AreEqual(expectedEditions, result.ToList());

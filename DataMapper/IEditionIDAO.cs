@@ -1,6 +1,6 @@
 ﻿namespace DataMapper
 {
-    using Library.models;
+    using Library.Models;
 
     /// <summary>
     /// The <see cref="IEditionIDAO"/> interface defines the contract for Data Access Object (DAO) operations

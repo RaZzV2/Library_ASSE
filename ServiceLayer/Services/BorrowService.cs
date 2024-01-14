@@ -1,7 +1,7 @@
 ﻿using DataMapper;
 using DataMapper.Migrations;
 using DomainModel;
-using Library.models;
+using Library.Models;
 using log4net;
 using Rhino.Mocks.Impl;
 using System;

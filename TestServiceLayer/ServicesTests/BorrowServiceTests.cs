@@ -1,7 +1,7 @@
 ﻿using DataMapper;
 using DomainModel;
 using DomainModel.CustomValidationHelpers;
-using Library.models;
+using Library.Models;
 using log4net;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhino.Mocks;

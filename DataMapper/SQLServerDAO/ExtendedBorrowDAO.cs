@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using DomainModel;
-    using Library.models;
     using Library.Models;
 
     /// <summary>

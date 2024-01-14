@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-using Library.models;
+using Library.Models;
 using System.Linq;
 
 namespace TestServiceLayer.ServicesTests

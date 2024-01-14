@@ -3,7 +3,7 @@
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
-    using Library.models;
+    using Library.Models;
 
     /// <summary>
     /// The <see cref="NoDomainInSubdomains"/> attribute is a custom validation attribute for ensuring that a BookDomain's 

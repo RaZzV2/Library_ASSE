@@ -1,16 +1,20 @@
-﻿using DomainModel.CustomValidators;
-using DomainModel;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-
-namespace TestDomainModel.CustomValidatorsTests
+﻿namespace TestDomainModel.CustomValidatorsTests
 {
+    using System;
+    using System.ComponentModel.DataAnnotations;
+    using DomainModel;
+    using DomainModel.CustomValidators;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+    /// <summary>
+    /// Test class for validating the StartEndDateValid custom validator.
+    /// </summary>
     [TestClass]
     public class StartAndEndDateTests
     {
+        /// <summary>
+        /// Validates that the start date is earlier than the end date, and returns success.
+        /// </summary>
         [TestMethod]
         public void StartDateIsEarlierThanEndDate_ReturnsSuccess()
         {
@@ -22,6 +26,9 @@ namespace TestDomainModel.CustomValidatorsTests
             Assert.AreEqual(ValidationResult.Success, validationResult);
         }
 
+        /// <summary>
+        /// Validates that the start date equals the end date, and returns success.
+        /// </summary>
         [TestMethod]
         public void StartDateEqualsEndDate_ReturnsSuccess()
         {
@@ -33,6 +40,9 @@ namespace TestDomainModel.CustomValidatorsTests
             Assert.AreEqual(ValidationResult.Success, validationResult);
         }
 
+        /// <summary>
+        /// Validates that the start date is later than the end date, and returns an error.
+        /// </summary>
         [TestMethod]
         public void StartDateIsLaterThanEndDate_ReturnsError()
         {
@@ -45,6 +55,9 @@ namespace TestDomainModel.CustomValidatorsTests
             Assert.AreEqual("End date must be later than start date.", validationResult.ErrorMessage);
         }
 
+        /// <summary>
+        /// Validates that the object type is not of type 'Borrow', and returns an error.
+        /// </summary>
         [TestMethod]
         public void WrongObjectType_ReturnsError()
         {
@@ -57,6 +70,9 @@ namespace TestDomainModel.CustomValidatorsTests
             Assert.AreEqual("Wrong object type!", validationResult.ErrorMessage);
         }
 
+        /// <summary>
+        /// Validates that the start and end dates are set to DateTime.MinValue, and returns success.
+        /// </summary>
         [TestMethod]
         public void MinValueStartDateAndEndDate_ReturnsSuccess()
         {
@@ -68,6 +84,9 @@ namespace TestDomainModel.CustomValidatorsTests
             Assert.AreEqual(ValidationResult.Success, validationResult);
         }
 
+        /// <summary>
+        /// Validates that the start and end dates are set to DateTime.MaxValue, and returns success.
+        /// </summary>
         [TestMethod]
         public void MaxValueStartDateAndEndDate_ReturnsSuccess()
         {

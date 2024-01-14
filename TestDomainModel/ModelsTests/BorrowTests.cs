@@ -1,14 +1,12 @@
-﻿using DomainModel;
-using DomainModel.CustomValidationHelpers;
-using Library.models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-
-namespace TestDomainModel.ModelsTests
+﻿namespace TestDomainModel.ModelsTests
 {
+    using System;
+    using System.ComponentModel.DataAnnotations;
+    using DomainModel;
+    using DomainModel.CustomValidationHelpers;
+    using Library.Models;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
     public class BorrowTests
     {

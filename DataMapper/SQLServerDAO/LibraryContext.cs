@@ -2,7 +2,7 @@
 {
     using System.Data.Entity;
     using DomainModel;
-    using Library.models;
+    using Library.Models;
 
     /// <summary>
     /// The <see cref="LibraryContext"/> class represents the DbContext for the Library database.

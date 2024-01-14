@@ -1,16 +1,20 @@
-﻿using DomainModel.CustomValidators;
-using Library.models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-
-namespace TestDomainModel.CustomValidatorsTests
+﻿namespace TestDomainModel.CustomValidatorsTests
 {
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using DomainModel.CustomValidators;
+    using Library.Models;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+    /// <summary>
+    /// Test class for validating the EnsureAtLeastOneElement custom validator.
+    /// </summary>
     [TestClass]
     public class EnsureAtLeastOneElementTests
     {
+        /// <summary>
+        /// Validates that a null collection returns an error.
+        /// </summary>
         [TestMethod]
         public void NullCollection_ReturnsError()
         {
@@ -23,6 +27,9 @@ namespace TestDomainModel.CustomValidatorsTests
             Assert.AreEqual("The collection must contain at least one element.", validationResult.ErrorMessage);
         }
 
+        /// <summary>
+        /// Validates that an empty collection returns an error.
+        /// </summary>
         [TestMethod]
         public void EmptyCollection_ReturnsError()
         {
@@ -35,6 +42,9 @@ namespace TestDomainModel.CustomValidatorsTests
             Assert.AreEqual("The collection must contain at least one element.", validationResult.ErrorMessage);
         }
 
+        /// <summary>
+        /// Validates that a non-empty collection returns success.
+        /// </summary>
         [TestMethod]
         public void NonEmptyCollection_ReturnsSuccess()
         {
@@ -46,6 +56,9 @@ namespace TestDomainModel.CustomValidatorsTests
             Assert.AreEqual(ValidationResult.Success, validationResult);
         }
 
+        /// <summary>
+        /// Validates that a non-collection object returns an error.
+        /// </summary>
         [TestMethod]
         public void NonCollectionObject_ReturnsError()
         {
@@ -58,6 +71,9 @@ namespace TestDomainModel.CustomValidatorsTests
             Assert.AreEqual("The property must be a collection.", validationResult.ErrorMessage);
         }
 
+        /// <summary>
+        /// Validates that a single-element collection returns success.
+        /// </summary>
         [TestMethod]
         public void SingleElementCollection_ReturnsSuccess()
         {
@@ -69,6 +85,9 @@ namespace TestDomainModel.CustomValidatorsTests
             Assert.AreEqual(ValidationResult.Success, validationResult);
         }
 
+        /// <summary>
+        /// Validates that a multiple-elements collection returns success.
+        /// </summary>
         [TestMethod]
         public void MultipleElementsCollection_ReturnsSuccess()
         {
