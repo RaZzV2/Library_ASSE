@@ -15,6 +15,7 @@ namespace ServiceLayer.Services
     {
         readonly IExtendedBorrowIDAO iExtendedBorrowIDAO;
         private static readonly ILog Log = LogManager.GetLogger(typeof(ExtendedBorrowService));
+        private int lim;
 
         private ValidationContext CreateValidationContext(object instance)
         {
@@ -50,6 +51,16 @@ namespace ServiceLayer.Services
         public void Update(ExtendedBorrow t)
         {
             iExtendedBorrowIDAO.Update(t);
+        }
+
+        public void MaximumExtension(ExtendedBorrow t)
+        {
+            var extendedBorrowCount = t.Borrow.Reader.Borrows.Select(x => x.ExtendedBorrows.Where(y => t.Date.Date.AddMonths(-3) >= y.Date && y.Date < t.Date.Date)).SelectMany(i => i).Count();
+            if (extendedBorrowCount > lim)
+            {
+                throw new ValidationException("You cannot borrow " + extendedBorrowCount + " in this period!");
+            }
+
         }
     }
 }

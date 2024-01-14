@@ -17,15 +17,25 @@ namespace ServiceLayer.Services
     {
         readonly IBookIDAO iBookIDAO;
         private static readonly ILog Log = LogManager.GetLogger(typeof(BookService));
+        private int maxDomains;
 
         private ValidationContext CreateValidationContext(object instance)
         {
             return new ValidationContext(instance, null, null);
         }
 
-        public BookService(IBookIDAO iBookIDAO)
+        public BookService(IBookIDAO iBookIDAO, int maxDomains)
         {
             this.iBookIDAO = iBookIDAO;
+            this.maxDomains = maxDomains;
+        }
+
+        public void VerifyMoreDomainsThanNecessary(Book book)
+        {
+            if(book.Domains.Count >= maxDomains)
+            {
+                throw new ValidationException("A book shouldn't have more than " + maxDomains + " domains");
+            }
         }
 
         public void Add(Book t)

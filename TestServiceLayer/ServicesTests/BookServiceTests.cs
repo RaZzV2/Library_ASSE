@@ -23,7 +23,7 @@ namespace TestServiceLayer.ServicesTests
         public void SetUp()
         {
             mockBookIDAO = MockRepository.GenerateMock<IBookIDAO>();
-            bookService = new BookService(mockBookIDAO);
+            bookService = new BookService(mockBookIDAO,3);
             book = new Book()
             {
                 BookId = 1,
@@ -41,10 +41,26 @@ namespace TestServiceLayer.ServicesTests
                     new BookDomain
                     {
 
+                    },
+                    new BookDomain
+                    {
+
+                    },
+                    new BookDomain
+                    {
+
                     }
                 },
                 Editions = new List<Edition>()
             };
+        }
+
+        [TestMethod]
+        public void MoreThanNecessaryDomains()
+        {
+            var exception = Assert.ThrowsException<ValidationException>(() =>
+                bookService.VerifyMoreDomainsThanNecessary(this.book));
+            Assert.AreEqual("A book shouldn't have more than 3 domains", exception.Message);
         }
 
         [TestMethod]

@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Rhino.Mocks.Constraints;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace DomainModel
 {
@@ -33,5 +35,7 @@ namespace DomainModel
        
         [Phone(ErrorMessage = "Invalid Phone Number!")]
         public string PhoneNumber { get; set; }
+
+        public List<Borrow> Borrows { get; set; }
     }
 }
