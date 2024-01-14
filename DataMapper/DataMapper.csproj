@@ -68,12 +68,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthorIDAO.cs" />
-    <Compile Include="BookDomainIDAO.cs" />
-    <Compile Include="BookIDAO.cs" />
-    <Compile Include="BorrowIDAO.cs" />
-    <Compile Include="EditionIDAO.cs" />
-    <Compile Include="ExtendedBorrowIDAO.cs" />
+    <Compile Include="IAuthorIDAO.cs" />
+    <Compile Include="IBookDomainIDAO.cs" />
+    <Compile Include="IBookIDAO.cs" />
+    <Compile Include="IBorrowIDAO.cs" />
+    <Compile Include="IEditionIDAO.cs" />
+    <Compile Include="IExtendedBorrowIDAO.cs" />
     <Compile Include="IDAO.cs" />
     <Compile Include="Migrations\202401051617141_t.cs" />
     <Compile Include="Migrations\202401051617141_t.designer.cs">
@@ -84,7 +84,7 @@
       <DependentUpon>202401121842410_test.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="ReaderIDAO.cs" />
+    <Compile Include="IReaderIDAO.cs" />
     <Compile Include="SQLServerDAO\AuthorDAO.cs" />
     <Compile Include="SQLServerDAO\BookDAO.cs" />
     <Compile Include="SQLServerDAO\BookDomainDAO.cs" />
