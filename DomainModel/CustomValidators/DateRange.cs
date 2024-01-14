@@ -3,6 +3,10 @@
     using System;
     using System.ComponentModel.DataAnnotations;
 
+    /// <summary>
+    /// The <see cref="DateRange"/> attribute is a custom validation attribute for validating that a DateTime property
+    /// falls within a specified range of years.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public class DateRange : ValidationAttribute
     {
@@ -12,14 +16,20 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="DateRange"/> class.
         /// </summary>
-        /// <param name="minYear"></param>
-        /// <param name="maxYear"></param>
+        /// <param name="minYear">The minimum allowed year.</param>
+        /// <param name="maxYear">The maximum allowed year.</param>
         public DateRange(int minYear, int maxYear)
         {
             this.minYear = minYear;
             this.maxYear = maxYear;
         }
 
+        /// <summary>
+        /// Validates whether the specified date falls within the allowed date range.
+        /// </summary>
+        /// <param name="value">The DateTime value to validate.</param>
+        /// <param name="validationContext">The validation context.</param>
+        /// <returns>A <see cref="ValidationResult"/> indicating whether the validation was successful.</returns>
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             if (value is DateTime dateValue)
@@ -28,6 +38,7 @@
                 {
                     return new ValidationResult($"Date must be between {this.minYear} and {this.maxYear}.");
                 }
+
                 return ValidationResult.Success;
             }
             else

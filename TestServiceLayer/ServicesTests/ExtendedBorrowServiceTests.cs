@@ -68,7 +68,6 @@ namespace TestServiceLayer.ServicesTests
                     },
                     Date = new DateTime(2023, 1, 1, 12, 0, 0)
                 },
-        
             };
 
             mockExtendedBorrowIDAO.Stub(x => x.GetAll()).Return(expectedExtendedBorrows);
@@ -96,29 +95,27 @@ namespace TestServiceLayer.ServicesTests
                                 {
                                     new ExtendedBorrow
                                     {
-                                        Date = new DateTime(2022,10,8)
+                                        Date = new DateTime(2022,10,8),
                                     },
                                     new ExtendedBorrow
                                     {
-                                        Date = new DateTime(2022,10,7)
+                                        Date = new DateTime(2022,10,7),
                                     },
                                     new ExtendedBorrow
                                     {
-                                        Date = new DateTime(2022,10,5)
+                                        Date = new DateTime(2022,10,5),
                                     },
                                     new ExtendedBorrow
                                     {
-                                        Date = new DateTime(2022,10,3)
-                                    }
-                                }
-                            }
-                        }
-                    }
+                                        Date = new DateTime(2022,10,3),
+                                    },
+                                },
+                            },
+                        },
+                    },
                 },
                 Date = new DateTime(2022,10,20)
             };
-
-            
             var exception = Assert.ThrowsException<ValidationException>(() => extendedBorrowService.MaximumExtension(extendedBorrow));
             Assert.AreEqual("You can extend your borrow with maximum 2 in this period!", exception.Message);
         }
@@ -142,12 +139,12 @@ namespace TestServiceLayer.ServicesTests
                                     {
                                         Date = new DateTime(2022,10,8)
                                     },
-                                }
-                            }
-                        }
-                    }
+                                },
+                            },
+                        },
+                    },
                 },
-                Date = new DateTime(2022, 10, 20)
+                Date = new DateTime(2022, 10, 20),
             };
             extendedBorrowService.MaximumExtension(extendedBorrow);
         }
