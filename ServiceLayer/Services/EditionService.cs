@@ -34,29 +34,25 @@ namespace ServiceLayer.Services
 
         public List<Edition> GetAll()
         {
+            Log.Info("List of editions has been returned succesfully!");
             return iEditionIDAO.GetAll();
         }
         public void Delete(Edition t)
         {
+            Log.Info("Edition has been deleted succesfully!");
             iEditionIDAO.Delete(t);
         }
 
         public Edition GetById(int id)
         {
+            Log.Info("Edition has been returned succesfully!");
             return iEditionIDAO.GetById(id);
         }
 
         public void Update(Edition t)
         {
-            try
-            {
-                Validator.ValidateObject(t, CreateValidationContext(t), true);
-                iEditionIDAO.Update(t);
-            }
-            catch (Exception exception)
-            {
-                throw exception;
-            }
+            iEditionIDAO.Update(t);
+            Log.Info("Edition has been updated succesfully!");
         }
     }
 }

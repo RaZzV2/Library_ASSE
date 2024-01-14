@@ -36,21 +36,25 @@ namespace ServiceLayer.Services
 
         public List<ExtendedBorrow> GetAll()
         {
+            Log.Info("List of extended borrow has been returned successfully!");
             return iExtendedBorrowIDAO.GetAll();
         }
 
         public void Delete(ExtendedBorrow t)
         {
             iExtendedBorrowIDAO.Delete(t);
+            Log.Info("Extended borrow has been deleted successfully!");
         }
 
         public ExtendedBorrow GetById(int id)
         {
+            Log.Info("Extended borrow has been returned successfully!");
             return iExtendedBorrowIDAO.GetById(id);
         }
 
         public void Update(ExtendedBorrow t)
         {
+            Log.Info("Extended borrow has been updated successfully!");
             iExtendedBorrowIDAO.Update(t);
         }
 
@@ -59,9 +63,10 @@ namespace ServiceLayer.Services
             var extendedBorrowCount = t.Borrow.Reader.Borrows.Select(x => x.ExtendedBorrows.Where(y => t.Date.Date.AddMonths(-3) < y.Date && y.Date < t.Date.Date)).SelectMany(i => i).Count();
             if (extendedBorrowCount > lim)
             {
+                Log.Warn($"Validation failed: Attempting to extend borrow beyond the limit for borrow with Id {t.Borrow.Id}.");
                 throw new ValidationException("You can extend your borrow with maximum " + lim + " in this period!");
             }
-
+            Log.Warn($"Validation failed: Attempting to extend borrow beyond the limit for borrow with Id {t.Borrow.Id}.");
         }
     }
 }

@@ -42,6 +42,10 @@ namespace TestServiceLayer.ServicesTests
                 Edition = new Edition()
                 {
                     EditionId = 1,
+                    Book = new Book
+                    {
+                        BookId =2
+                    }
                 },
                 BorrowStartDate = new DateTime(2003, 12, 4),
                 BorrowEndDate = new DateTime(2004, 2, 3),
@@ -89,7 +93,7 @@ namespace TestServiceLayer.ServicesTests
                 new Borrow
                 {
                     Reader = new Reader(),
-                    Edition = new Edition(),
+                    Edition = new Edition{Book = new Book {BookId =1 } },
                     BorrowStartDate = new DateTime(2003,12,1),
                     BorrowEndDate = new DateTime(2004,2,3),
                     IsReturned = false,

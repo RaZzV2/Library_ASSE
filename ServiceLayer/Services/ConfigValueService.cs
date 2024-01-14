@@ -1,4 +1,5 @@
-﻿using ServiceLayer.IServices;
+﻿using log4net;
+using ServiceLayer.IServices;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,7 +15,7 @@ namespace ServiceLayer.Services
     public class ConfigValueService : IConfigValue
     {
         private XElement xmlData;
-
+        private static readonly ILog Log = LogManager.GetLogger(typeof(ConfigValueService));
         public void LoadConfiguration(string filePath)
         {
             string xmlText = File.ReadAllText(filePath);
@@ -28,10 +29,11 @@ namespace ServiceLayer.Services
                 XElement element = xmlData.Element(key);
                 if (element != null)
                 {
+                    Log.Debug("Configuration loaded successfully.");
                     return (T)Convert.ChangeType(element.Value, typeof(T));
                 }
             }
-
+            Log.Warn("Xml is null!");
             return default;
         }
     }

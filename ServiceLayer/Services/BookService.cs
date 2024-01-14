@@ -36,6 +36,7 @@ namespace ServiceLayer.Services
             {
                 throw new ValidationException("A book shouldn't have more than " + maxDomains + " domains");
             }
+            Log.Debug("The function of verifying domains is called succesfully!");
         }
 
         public void Add(Book t)
@@ -47,22 +48,26 @@ namespace ServiceLayer.Services
 
         public List<Book> GetAll()
         {
+            Log.Info("List of books has been returned succesfully!");
             return iBookIDAO.GetAll();
         }
 
         public void Delete(Book t)
         {
+            Log.Info("Book has been deleted succesfully!");
             iBookIDAO.Delete(t);
         }
 
         public Book GetById(int id)
         {
+            Log.Info("Book has been returned succesfully!");
             return iBookIDAO.GetById(id);
         }
 
         public void Update(Book t)
         {
             iBookIDAO.Update(t);
+            Log.Info("Book has been updated succesfuly!");
         }
     }
 }

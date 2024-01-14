@@ -36,15 +36,18 @@ namespace ServiceLayer.Services
         public void Delete(BookDomain t)
         {
             iBookDomainIDAO.Delete(t);
+            Log.Info("Book domain has been deleted successfully!");
         }
 
         public BookDomain GetById(int id)
         {
+            Log.Info("Book domain has been returned successfully!");
             return iBookDomainIDAO.GetById(id);
         }
 
         public List<BookDomain> GetAll()
         {
+            Log.Info("List of book domains has been returned successfully!");
             return iBookDomainIDAO.GetAll();
         }
 
@@ -54,6 +57,7 @@ namespace ServiceLayer.Services
         {
             Validator.ValidateObject(t, CreateValidationContext(t), true);
             iBookDomainIDAO.Update(t);
+            Log.Info("Book domain has been updated successfully!");
         }
     }
 }

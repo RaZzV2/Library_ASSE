@@ -31,16 +31,19 @@ namespace ServiceLayer.Services
 
         public List<Author> GetAll()
         {
+            Log.Info("List of authors has been returned successfully!");
             return iAuthorIDAO.GetAll();
         }
 
         public void Delete(Author t)
         {
             iAuthorIDAO.Delete(t);
+            Log.Info("An author has been deleted!");
         }
 
         public Author GetById(int id)
         {
+            Log.Info("Author has been returned!");
             return iAuthorIDAO.GetById(id);
         }
 
@@ -48,6 +51,7 @@ namespace ServiceLayer.Services
         {
             Validator.ValidateObject(t, CreateValidationContext(t), true);
             iAuthorIDAO.Update(t);
+            Log.Info("Author has been updated!");
         }
     }
 }

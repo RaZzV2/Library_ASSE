@@ -43,29 +43,25 @@ namespace ServiceLayer.Services
 
         public List<Reader> GetAll()
         {
+            Log.Info("List of readers has been returned successfully!");
             return iReaderIDAO.GetAll();
         }
 
         public void Delete(Reader t)
         {
             iReaderIDAO.Delete(t);
+            Log.Info("Reader has been deleted successfully!");
         }
 
         public void Update(Reader t)
         {
-            try
-            {
-                Validator.ValidateObject(t, CreateValidationContext(t), true);
-                iReaderIDAO.Update(t);
-            }
-            catch (Exception exception)
-            {
-                throw exception;
-            }
+            iReaderIDAO.Update(t);
+            Log.Info("Reader has been updated successfully!");
         }
 
         public Reader GetById(int id)
         {
+            Log.Info("Reader has been returned successfully!");
             return iReaderIDAO.GetById(id);
         }
     }

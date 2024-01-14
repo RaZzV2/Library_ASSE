@@ -49,7 +49,8 @@ namespace ServiceLayer.Services
                 var startDate = entity.BorrowStartDate - delta;
                 var borrowCount = entity.Reader.Borrows.Where(x => startDate < x.BorrowStartDate && x.BorrowStartDate < entity.BorrowStartDate).Where(x => x.Edition.EditionId == entity.Edition.EditionId).Count();
                 if (borrowCount > 0)
-                {
+                { 
+                    Log.Error($"An error occurred in CannotBorrowSameBookInAPeriod for book with Id {entity.Edition.Book.BookId}");
                     throw new ValidationException("You cannot borrow same edition in this period!");
                 }
             }
@@ -60,9 +61,11 @@ namespace ServiceLayer.Services
                 var borrowCount = entity.Reader.Borrows.Where(x => startDate < x.BorrowStartDate && x.BorrowStartDate < entity.BorrowStartDate).Where(x => x.Edition.EditionId == entity.Edition.EditionId).Count();
                 if (borrowCount > 0)
                 {
+                    Log.Error($"An error occurred in CannotBorrowSameBookInAPeriod for book with Id {entity.Edition.Book.BookId}");
                     throw new ValidationException("You cannot borrow same edition in this period!");
                 }
             }
+            Log.Debug($"CannotBorrowSameBookInAPeriod completed successfully for book with Id {entity.Edition.Book.BookId}.");
         }
 
         public void MaximumBooksInTheSameDomain(Borrow entity)
@@ -95,6 +98,7 @@ namespace ServiceLayer.Services
             {
                 if (maximum > d)
                 {
+                    Log.Warn($"Validation failed: You borrowed a book with the same domain too much for book with Id {entity.Edition.Book.BookId}.");
                     throw new ValidationException("You borrowed a book with same domain too much!");
                 }
             }
@@ -102,9 +106,11 @@ namespace ServiceLayer.Services
             {
                 if (maximum > d*2)
                 {
+                    Log.Warn($"Validation failed: You borrowed a book with the same domain too much for book with Id {entity.Edition.Book.BookId}.");
                     throw new ValidationException("You borrowed a book with same domain too much!");
                 }
             }
+            Log.Debug($"MaximumBooksInTheSameDomain completed successfully for book with Id {entity.Edition.Book.BookId}.");
         }
 
         private void Validate(Borrow entity)
@@ -119,6 +125,7 @@ namespace ServiceLayer.Services
             {
                 if (borrowList.Count > c)
                 {
+                    Log.Warn($"Validation failed: Limit exceeded for borrower with Id {borrowList.First().Reader.ReaderId}.");
                     throw new ValidationException("Your limit to borrow books has exceeded!");
                 }
             }
@@ -126,6 +133,7 @@ namespace ServiceLayer.Services
             {
                 if (borrowList.Count > c*2)
                 {
+                    Log.Warn($"Validation failed: Limit exceeded for borrower with Id {borrowList.First().Reader.ReaderId}.");
                     throw new ValidationException("Your limit to borrow books has exceeded!");
                 }
             }
@@ -146,6 +154,7 @@ namespace ServiceLayer.Services
                     throw new ValidationException("You should borrow at least two different books in two different domains!");
                 }
             }
+            Log.Debug($"ValidateBorrowList completed successfully for borrower with Id {borrowList.First().Reader.ReaderId}.");
         }
 
         public void CreateBorrowList(List<Borrow> borrowList)
@@ -197,6 +206,7 @@ namespace ServiceLayer.Services
             {
                 if (numberOfBorrows > nmc)
                 {
+                    Log.Warn($"Validation failed: Borrowing more than {nmc} books in this period for borrower with Id {t.Reader.ReaderId}.");
                     throw new ValidationException("You cannot borrow more than " + nmc + " books in this period!");
                 }
             }
@@ -204,9 +214,11 @@ namespace ServiceLayer.Services
             {
                 if (numberOfBorrows > nmc*2)
                 {
+                    Log.Warn($"Validation failed: Borrowing more than {nmc} books in this period for borrower with Id {t.Reader.ReaderId}.");
                     throw new ValidationException("You cannot borrow more than " + nmc*2 + " books in this period!");
                 }
             }
+            Log.Debug($"MaximumBooksInSpecificPeriod completed successfully for borrower with Id {t.Reader.ReaderId}.");
         }
 
 
@@ -219,20 +231,24 @@ namespace ServiceLayer.Services
 
         public List<Borrow> GetAll()
         {
+            Log.Info("List of borrows has been returned succesfully!");
             return iBorrowIDAO.GetAll();
         }
         public void Delete(Borrow t)
         {
+            Log.Info("Borrow has been deleted successfully!");
             iBorrowIDAO.Delete(t);
         }
 
         public Borrow GetById(int id)
         {
+            Log.Info("Borrow has been returned successfully!");
             return iBorrowIDAO.GetById(id);
         }
 
         public void Update(Borrow t)
         {
+            Log.Info("Borrow has been updated successfully!");
             iBorrowIDAO.Update(t);
         }
     }
