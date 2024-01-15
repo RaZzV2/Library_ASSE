@@ -1,4 +1,8 @@
-﻿namespace DomainModel
+﻿// <copyright file="ExtendedBorrow.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace DomainModel
 {
     using System;
     using System.ComponentModel.DataAnnotations;

@@ -1,4 +1,8 @@
-﻿namespace DataMapper
+﻿// <copyright file="BookDAO.cs" company="Transilvania University Of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace DataMapper
 {
     using System;
     using System.Collections.Generic;

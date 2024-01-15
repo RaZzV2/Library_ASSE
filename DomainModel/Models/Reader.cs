@@ -1,4 +1,8 @@
-﻿namespace DomainModel
+﻿// <copyright file="Reader.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace DomainModel
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -28,7 +32,7 @@
         [Required(ErrorMessage = "Last name is required!")]
         [StringLength(50, MinimumLength = 4, ErrorMessage = "Last name must have at least 4 characters!")]
         [RegularExpression("^[a-zA-Z0-9]+$", ErrorMessage = "Last name must not have special characters!")]
-        public string ReaderLastName { get;set; }
+        public string ReaderLastName { get; set; }
 
         /// <summary>
         /// Gets or sets the address of the reader.

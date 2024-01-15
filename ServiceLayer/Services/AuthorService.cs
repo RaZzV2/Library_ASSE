@@ -1,4 +1,8 @@
-﻿namespace ServiceLayer.Services
+﻿// <copyright file="AuthorService.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace ServiceLayer.Services
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -12,16 +16,23 @@
     /// </summary>
     public class AuthorService : IAuthorService
     {
+        /// <summary>
+        /// Represents the logger for the AuthorService class.
+        /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(AuthorService));
-        private readonly IAuthorIDAO iAuthorIDAO;
+
+        /// <summary>
+        /// Represents the data access object for handling Author entities.
+        /// </summary>
+        private readonly IAuthorIDAO authorIDAO;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AuthorService"/> class with the specified IAuthorIDAO implementation.
         /// </summary>
-        /// <param name="iAuthorIDAO">The data access object interface for Author.</param>
-        public AuthorService(IAuthorIDAO iAuthorIDAO)
+        /// <param name="authorIDAO">The data access object interface for Author.</param>
+        public AuthorService(IAuthorIDAO authorIDAO)
         {
-            this.iAuthorIDAO = iAuthorIDAO;
+            this.authorIDAO = authorIDAO;
         }
 
         /// <summary>
@@ -31,7 +42,7 @@
         public void Add(Author t)
         {
             Validator.ValidateObject(t, this.CreateValidationContext(t), true);
-            this.iAuthorIDAO.Add(t);
+            this.authorIDAO.Add(t);
             Log.Info("Author has been added successfully!");
         }
 
@@ -42,7 +53,7 @@
         public List<Author> GetAll()
         {
             Log.Info("List of authors has been returned successfully!");
-            return this.iAuthorIDAO.GetAll();
+            return this.authorIDAO.GetAll();
         }
 
         /// <summary>
@@ -51,7 +62,7 @@
         /// <param name="t">The Author object to be deleted.</param>
         public void Delete(Author t)
         {
-            this.iAuthorIDAO.Delete(t);
+            this.authorIDAO.Delete(t);
             Log.Info("An author has been deleted!");
         }
 
@@ -63,7 +74,7 @@
         public Author GetById(int id)
         {
             Log.Info("Author has been returned!");
-            return this.iAuthorIDAO.GetById(id);
+            return this.authorIDAO.GetById(id);
         }
 
         /// <summary>
@@ -73,13 +84,15 @@
         public void Update(Author t)
         {
             Validator.ValidateObject(t, this.CreateValidationContext(t), true);
-            this.iAuthorIDAO.Update(t);
+            this.authorIDAO.Update(t);
             Log.Info("Author has been updated!");
         }
 
         /// <summary>
-        /// Creates a validation context for the specified instance.
+        /// Creates a new <see cref="ValidationContext"/> for the specified instance with optional service provider and items.
         /// </summary>
+        /// <param name="instance">The object to be validated.</param>
+        /// <returns>A <see cref="ValidationContext"/> for the specified instance.</returns>
         private ValidationContext CreateValidationContext(object instance)
         {
             return new ValidationContext(instance, null, null);

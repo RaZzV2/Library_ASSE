@@ -3,21 +3,18 @@
 namespace DataMapper.Migrations
 {
     using System.CodeDom.Compiler;
+    using System.Data.Entity.Migrations;
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
-
+    
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-
-    /// <summary>
-    /// This is a summary for the class.
-    /// </summary>
-    public sealed partial class t : IMigrationMetadata
+    public sealed partial class final : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(t));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(final));
         
         string IMigrationMetadata.Id
         {
-            get { return "202401051617141_t"; }
+            get { return "202401150118219_final"; }
         }
         
         string IMigrationMetadata.Source

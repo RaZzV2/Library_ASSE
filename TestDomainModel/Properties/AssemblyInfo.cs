@@ -1,3 +1,7 @@
+// <copyright file="AssemblyInfo.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;

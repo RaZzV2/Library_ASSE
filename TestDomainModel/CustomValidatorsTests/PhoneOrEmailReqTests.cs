@@ -1,4 +1,8 @@
-﻿namespace TestDomainModel.CustomValidatorsTests
+﻿// <copyright file="PhoneOrEmailReqTests.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace TestDomainModel.CustomValidatorsTests
 {
     using System.ComponentModel.DataAnnotations;
     using DomainModel;

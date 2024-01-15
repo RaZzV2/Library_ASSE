@@ -1,4 +1,8 @@
-﻿namespace Library.Models
+﻿// <copyright file="Author.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace Library.Models
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;

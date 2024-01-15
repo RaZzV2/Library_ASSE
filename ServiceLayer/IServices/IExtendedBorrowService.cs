@@ -1,4 +1,8 @@
-﻿namespace ServiceLayer.IServices
+﻿// <copyright file="IExtendedBorrowService.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace ServiceLayer.IServices
 {
     using DomainModel;
 

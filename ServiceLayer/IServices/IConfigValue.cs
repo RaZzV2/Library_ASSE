@@ -1,4 +1,8 @@
-﻿namespace ServiceLayer.IServices
+﻿// <copyright file="IConfigValue.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace ServiceLayer.IServices
 {
     /// <summary>
     /// Interface for handling configuration-related operations.

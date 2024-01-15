@@ -1,4 +1,8 @@
-﻿namespace TestDomainModel.CustomValidatorsTests
+﻿// <copyright file="NoDomainInSubdomainTests.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace TestDomainModel.CustomValidatorsTests
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;

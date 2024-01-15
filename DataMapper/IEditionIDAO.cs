@@ -1,4 +1,8 @@
-﻿namespace DataMapper
+﻿// <copyright file="IEditionIDAO.cs" company="Transilvania University Of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace DataMapper
 {
     using Library.Models;
 

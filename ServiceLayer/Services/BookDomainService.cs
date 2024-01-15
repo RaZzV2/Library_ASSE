@@ -1,4 +1,8 @@
-﻿namespace ServiceLayer.Services
+﻿// <copyright file="BookDomainService.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace ServiceLayer.Services
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -12,16 +16,23 @@
     /// </summary>
     public class BookDomainService : IBookDomainService
     {
+        /// <summary>
+        /// Represents the static readonly log instance for logging in the BookDomainService class.
+        /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(BookDomainService));
-        private readonly IBookDomainIDAO iBookDomainIDAO;
+
+        /// <summary>
+        /// Represents the Data Access Object (DAO) for handling BookDomain entities.
+        /// </summary>
+        private readonly IBookDomainIDAO bookDomainIDAO;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BookDomainService"/> class with the specified IBookDomainIDAO implementation.
         /// </summary>
-        /// <param name="iBookDomainIDAO">The data access object interface for BookDomain.</param>
-        public BookDomainService(IBookDomainIDAO iBookDomainIDAO)
+        /// <param name="bookDomainIDAO">The data access object interface for BookDomain.</param>
+        public BookDomainService(IBookDomainIDAO bookDomainIDAO)
         {
-            this.iBookDomainIDAO = iBookDomainIDAO;
+            this.bookDomainIDAO = bookDomainIDAO;
         }
 
         /// <summary>
@@ -31,7 +42,7 @@
         public void Add(BookDomain t)
         {
             Validator.ValidateObject(t, this.CreateValidationContext(t), true);
-            this.iBookDomainIDAO.Add(t);
+            this.bookDomainIDAO.Add(t);
             Log.Info("Book domain has been added successfully!");
         }
 
@@ -41,7 +52,7 @@
         /// <param name="t">The BookDomain object to be deleted.</param>
         public void Delete(BookDomain t)
         {
-            this.iBookDomainIDAO.Delete(t);
+            this.bookDomainIDAO.Delete(t);
             Log.Info("Book domain has been deleted successfully!");
         }
 
@@ -53,7 +64,7 @@
         public BookDomain GetById(int id)
         {
             Log.Info("Book domain has been returned successfully!");
-            return this.iBookDomainIDAO.GetById(id);
+            return this.bookDomainIDAO.GetById(id);
         }
 
         /// <summary>
@@ -63,7 +74,7 @@
         public List<BookDomain> GetAll()
         {
             Log.Info("List of book domains has been returned successfully!");
-            return this.iBookDomainIDAO.GetAll();
+            return this.bookDomainIDAO.GetAll();
         }
 
         /// <summary>
@@ -73,10 +84,15 @@
         public void Update(BookDomain t)
         {
             Validator.ValidateObject(t, this.CreateValidationContext(t), true);
-            this.iBookDomainIDAO.Update(t);
+            this.bookDomainIDAO.Update(t);
             Log.Info("Book domain has been updated successfully!");
         }
 
+        /// <summary>
+        /// Creates a new <see cref="ValidationContext"/> for the specified instance with optional service provider and items.
+        /// </summary>
+        /// <param name="instance">The object to be validated.</param>
+        /// <returns>A <see cref="ValidationContext"/> for the specified instance.</returns>
         private ValidationContext CreateValidationContext(object instance)
         {
             return new ValidationContext(instance, null, null);

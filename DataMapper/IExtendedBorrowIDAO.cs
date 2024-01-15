@@ -1,4 +1,8 @@
-﻿namespace DataMapper
+﻿// <copyright file="IExtendedBorrowIDAO.cs" company="Transilvania University Of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace DataMapper
 {
     using DomainModel;
 

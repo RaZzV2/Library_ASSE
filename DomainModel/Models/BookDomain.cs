@@ -1,4 +1,8 @@
-﻿namespace Library.Models
+﻿// <copyright file="BookDomain.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace Library.Models
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -31,7 +35,7 @@
         /// <summary>
         /// Gets or sets the collection of subdomains under the current book domain.
         /// </summary>
-        public virtual ICollection<BookDomain> BookSubdomains { get; set; }  = new List<BookDomain>();
+        public virtual ICollection<BookDomain> BookSubdomains { get; set; } = new List<BookDomain>();
 
         /// <summary>
         /// Gets or sets the parent domain of the current book domain.

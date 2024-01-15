@@ -8,7 +8,7 @@
   "$schema": "https://raw.githubusercontent.com/DotNetAnalyzers/StyleCopAnalyzers/master/StyleCop.Analyzers/StyleCop.Analyzers/Settings/stylecop.schema.json",
   "settings": {
     "documentationRules": {
-      "companyName": "Transilvania University of Brasov",
+      "companyName": "Transilvania University Of Brasov",
       "copyrightText": "Dragomir Razvan"
     }
   }

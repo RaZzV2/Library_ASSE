@@ -1,10 +1,14 @@
-﻿namespace DomainModel
+﻿// <copyright file="PhoneOrEmailReq.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace DomainModel
 {
     using System;
     using System.ComponentModel.DataAnnotations;
 
     /// <summary>
-    /// The <see cref="PhoneOrEmailReq"/> attribute is a custom validation attribute for ensuring that either 
+    /// The <see cref="PhoneOrEmailReq"/> attribute is a custom validation attribute for ensuring that either
     /// a phone number or an email address is provided in a Reader object.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]

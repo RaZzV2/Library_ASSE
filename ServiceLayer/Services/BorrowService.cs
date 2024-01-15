@@ -1,4 +1,8 @@
-﻿namespace ServiceLayer.Services
+﻿// <copyright file="BorrowService.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace ServiceLayer.Services
 {
     using System;
     using System.Collections.Generic;
@@ -13,20 +17,55 @@
     /// </summary>
     public class BorrowService : IBorrowIDAO
     {
+        /// <summary>
+        /// Represents the static readonly log instance for logging in the BorrowService class.
+        /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(BorrowService));
-        private readonly IBorrowIDAO iBorrowIDAO;
+
+        /// <summary>
+        /// Represents the Data Access Object (DAO) for handling Borrow entities.
+        /// </summary>
+        private readonly IBorrowIDAO borrowIDAO;
+
+        /// <summary>
+        /// Represents the value for 'nmc'.
+        /// </summary>
         private readonly int nmc;
+
+        /// <summary>
+        /// Represents the value for 'c'.
+        /// </summary>
         private readonly int c;
+
+        /// <summary>
+        /// Represents the value for 'ncz'.
+        /// </summary>
         private readonly int ncz;
+
+        /// <summary>
+        /// Represents the value for 'd'.
+        /// </summary>
         private readonly int d;
+
+        /// <summary>
+        /// Represents the TimeSpan value for 'per'.
+        /// </summary>
         private TimeSpan per;
+
+        /// <summary>
+        /// Represents the TimeSpan value for 'l'.
+        /// </summary>
         private TimeSpan l;
+
+        /// <summary>
+        /// Represents the TimeSpan value for 'delta'.
+        /// </summary>
         private TimeSpan delta;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BorrowService"/> class with the specified IBorrowIDAO implementation and parameters.
         /// </summary>
-        /// <param name="iBorrowIDAO">The data access object interface for Borrow.</param>
+        /// <param name="borrowIDAO">The data access object interface for Borrow.</param>
         /// <param name="per">The time span representing the specific period for borrowing.</param>
         /// <param name="nmc">The maximum number of books that can be borrowed in a specific period for regular readers.</param>
         /// <param name="c">The limit of books that can be borrowed at once for regular readers.</param>
@@ -34,9 +73,9 @@
         /// <param name="l">The time span representing the duration for checking the maximum books in the same domain.</param>
         /// <param name="ncz">The maximum number of books that can be borrowed in a day for regular readers.</param>
         /// <param name="delta">The time span representing the delta for checking the same book borrow in a period.</param>
-        public BorrowService(IBorrowIDAO iBorrowIDAO, TimeSpan per, int nmc, int c, int d, TimeSpan l, int ncz, TimeSpan delta)
+        public BorrowService(IBorrowIDAO borrowIDAO, TimeSpan per, int nmc, int c, int d, TimeSpan l, int ncz, TimeSpan delta)
         {
-            this.iBorrowIDAO = iBorrowIDAO;
+            this.borrowIDAO = borrowIDAO;
             this.per = per;
             this.nmc = nmc;
             this.c = c;
@@ -153,7 +192,6 @@
 
             if (borrowList.Count > 2)
             {
-
                 HashSet<int> bookDomains = new HashSet<int>();
                 foreach (var entity in borrowList)
                 {
@@ -184,14 +222,14 @@
                 foreach (var entity in borrowList)
                 {
                     this.Validate(entity);
-                    this.iBorrowIDAO.Add(entity);
+                    this.borrowIDAO.Add(entity);
                 }
             }
             catch (Exception ex)
             {
                 foreach (var entity in borrowList)
                 {
-                    this.iBorrowIDAO.Delete(entity);
+                    this.borrowIDAO.Delete(entity);
                 }
 
                 throw ex;
@@ -263,7 +301,7 @@
         public void Add(Borrow t)
         {
             Validator.ValidateObject(t, this.CreateValidationContext(t), true);
-            this.iBorrowIDAO.Add(t);
+            this.borrowIDAO.Add(t);
             Log.Info("Borrow has been added successfully!");
         }
 
@@ -274,7 +312,7 @@
         public List<Borrow> GetAll()
         {
             Log.Info("List of borrows has been returned succesfully!");
-            return this.iBorrowIDAO.GetAll();
+            return this.borrowIDAO.GetAll();
         }
 
         /// <summary>
@@ -284,7 +322,7 @@
         public void Delete(Borrow t)
         {
             Log.Info("Borrow has been deleted successfully!");
-            this.iBorrowIDAO.Delete(t);
+            this.borrowIDAO.Delete(t);
         }
 
         /// <summary>
@@ -295,7 +333,7 @@
         public Borrow GetById(int id)
         {
             Log.Info("Borrow has been returned successfully!");
-            return this.iBorrowIDAO.GetById(id);
+            return this.borrowIDAO.GetById(id);
         }
 
         /// <summary>
@@ -305,14 +343,29 @@
         public void Update(Borrow t)
         {
             Log.Info("Borrow has been updated successfully!");
-            this.iBorrowIDAO.Update(t);
+            this.borrowIDAO.Update(t);
         }
 
+        /// <summary>
+        /// Creates a new <see cref="ValidationContext"/> for the specified instance with optional service provider and items.
+        /// </summary>
+        /// <param name="instance">The object to be validated.</param>
+        /// <returns>A <see cref="ValidationContext"/> for the specified instance.</returns>
         private ValidationContext CreateValidationContext(object instance)
         {
             return new ValidationContext(instance, null, null);
         }
 
+        /// <summary>
+        /// Validates a Borrow entity using the built-in .NET Validator.
+        /// </summary>
+        /// <param name="entity">The Borrow entity to be validated.</param>
+        /// <remarks>
+        /// This method performs validation on the provided Borrow entity using the .NET Validator,
+        /// ensuring that the entity adheres to the specified validation rules. Additionally, the
+        /// method invokes the CheckBorrowBook method to perform additional validation checks related
+        /// to the borrow's associated book.
+        /// </remarks>
         private void Validate(Borrow entity)
         {
             Validator.ValidateObject(entity, this.CreateValidationContext(entity), true);

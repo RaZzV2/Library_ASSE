@@ -1,4 +1,8 @@
-﻿namespace ServiceLayer.IServices
+﻿// <copyright file="IBorrowService.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace ServiceLayer.IServices
 {
     using System;
     using System.Collections.Generic;

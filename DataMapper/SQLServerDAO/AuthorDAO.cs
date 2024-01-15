@@ -1,4 +1,8 @@
-﻿namespace DataMapper.SQLServerDAO
+﻿// <copyright file="AuthorDAO.cs" company="Transilvania University Of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace DataMapper.SQLServerDAO
 {
     using System;
     using System.Collections.Generic;
@@ -28,7 +32,6 @@
         /// Deletes an existing author from the database.
         /// </summary>
         /// <param name="t">The <see cref="Author"/> object to be deleted.</param>
-
         public void Delete(Author t)
         {
             using (var context = new LibraryContext())

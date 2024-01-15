@@ -1,4 +1,8 @@
-﻿namespace DomainModel.CustomValidators
+﻿// <copyright file="StartEndDateValid.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace DomainModel.CustomValidators
 {
     using System;
     using System.ComponentModel.DataAnnotations;

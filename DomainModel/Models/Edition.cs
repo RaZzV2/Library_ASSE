@@ -1,4 +1,8 @@
-﻿namespace Library.Models
+﻿// <copyright file="Edition.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace Library.Models
 {
     using System.ComponentModel.DataAnnotations;
 

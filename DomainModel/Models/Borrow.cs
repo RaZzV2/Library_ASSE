@@ -1,4 +1,8 @@
-﻿namespace DomainModel
+﻿// <copyright file="Borrow.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace DomainModel
 {
     using System;
     using System.Collections.Generic;

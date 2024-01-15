@@ -1,4 +1,8 @@
-﻿namespace TestServiceLayer.ServicesTests
+﻿// <copyright file="ExtendedBorrowServiceTests.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace TestServiceLayer.ServicesTests
 {
     using System;
     using System.Collections.Generic;
@@ -17,8 +21,19 @@
     [TestClass]
     public class ExtendedBorrowServiceTests
     {
+        /// <summary>
+        /// Represents the mock object for the IExtendedBorrowIDAO interface.
+        /// </summary>
         private IExtendedBorrowIDAO mockExtendedBorrowIDAO;
+
+        /// <summary>
+        /// Represents the service responsible for handling ExtendedBorrow entities.
+        /// </summary>
         private ExtendedBorrowService extendedBorrowService;
+
+        /// <summary>
+        /// Represents an instance of the ExtendedBorrow entity.
+        /// </summary>
         private ExtendedBorrow extendedBorrow;
 
         /// <summary>

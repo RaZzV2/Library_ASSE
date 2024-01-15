@@ -1,4 +1,8 @@
-﻿namespace TestServiceLayer.ServicesTests
+﻿// <copyright file="EditionServiceTests.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace TestServiceLayer.ServicesTests
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -15,8 +19,19 @@
     [TestClass]
     public class EditionServiceTests
     {
+        /// <summary>
+        /// Represents a mock instance of the IEditionIDAO interface used for testing in the EditionService class.
+        /// </summary>
         private IEditionIDAO mockEditionIDAO;
+
+        /// <summary>
+        /// Represents an instance of the EditionService class, which provides business logic operations related to editions.
+        /// </summary>
         private EditionService editionService;
+
+        /// <summary>
+        /// Represents an instance of the Edition class, which encapsulates information about an edition in the system.
+        /// </summary>
         private Edition edition;
 
         /// <summary>

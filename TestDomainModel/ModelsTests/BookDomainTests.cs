@@ -1,4 +1,8 @@
-﻿namespace TestDomainModel.ModelsTests
+﻿// <copyright file="BookDomainTests.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace TestDomainModel.ModelsTests
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -12,6 +16,9 @@
     [TestClass]
     public class BookDomainTests
     {
+        /// <summary>
+        /// Gets or sets the instance of the BookDomain associated with this object.
+        /// </summary>
         private BookDomain bookDomain;
 
         /// <summary>
@@ -75,7 +82,7 @@
             var domain = new BookDomain
             {
                 DomainName = "ExampleDomain",
-                ParentDomain = new BookDomain { DomainName = "Genul 1", ParentDomain = new BookDomain {DomainName = "Dom 2" } },
+                ParentDomain = new BookDomain { DomainName = "Genul 1", ParentDomain = new BookDomain { DomainName = "Dom 2" } },
             };
             try
             {
@@ -148,11 +155,22 @@
             this.AssertValidationException(this.bookDomain, "Circular dependency detected! Domain name must be unique within parent domains!");
         }
 
+        /// <summary>
+        /// Creates a new <see cref="ValidationContext"/> for the specified instance with optional service provider and items.
+        /// </summary>
+        /// <param name="instance">The object to be validated.</param>
+        /// <returns>A <see cref="ValidationContext"/> for the specified instance.</returns>
         private ValidationContext CreateValidationContext(object instance)
         {
             return new ValidationContext(instance, null, null);
         }
 
+        /// <summary>
+        /// Asserts that a validation exception is thrown for the specified instance with the expected error message.
+        /// </summary>
+        /// <typeparam name="T">The type of the object to be validated.</typeparam>
+        /// <param name="instance">The object to be validated.</param>
+        /// <param name="expectedErrorMessage">The expected error message that should be thrown.</param>
         private void AssertValidationException<T>(T instance, string expectedErrorMessage)
         {
             ModelValidationHelper.AssertValidationException(instance, expectedErrorMessage);

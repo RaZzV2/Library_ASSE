@@ -1,4 +1,8 @@
-﻿namespace ServiceLayer.Services
+﻿// <copyright file="ReaderService.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace ServiceLayer.Services
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -12,16 +16,23 @@
     /// </summary>
     public class ReaderService : IReaderService
     {
+        /// <summary>
+        /// Logger instance for logging events related to the ReaderService class.
+        /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(ReaderService));
-        private readonly IReaderIDAO iReaderIDAO;
+
+        /// <summary>
+        /// Instance of the data access object for Reader entities (IReaderIDAO).
+        /// </summary>
+        private readonly IReaderIDAO readerDAO;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ReaderService"/> class with the specified IReaderIDAO implementation.
         /// </summary>
-        /// <param name="iReaderIDAO">The data access object interface for Reader.</param>
-        public ReaderService(IReaderIDAO iReaderIDAO)
+        /// <param name="readerDAO">The data access object interface for Reader.</param>
+        public ReaderService(IReaderIDAO readerDAO)
         {
-            this.iReaderIDAO = iReaderIDAO;
+            this.readerDAO = readerDAO;
         }
 
         /// <summary>
@@ -34,7 +45,7 @@
             try
             {
                 Validator.ValidateObject(t, this.CreateValidationContext(t), true);
-                this.iReaderIDAO.Add(t);
+                this.readerDAO.Add(t);
                 Log.Info("Reader has been added successfully!");
             }
             catch (ValidationException validationException)
@@ -50,7 +61,7 @@
         public List<Reader> GetAll()
         {
             Log.Info("List of readers has been returned successfully!");
-            return this.iReaderIDAO.GetAll();
+            return this.readerDAO.GetAll();
         }
 
         /// <summary>
@@ -59,7 +70,7 @@
         /// <param name="t">The Reader entity to be deleted.</param>
         public void Delete(Reader t)
         {
-            this.iReaderIDAO.Delete(t);
+            this.readerDAO.Delete(t);
             Log.Info("Reader has been deleted successfully!");
         }
 
@@ -69,7 +80,7 @@
         /// <param name="t">The Reader entity to be updated.</param>
         public void Update(Reader t)
         {
-            this.iReaderIDAO.Update(t);
+            this.readerDAO.Update(t);
             Log.Info("Reader has been updated successfully!");
         }
 
@@ -81,9 +92,14 @@
         public Reader GetById(int id)
         {
             Log.Info("Reader has been returned successfully!");
-            return this.iReaderIDAO.GetById(id);
+            return this.readerDAO.GetById(id);
         }
 
+        /// <summary>
+        /// Creates a new <see cref="ValidationContext"/> for the specified instance with optional service provider and items.
+        /// </summary>
+        /// <param name="instance">The object to be validated.</param>
+        /// <returns>A <see cref="ValidationContext"/> for the specified instance.</returns>
         private ValidationContext CreateValidationContext(object instance)
         {
             return new ValidationContext(instance, null, null);

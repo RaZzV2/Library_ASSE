@@ -1,4 +1,8 @@
-﻿namespace Library.Models
+﻿// <copyright file="LibraryContext.cs" company="Transilvania University Of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace Library.Models
 {
     using System.Data.Entity;
     using DomainModel;

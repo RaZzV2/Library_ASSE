@@ -1,4 +1,8 @@
-﻿namespace TestServiceLayer.ServicesTests
+﻿// <copyright file="ReaderServiceTests.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace TestServiceLayer.ServicesTests
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -15,8 +19,19 @@
     [TestClass]
     public class ReaderServiceTests
     {
+        /// <summary>
+        /// Represents the mock object for the IReaderIDAO interface.
+        /// </summary>
         private IReaderIDAO mockReaderIDAO;
+
+        /// <summary>
+        /// Represents the service responsible for handling Reader entities.
+        /// </summary>
         private ReaderService readerService;
+
+        /// <summary>
+        /// Represents an instance of the Reader entity.
+        /// </summary>
         private Reader reader;
 
         /// <summary>

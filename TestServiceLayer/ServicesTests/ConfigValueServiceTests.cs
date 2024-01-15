@@ -1,4 +1,8 @@
-﻿namespace TestServiceLayer.ServicesTests
+﻿// <copyright file="ConfigValueServiceTests.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace TestServiceLayer.ServicesTests
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using ServiceLayer.Services;
@@ -9,6 +13,9 @@
     [TestClass]
     public class ConfigValueServiceTests
     {
+        /// <summary>
+        /// Represents an instance of the ConfigValueService, which provides operations related to configuration values.
+        /// </summary>
         private ConfigValueService configValueService;
 
         /// <summary>

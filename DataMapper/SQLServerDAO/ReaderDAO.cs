@@ -1,4 +1,8 @@
-﻿namespace DataMapper.SQLServerDAO
+﻿// <copyright file="ReaderDAO.cs" company="Transilvania University Of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace DataMapper.SQLServerDAO
 {
     using System;
     using System.Collections.Generic;

@@ -1,4 +1,8 @@
-﻿namespace ServiceLayer.Services
+﻿// <copyright file="ConfigValueService.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace ServiceLayer.Services
 {
     using System;
     using System.IO;
@@ -11,7 +15,14 @@
     /// </summary>
     public class ConfigValueService : IConfigValue
     {
+        /// <summary>
+        /// Represents the static readonly log instance for logging in the ConfigValueService class.
+        /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(ConfigValueService));
+
+        /// <summary>
+        /// Represents XML data used by the ConfigValueService.
+        /// </summary>
         private XElement xmlData;
 
         /// <summary>

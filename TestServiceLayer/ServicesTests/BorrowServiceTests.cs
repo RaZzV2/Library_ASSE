@@ -1,4 +1,8 @@
-﻿namespace TestServiceLayer.ServicesTests
+﻿// <copyright file="BorrowServiceTests.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace TestServiceLayer.ServicesTests
 {
     using System;
     using System.Collections.Generic;
@@ -17,8 +21,19 @@
     [TestClass]
     public class BorrowServiceTests
     {
+        /// <summary>
+        /// Represents the mock instance for the IBorrowIDAO interface, used for testing purposes in the BorrowService class.
+        /// </summary>
         private IBorrowIDAO mockBorrowIDAO;
+
+        /// <summary>
+        /// Represents the service class that provides operations related to the Borrow entity.
+        /// </summary>
         private BorrowService borrowService;
+
+        /// <summary>
+        /// Represents an instance of the Borrow entity used by the BorrowService class.
+        /// </summary>
         private Borrow borrow;
 
         /// <summary>
@@ -438,7 +453,6 @@
                 {
                     BorrowStartDate = new DateTime(2008, 11, 19),
                 },
-
             };
             var exception = Assert.ThrowsException<ValidationException>(() => this.borrowService.MaximumBooksInSpecificPeriod(this.borrow)).Message;
             Assert.AreEqual(exception, "You cannot borrow more than 8 books in this period!");

@@ -1,4 +1,8 @@
-﻿namespace TestDomainModel.ModelsTests
+﻿// <copyright file="ExtendedBorrowTests.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace TestDomainModel.ModelsTests
 {
     using System;
     using System.ComponentModel.DataAnnotations;
@@ -13,6 +17,9 @@
     [TestClass]
     public class ExtendedBorrowTests
     {
+        /// <summary>
+        /// Represents extended borrowing periods in a library system, providing information about the duration and associated borrow details.
+        /// </summary>
         private ExtendedBorrow extendedBorrow;
 
         /// <summary>
@@ -24,7 +31,6 @@
             var dateTime = new DateTime(2022, 1, 1, 12, 0, 0);
             this.extendedBorrow = new ExtendedBorrow()
             {
-
                 Borrow = new Borrow
                 {
                     Reader = new Reader { },
@@ -98,11 +104,22 @@
             this.AssertValidationException(this.extendedBorrow, "Date must be between 1900 and 2100.");
         }
 
+        /// <summary>
+        /// Creates a new <see cref="ValidationContext"/> for the specified instance with optional service provider and items.
+        /// </summary>
+        /// <param name="instance">The object to be validated.</param>
+        /// <returns>A <see cref="ValidationContext"/> for the specified instance.</returns>
         private ValidationContext CreateValidationContext(object instance)
         {
             return new ValidationContext(instance, null, null);
         }
 
+        /// <summary>
+        /// Asserts that a validation exception is thrown for the specified instance with the expected error message.
+        /// </summary>
+        /// <typeparam name="T">The type of the object to be validated.</typeparam>
+        /// <param name="instance">The object to be validated.</param>
+        /// <param name="expectedErrorMessage">The expected error message that should be thrown.</param>
         private void AssertValidationException<T>(T instance, string expectedErrorMessage)
         {
             ModelValidationHelper.AssertValidationException(instance, expectedErrorMessage);

@@ -1,4 +1,8 @@
-﻿namespace ServiceLayer.Services
+﻿// <copyright file="EditionService.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace ServiceLayer.Services
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -12,16 +16,23 @@
     /// </summary>
     public class EditionService : IEditionService
     {
+        /// <summary>
+        /// Represents a static readonly instance of the ILog interface used for logging in the EditionService class.
+        /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(EditionService));
-        private readonly IEditionIDAO iEditionIDAO;
+
+        /// <summary>
+        /// Represents an instance of the IEditionIDAO interface, providing data access operations related to editions.
+        /// </summary>
+        private readonly IEditionIDAO editionIDAO;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EditionService"/> class with the specified IEditionIDAO implementation.
         /// </summary>
-        /// <param name="iEditionIDAO">The data access object interface for Edition.</param>
-        public EditionService(IEditionIDAO iEditionIDAO)
+        /// <param name="editionIDAO">The data access object interface for Edition.</param>
+        public EditionService(IEditionIDAO editionIDAO)
         {
-            this.iEditionIDAO = iEditionIDAO;
+            this.editionIDAO = editionIDAO;
         }
 
         /// <summary>
@@ -31,7 +42,7 @@
         public void Add(Edition t)
         {
             Validator.ValidateObject(t, this.CreateValidationContext(t), true);
-            this.iEditionIDAO.Add(t);
+            this.editionIDAO.Add(t);
             Log.Info("Edition has been added successfully!");
         }
 
@@ -42,7 +53,7 @@
         public List<Edition> GetAll()
         {
             Log.Info("List of editions has been returned succesfully!");
-            return this.iEditionIDAO.GetAll();
+            return this.editionIDAO.GetAll();
         }
 
         /// <summary>
@@ -52,7 +63,7 @@
         public void Delete(Edition t)
         {
             Log.Info("Edition has been deleted succesfully!");
-            this.iEditionIDAO.Delete(t);
+            this.editionIDAO.Delete(t);
         }
 
         /// <summary>
@@ -63,7 +74,7 @@
         public Edition GetById(int id)
         {
             Log.Info("Edition has been returned succesfully!");
-            return this.iEditionIDAO.GetById(id);
+            return this.editionIDAO.GetById(id);
         }
 
         /// <summary>
@@ -72,10 +83,15 @@
         /// <param name="t">The Edition entity to be updated.</param>
         public void Update(Edition t)
         {
-            this.iEditionIDAO.Update(t);
+            this.editionIDAO.Update(t);
             Log.Info("Edition has been updated succesfully!");
         }
 
+        /// <summary>
+        /// Creates a new <see cref="ValidationContext"/> for the specified instance with optional service provider and items.
+        /// </summary>
+        /// <param name="instance">The object to be validated.</param>
+        /// <returns>A <see cref="ValidationContext"/> for the specified instance.</returns>
         private ValidationContext CreateValidationContext(object instance)
         {
             return new ValidationContext(instance, null, null);

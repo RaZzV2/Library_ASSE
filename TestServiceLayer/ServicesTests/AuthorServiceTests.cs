@@ -1,4 +1,8 @@
-﻿namespace TestServiceLayer.ServicesTests
+﻿// <copyright file="AuthorServiceTests.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace TestServiceLayer.ServicesTests
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -15,8 +19,19 @@
     [TestClass]
     public class AuthorServiceTests
     {
+        /// <summary>
+        /// Represents a mock instance of the IAuthorIDAO interface for testing purposes.
+        /// </summary>
         private IAuthorIDAO mockAuthorIDAO;
+
+        /// <summary>
+        /// Represents an instance of the AuthorService, providing operations related to authors.
+        /// </summary>
         private AuthorService authorService;
+
+        /// <summary>
+        /// Represents an instance of the Author model, containing information about an author.
+        /// </summary>
         private Author author;
 
         /// <summary>

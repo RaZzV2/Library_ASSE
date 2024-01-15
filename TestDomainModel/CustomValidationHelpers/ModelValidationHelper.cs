@@ -1,4 +1,8 @@
-﻿namespace DomainModel.CustomValidationHelpers
+﻿// <copyright file="ModelValidationHelper.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace DomainModel.CustomValidationHelpers
 {
     using System.ComponentModel.DataAnnotations;
     using Microsoft.VisualStudio.TestTools.UnitTesting;

@@ -1,4 +1,8 @@
-﻿namespace DomainModel.CustomValidators
+﻿// <copyright file="DateRange.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace DomainModel.CustomValidators
 {
     using System;
     using System.ComponentModel.DataAnnotations;
@@ -10,7 +14,14 @@
     [AttributeUsage(AttributeTargets.Property)]
     public class DateRange : ValidationAttribute
     {
+        /// <summary>
+        /// Represents the minimum allowable year value.
+        /// </summary>
         private readonly int minYear;
+
+        /// <summary>
+        /// Represents the maximum allowable year value.
+        /// </summary>
         private readonly int maxYear;
 
         /// <summary>

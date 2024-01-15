@@ -1,4 +1,8 @@
-﻿namespace ServiceLayer.Services
+﻿// <copyright file="BookService.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace ServiceLayer.Services
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -12,18 +16,29 @@
     /// </summary>
     public class BookService : IBookService
     {
+        /// <summary>
+        /// Represents a static instance of the log for the BookService class.
+        /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(BookService));
-        private readonly IBookIDAO iBookIDAO;
+
+        /// <summary>
+        /// Represents an instance of the BookService, providing operations related to books.
+        /// </summary>
+        private readonly IBookIDAO bookIDAO;
+
+        /// <summary>
+        /// Represents the maximum number of domains associated with a book.
+        /// </summary>
         private readonly int maxDomains;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BookService"/> class with the specified IBookIDAO implementation and maximum domains.
         /// </summary>
-        /// <param name="iBookIDAO">The data access object interface for Book.</param>
+        /// <param name="bookIDAO">The data access object interface for Book.</param>
         /// <param name="maxDomains">The maximum number of domains allowed for a book.</param>
-        public BookService(IBookIDAO iBookIDAO, int maxDomains)
+        public BookService(IBookIDAO bookIDAO, int maxDomains)
         {
-            this.iBookIDAO = iBookIDAO;
+            this.bookIDAO = bookIDAO;
             this.maxDomains = maxDomains;
         }
 
@@ -47,8 +62,8 @@
         /// <param name="t">The Book object to be added.</param>
         public void Add(Book t)
         {
-                Validator.ValidateObject(t, this.CreateValidationContext(t),true);
-                this.iBookIDAO.Add(t);
+                Validator.ValidateObject(t, this.CreateValidationContext(t), true);
+                this.bookIDAO.Add(t);
                 Log.Info("Book has been added successfully!");
         }
 
@@ -59,7 +74,7 @@
         public List<Book> GetAll()
         {
             Log.Info("List of books has been returned succesfully!");
-            return this.iBookIDAO.GetAll();
+            return this.bookIDAO.GetAll();
         }
 
         /// <summary>
@@ -69,7 +84,7 @@
         public void Delete(Book t)
         {
             Log.Info("Book has been deleted succesfully!");
-            this.iBookIDAO.Delete(t);
+            this.bookIDAO.Delete(t);
         }
 
         /// <summary>
@@ -80,7 +95,7 @@
         public Book GetById(int id)
         {
             Log.Info("Book has been returned succesfully!");
-            return this.iBookIDAO.GetById(id);
+            return this.bookIDAO.GetById(id);
         }
 
         /// <summary>
@@ -89,10 +104,15 @@
         /// <param name="t">The Book object to be updated.</param>
         public void Update(Book t)
         {
-            this.iBookIDAO.Update(t);
+            this.bookIDAO.Update(t);
             Log.Info("Book has been updated succesfuly!");
         }
 
+        /// <summary>
+        /// Creates a new <see cref="ValidationContext"/> for the specified instance with optional service provider and items.
+        /// </summary>
+        /// <param name="instance">The object to be validated.</param>
+        /// <returns>A <see cref="ValidationContext"/> for the specified instance.</returns>
         private ValidationContext CreateValidationContext(object instance)
         {
             return new ValidationContext(instance, null, null);

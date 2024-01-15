@@ -1,4 +1,8 @@
-﻿namespace ServiceLayer.Services
+﻿// <copyright file="ExtendedBorrowService.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace ServiceLayer.Services
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -13,19 +17,29 @@
     /// </summary>
     public class ExtendedBorrowService : IExtendedBorrowService
     {
+        /// <summary>
+        /// Provides logging functionality for the ExtendedBorrowService class.
+        /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(ExtendedBorrowService));
-        private readonly IExtendedBorrowIDAO iExtendedBorrowIDAO;
 
+        /// <summary>
+        /// Represents the data access object for managing ExtendedBorrow entities.
+        /// </summary>
+        private readonly IExtendedBorrowIDAO extendedBorrowIDAO;
+
+        /// <summary>
+        /// Represents the maximum limit for a specific condition.
+        /// </summary>
         private readonly int lim;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ExtendedBorrowService"/> class with the specified IExtendedBorrowIDAO implementation and limit for borrow extension.
         /// </summary>
-        /// <param name="iExtendedBorrowIDAO">The data access object interface for ExtendedBorrow.</param>
+        /// <param name="extendedBorrowIDAO">The data access object interface for ExtendedBorrow.</param>
         /// <param name="lim">The limit for extending a borrow in a specific period.</param>
-        public ExtendedBorrowService(IExtendedBorrowIDAO iExtendedBorrowIDAO, int lim)
+        public ExtendedBorrowService(IExtendedBorrowIDAO extendedBorrowIDAO, int lim)
         {
-            this.iExtendedBorrowIDAO = iExtendedBorrowIDAO;
+            this.extendedBorrowIDAO = extendedBorrowIDAO;
             this.lim = lim;
         }
 
@@ -36,7 +50,7 @@
         public void Add(ExtendedBorrow t)
         {
             Validator.ValidateObject(t, this.CreateValidationContext(t), true);
-            this.iExtendedBorrowIDAO.Add(t);
+            this.extendedBorrowIDAO.Add(t);
             Log.Info("Extended borrow has been added successfully!");
         }
 
@@ -47,7 +61,7 @@
         public List<ExtendedBorrow> GetAll()
         {
             Log.Info("List of extended borrow has been returned successfully!");
-            return this.iExtendedBorrowIDAO.GetAll();
+            return this.extendedBorrowIDAO.GetAll();
         }
 
         /// <summary>
@@ -56,7 +70,7 @@
         /// <param name="t">The ExtendedBorrow entity to be deleted.</param>
         public void Delete(ExtendedBorrow t)
         {
-            this.iExtendedBorrowIDAO.Delete(t);
+            this.extendedBorrowIDAO.Delete(t);
             Log.Info("Extended borrow has been deleted successfully!");
         }
 
@@ -68,7 +82,7 @@
         public ExtendedBorrow GetById(int id)
         {
             Log.Info("Extended borrow has been returned successfully!");
-            return this.iExtendedBorrowIDAO.GetById(id);
+            return this.extendedBorrowIDAO.GetById(id);
         }
 
         /// <summary>
@@ -78,7 +92,7 @@
         public void Update(ExtendedBorrow t)
         {
             Log.Info("Extended borrow has been updated successfully!");
-            this.iExtendedBorrowIDAO.Update(t);
+            this.extendedBorrowIDAO.Update(t);
         }
 
         /// <summary>
@@ -97,6 +111,11 @@
             Log.Warn($"Validation failed: Attempting to extend borrow beyond the limit for borrow with Id {t.Borrow.Id}.");
         }
 
+        /// <summary>
+        /// Creates a new <see cref="ValidationContext"/> for the specified instance with optional service provider and items.
+        /// </summary>
+        /// <param name="instance">The object to be validated.</param>
+        /// <returns>A <see cref="ValidationContext"/> for the specified instance.</returns>
         private ValidationContext CreateValidationContext(object instance)
         {
             return new ValidationContext(instance, null, null);

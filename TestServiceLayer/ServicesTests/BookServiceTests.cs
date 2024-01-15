@@ -1,4 +1,8 @@
-﻿namespace TestServiceLayer.ServicesTests
+﻿// <copyright file="BookServiceTests.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace TestServiceLayer.ServicesTests
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -15,8 +19,19 @@
     [TestClass]
     public class BookServiceTests
     {
+        /// <summary>
+        /// Represents a mock instance of the IBookIDAO interface used for testing in the BookService class.
+        /// </summary>
         private IBookIDAO mockBookIDAO;
+
+        /// <summary>
+        /// Represents an instance of the BookService class, which provides business logic operations related to books.
+        /// </summary>
         private BookService bookService;
+
+        /// <summary>
+        /// Represents an instance of the Book class, which encapsulates information about a book in the system.
+        /// </summary>
         private Book book;
 
         /// <summary>

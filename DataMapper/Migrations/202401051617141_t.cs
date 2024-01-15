@@ -1,13 +1,23 @@
-﻿namespace DataMapper.Migrations
+﻿// <copyright file="202401051617141_t.cs" company="Transilvania University Of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace DataMapper.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
-    
-    public partial class t : DbMigration
+
+    /// <summary>
+    /// Represents a database migration to create tables for Authors, Books, BookDomains, and Editions.
+    /// </summary>
+    public partial class T : DbMigration
     {
+        /// <summary>
+        /// Applies changes to the database schema during the migration.
+        /// </summary>
         public override void Up()
         {
-            CreateTable(
+            this.CreateTable(
                 "dbo.Authors",
                 c => new
                     {
@@ -15,8 +25,8 @@
                         Name = c.String(),
                     })
                 .PrimaryKey(t => t.Id);
-            
-            CreateTable(
+
+            this.CreateTable(
                 "dbo.Books",
                 c => new
                     {
@@ -24,8 +34,8 @@
                         Title = c.String(),
                     })
                 .PrimaryKey(t => t.BookId);
-            
-            CreateTable(
+
+            this.CreateTable(
                 "dbo.BookDomains",
                 c => new
                     {
@@ -36,8 +46,8 @@
                 .PrimaryKey(t => t.BookDomainId)
                 .ForeignKey("dbo.BookDomains", t => t.BookDomain_BookDomainId)
                 .Index(t => t.BookDomain_BookDomainId);
-            
-            CreateTable(
+
+            this.CreateTable(
                 "dbo.Editions",
                 c => new
                     {
@@ -53,8 +63,8 @@
                 .PrimaryKey(t => t.EditionId)
                 .ForeignKey("dbo.Books", t => t.Book_BookId)
                 .Index(t => t.Book_BookId);
-            
-            CreateTable(
+
+            this.CreateTable(
                 "dbo.Borrows",
                 c => new
                     {
@@ -70,8 +80,8 @@
                 .ForeignKey("dbo.Readers", t => t.Reader_ReaderId)
                 .Index(t => t.Edition_EditionId)
                 .Index(t => t.Reader_ReaderId);
-            
-            CreateTable(
+
+            this.CreateTable(
                 "dbo.ExtendedBorrows",
                 c => new
                     {
@@ -82,8 +92,8 @@
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Borrows", t => t.Borrow_Id)
                 .Index(t => t.Borrow_Id);
-            
-            CreateTable(
+
+            this.CreateTable(
                 "dbo.Readers",
                 c => new
                     {
@@ -96,8 +106,8 @@
                         PhoneNumber = c.String(),
                     })
                 .PrimaryKey(t => t.ReaderId);
-            
-            CreateTable(
+
+            this.CreateTable(
                 "dbo.Students",
                 c => new
                     {
@@ -105,8 +115,8 @@
                         Name = c.String(),
                     })
                 .PrimaryKey(t => t.Id);
-            
-            CreateTable(
+
+            this.CreateTable(
                 "dbo.BookAuthors",
                 c => new
                     {
@@ -118,8 +128,8 @@
                 .ForeignKey("dbo.Authors", t => t.Author_Id, cascadeDelete: true)
                 .Index(t => t.Book_BookId)
                 .Index(t => t.Author_Id);
-            
-            CreateTable(
+
+            this.CreateTable(
                 "dbo.BookDomainBooks",
                 c => new
                     {
@@ -131,39 +141,39 @@
                 .ForeignKey("dbo.Books", t => t.Book_BookId, cascadeDelete: true)
                 .Index(t => t.BookDomain_BookDomainId)
                 .Index(t => t.Book_BookId);
-            
         }
-        
+
+        /// <inheritdoc/>
         public override void Down()
         {
-            DropForeignKey("dbo.Borrows", "Reader_ReaderId", "dbo.Readers");
-            DropForeignKey("dbo.ExtendedBorrows", "Borrow_Id", "dbo.Borrows");
-            DropForeignKey("dbo.Borrows", "Edition_EditionId", "dbo.Editions");
-            DropForeignKey("dbo.Editions", "Book_BookId", "dbo.Books");
-            DropForeignKey("dbo.BookDomains", "BookDomain_BookDomainId", "dbo.BookDomains");
-            DropForeignKey("dbo.BookDomainBooks", "Book_BookId", "dbo.Books");
-            DropForeignKey("dbo.BookDomainBooks", "BookDomain_BookDomainId", "dbo.BookDomains");
-            DropForeignKey("dbo.BookAuthors", "Author_Id", "dbo.Authors");
-            DropForeignKey("dbo.BookAuthors", "Book_BookId", "dbo.Books");
-            DropIndex("dbo.BookDomainBooks", new[] { "Book_BookId" });
-            DropIndex("dbo.BookDomainBooks", new[] { "BookDomain_BookDomainId" });
-            DropIndex("dbo.BookAuthors", new[] { "Author_Id" });
-            DropIndex("dbo.BookAuthors", new[] { "Book_BookId" });
-            DropIndex("dbo.ExtendedBorrows", new[] { "Borrow_Id" });
-            DropIndex("dbo.Borrows", new[] { "Reader_ReaderId" });
-            DropIndex("dbo.Borrows", new[] { "Edition_EditionId" });
-            DropIndex("dbo.Editions", new[] { "Book_BookId" });
-            DropIndex("dbo.BookDomains", new[] { "BookDomain_BookDomainId" });
-            DropTable("dbo.BookDomainBooks");
-            DropTable("dbo.BookAuthors");
-            DropTable("dbo.Students");
-            DropTable("dbo.Readers");
-            DropTable("dbo.ExtendedBorrows");
-            DropTable("dbo.Borrows");
-            DropTable("dbo.Editions");
-            DropTable("dbo.BookDomains");
-            DropTable("dbo.Books");
-            DropTable("dbo.Authors");
+            this.DropForeignKey("dbo.Borrows", "Reader_ReaderId", "dbo.Readers");
+            this.DropForeignKey("dbo.ExtendedBorrows", "Borrow_Id", "dbo.Borrows");
+            this.DropForeignKey("dbo.Borrows", "Edition_EditionId", "dbo.Editions");
+            this.DropForeignKey("dbo.Editions", "Book_BookId", "dbo.Books");
+            this.DropForeignKey("dbo.BookDomains", "BookDomain_BookDomainId", "dbo.BookDomains");
+            this.DropForeignKey("dbo.BookDomainBooks", "Book_BookId", "dbo.Books");
+            this.DropForeignKey("dbo.BookDomainBooks", "BookDomain_BookDomainId", "dbo.BookDomains");
+            this.DropForeignKey("dbo.BookAuthors", "Author_Id", "dbo.Authors");
+            this.DropForeignKey("dbo.BookAuthors", "Book_BookId", "dbo.Books");
+            this.DropIndex("dbo.BookDomainBooks", new[] { "Book_BookId" });
+            this.DropIndex("dbo.BookDomainBooks", new[] { "BookDomain_BookDomainId" });
+            this.DropIndex("dbo.BookAuthors", new[] { "Author_Id" });
+            this.DropIndex("dbo.BookAuthors", new[] { "Book_BookId" });
+            this.DropIndex("dbo.ExtendedBorrows", new[] { "Borrow_Id" });
+            this.DropIndex("dbo.Borrows", new[] { "Reader_ReaderId" });
+            this.DropIndex("dbo.Borrows", new[] { "Edition_EditionId" });
+            this.DropIndex("dbo.Editions", new[] { "Book_BookId" });
+            this.DropIndex("dbo.BookDomains", new[] { "BookDomain_BookDomainId" });
+            this.DropTable("dbo.BookDomainBooks");
+            this.DropTable("dbo.BookAuthors");
+            this.DropTable("dbo.Students");
+            this.DropTable("dbo.Readers");
+            this.DropTable("dbo.ExtendedBorrows");
+            this.DropTable("dbo.Borrows");
+            this.DropTable("dbo.Editions");
+            this.DropTable("dbo.BookDomains");
+            this.DropTable("dbo.Books");
+            this.DropTable("dbo.Authors");
         }
     }
 }

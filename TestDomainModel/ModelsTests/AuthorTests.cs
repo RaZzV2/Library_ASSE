@@ -1,4 +1,8 @@
-﻿namespace TestDomainModel.ModelsTests
+﻿// <copyright file="AuthorTests.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace TestDomainModel.ModelsTests
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -12,6 +16,9 @@
     [TestClass]
     public class AuthorTests
     {
+        /// <summary>
+        /// Gets or sets the instance of the Author associated with this object.
+        /// </summary>
         private Author author;
 
         /// <summary>
@@ -234,20 +241,25 @@
                 },
             };
             this.author.Books = list;
-            Assert.AreEqual(list,this.author.Books);
+            Assert.AreEqual(list, this.author.Books);
         }
 
         /// <summary>
-        /// Creates a validation context for the specified instance.
+        /// Creates a new <see cref="ValidationContext"/> for the specified instance with optional service provider and items.
         /// </summary>
+        /// <param name="instance">The object to be validated.</param>
+        /// <returns>A <see cref="ValidationContext"/> for the specified instance.</returns>
         private ValidationContext CreateValidationContext(object instance)
         {
             return new ValidationContext(instance, null, null);
         }
 
         /// <summary>
-        /// Asserts that a validation exception is thrown for the specified instance and expected error message.
+        /// Asserts that a validation exception is thrown for the specified instance with the expected error message.
         /// </summary>
+        /// <typeparam name="T">The type of the object to be validated.</typeparam>
+        /// <param name="instance">The object to be validated.</param>
+        /// <param name="expectedErrorMessage">The expected error message that should be thrown.</param>
         private void AssertValidationException<T>(T instance, string expectedErrorMessage)
         {
             ModelValidationHelper.AssertValidationException(instance, expectedErrorMessage);

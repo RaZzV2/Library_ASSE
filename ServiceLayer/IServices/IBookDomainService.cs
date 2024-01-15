@@ -1,4 +1,8 @@
-﻿namespace ServiceLayer.IServices
+﻿// <copyright file="IBookDomainService.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace ServiceLayer.IServices
 {
     using Library.Models;
 

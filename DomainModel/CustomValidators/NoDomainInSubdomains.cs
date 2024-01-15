@@ -1,4 +1,8 @@
-﻿namespace DomainModel.CustomValidators
+﻿// <copyright file="NoDomainInSubdomains.cs" company="Transilvania University of Brasov">
+// Dragomir Razvan
+// </copyright>
+
+namespace DomainModel.CustomValidators
 {
     using System;
     using System.ComponentModel.DataAnnotations;
@@ -6,7 +10,7 @@
     using Library.Models;
 
     /// <summary>
-    /// The <see cref="NoDomainInSubdomains"/> attribute is a custom validation attribute for ensuring that a BookDomain's 
+    /// The <see cref="NoDomainInSubdomains"/> attribute is a custom validation attribute for ensuring that a BookDomain's
     /// domain name is unique within its subdomains and parent domains, preventing circular dependencies.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
